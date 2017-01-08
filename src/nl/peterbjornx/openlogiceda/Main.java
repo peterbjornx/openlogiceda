@@ -1,5 +1,6 @@
 package nl.peterbjornx.openlogiceda;
 
+import nl.peterbjornx.openlogiceda.gui.SignalTraceView;
 import nl.peterbjornx.openlogiceda.lib.Clock;
 import nl.peterbjornx.openlogiceda.lib.CombinatorialComponent;
 import nl.peterbjornx.openlogiceda.lib.Probe;
@@ -8,6 +9,9 @@ import nl.peterbjornx.openlogiceda.model.Net;
 import nl.peterbjornx.openlogiceda.sim.Simulator;
 import nl.peterbjornx.openlogiceda.util.ModificationException;
 import nl.peterbjornx.openlogiceda.util.SimulationException;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Main {
 
@@ -18,9 +22,12 @@ public class Main {
         Net c = new Net("c" );
         Clock ca = new Clock("ca", 2000 );
         Clock cb = new Clock("cb", 4000 );
-        test.connectNode(a, new Probe().getInput() );
-        test.connectNode(b, new Probe().getInput() );
-        test.connectNode(c, new Probe().getInput() );
+        Probe pa = new Probe();
+        Probe pb = new Probe();
+        Probe pc = new Probe();
+        test.connectNode(a, pa.getInput() );
+        test.connectNode(b, pb.getInput() );
+        test.connectNode(c, pc.getInput() );
         CombinatorialComponent comp = new CombinatorialComponent("and1", 2, 200,
                 (v)-> (v[0] & v[1]));
         test.connectNode(a, comp.getInput(0));
@@ -32,5 +39,13 @@ public class Main {
         sim.start(test);
         for ( int i = 0; i < 50; i++ )
             sim.step();
+        JFrame tf = new JFrame("Test");
+        SignalTraceView stf = new SignalTraceView();
+        stf.addTrace(Color.RED, "A", pa.getHistory());
+        stf.addTrace(Color.ORANGE, "B", pb.getHistory());
+        stf.addTrace(Color.YELLOW, "C", pc.getHistory());
+        tf.add(stf);
+        tf.setResizable(true);
+        tf.setVisible(true);
     }
 }
