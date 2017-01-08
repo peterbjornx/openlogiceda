@@ -17,13 +17,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.sim.Simulator;
+import nl.peterbjornx.openlogiceda.util.SimulationException;
+
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @author Peter Bosch
  */
-public class Component
+public abstract class Component
 {
 
     /**
@@ -40,6 +43,14 @@ public class Component
      * The circuit this component is on
      */
     Circuit circuit;
+
+    /**
+     * Create a new component
+     * @param name The name of the component
+     */
+    protected Component( String name ) {
+        this.name = name;
+    }
 
     /**
      * Gets the name of this component
@@ -66,4 +77,12 @@ public class Component
         return name;
     }
 
+    /**
+     * This function is called by the simulator before starting the simulation
+     * @param simulator The simulator context
+     * @throws SimulationException if something went wrong during the simulation.
+     */
+    public void beginSimulation(Simulator simulator) throws SimulationException {
+
+    }
 }

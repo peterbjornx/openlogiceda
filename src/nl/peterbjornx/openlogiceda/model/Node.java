@@ -19,7 +19,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import nl.peterbjornx.openlogiceda.sim.Process;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class Node {
     /**
      * The net this node is connected to.
      */
-    Net net;
+    Net net = null;
 
     /**
      * The component this node belongs to.
@@ -49,12 +48,20 @@ public class Node {
     /**
      * The value of this node
      */
-    private Value value;
+    private Value value = Value.UNDEFINED;
 
     /**
      * The processes to run when this node changes
      */
     private List<Process> processes = new LinkedList<>();
+
+    /**
+     * Creates a new Node
+     */
+    public Node(Component component, String name) {
+        this.component = component;
+        this.name = name;
+    }
 
     /**
      * Gets the component this node is attached to
@@ -100,5 +107,12 @@ public class Node {
      */
     public List<Process> getProcesses() {
         return processes;
+    }
+
+    /**
+     * Register a process to be called when the state of this node changes.
+     */
+    public void addProcess( Process process ) {
+        processes.add(process);
     }
 }

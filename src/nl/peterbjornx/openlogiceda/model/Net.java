@@ -60,6 +60,13 @@ public class Net {
     private List<Process> processes = new LinkedList<>();
 
     /**
+     * Creates a new net
+     */
+    public Net( String name ) {
+        this.name = name;
+    }
+
+    /**
      * Gets the effective value of this net.
      * This is only valid when running a simulation.
      */
@@ -118,5 +125,9 @@ public class Net {
      */
     public List<Process> getProcesses() {
         return processes;
+    }
+
+    public ValueChange getChange() {
+        return change;
     }
 }

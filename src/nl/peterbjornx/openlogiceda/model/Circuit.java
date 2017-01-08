@@ -22,6 +22,15 @@ public class Circuit extends Component {
     private List<Component> components = new LinkedList<>();
 
     /**
+     * Create a new circuit
+     *
+     * @param name The name of the component
+     */
+    public Circuit(String name) {
+        super(name);
+    }
+
+    /**
      * Add a component to this circuit.
      * @param component
      * @throws ModificationException
@@ -50,14 +59,21 @@ public class Circuit extends Component {
             throw new ModificationException("node is already on another net");
 
         if ( node.component.circuit == null )
-            node.component.circuit = this;
+            addComponent( node.component );
         else if ( node.component.circuit != this ) {
             throw new ModificationException("cannot connect nodes across circuits");
         }
+        if ( net.circuit == null )
+            addNet( net );
 
         node.net = net;
         net.nodes.add( node );
 
+    }
+
+    private void addNet(Net net) {
+        net.circuit = this;
+        nets.add(net);
     }
 
     /**
@@ -78,4 +94,7 @@ public class Circuit extends Component {
         nets.remove( b );
     }
 
+    public List<Component> getComponents() {
+        return components;
+    }
 }

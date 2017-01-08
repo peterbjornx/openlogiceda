@@ -17,27 +17,35 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.sim.CombinatorialEquation;
+
 /**
  * Describes the values a node can take
  * @author Peter Bosch
  */
 public enum Value {
 
-    HIGH(99, true, true),
-    LOW(99, true, false),
-    UNDEFINED(-99 ,true, false),
-    WEAK_HIGH(0, true, true),
-    WEAK_LOW(0, true, false),
-    HIGH_Z(-98, false, false),
-    CONFLICT(9001, false, false);
+    HIGH(99, 'H', true, true),
+    LOW(99, 'L', true, false),
+    UNDEFINED(-99, '?', true, false),
+    WEAK_HIGH(0, 'h', true, true),
+    WEAK_LOW(0, 'l', true, false),
+    HIGH_Z(-98, 'Z', false, false),
+    CONFLICT(9001, 'E', false, false);
 
     private int strength;
     public final boolean valid, truth;
+    private char repr;
 
-    private Value(int s, boolean valid, boolean truth) {
+    Value(int s, char repr, boolean valid, boolean truth) {
         strength = s;
         this.valid = valid;
         this.truth = truth;
+        this.repr = repr;
+    }
+
+    public char getRepresentation() {
+        return repr;
     }
 
     public Value combine(Value other){
@@ -50,4 +58,5 @@ public enum Value {
         else
             return this;
     }
+
 }

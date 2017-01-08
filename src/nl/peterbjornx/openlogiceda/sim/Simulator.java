@@ -17,10 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import nl.peterbjornx.openlogiceda.model.Circuit;
-import nl.peterbjornx.openlogiceda.model.Net;
-import nl.peterbjornx.openlogiceda.model.Node;
-import nl.peterbjornx.openlogiceda.model.Value;
+import nl.peterbjornx.openlogiceda.model.*;
 import nl.peterbjornx.openlogiceda.util.SimulationException;
 
 import java.util.HashSet;
@@ -29,6 +26,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
+ * Implements an event-driven timing accurate simulator.
  * @author Peter Bosch
  */
 public class Simulator {
@@ -39,6 +37,15 @@ public class Simulator {
     private long now = 0;
 
     /**
+     * Initialize the simulation for a circuit
+     */
+    public void start(Circuit root) throws SimulationException {
+        List<Component> components = root.getComponents();
+        for ( Component c : components )
+            c.beginSimulation( this );
+    }
+
+    /**
      * Sets a nodes value
      * @param node The node to update
      * @param value The value to set
@@ -47,7 +54,7 @@ public class Simulator {
     public void setNode(Node node, Value value, long delay) throws SimulationException {
         if ( delay == 0 )
             throw new SimulationException("cannot simulate an instantaneous effect");
-        addEvent(delay, sim -> {setNode(node,value);});
+        addEvent(delay, sim -> setNode(node,value));
     }
 
     /**
@@ -121,7 +128,7 @@ public class Simulator {
         if ( eventQueue.isEmpty() )
             return false;
         now = eventQueue.peek().timestamp;
-        while ( eventQueue.isEmpty() ) {
+        while ( !eventQueue.isEmpty() ) {
             if ( eventQueue.peek().timestamp != now )
                 break;
             eventQueue.poll().process.process(this);
@@ -162,7 +169,7 @@ public class Simulator {
         public int compareTo(Object o) {
             if (o instanceof Event ) {
                 Event e = (Event) o;
-                return (int)(e.timestamp - timestamp);//TODO Proper bounding
+                return (int)(timestamp - e.timestamp);//TODO Proper bounding
             }
             throw new RuntimeException("comparing Event to somehing that isn't an Event");
         }
