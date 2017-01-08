@@ -1,4 +1,9 @@
+/*
+
+ */
 package nl.peterbjornx.openlogiceda.util;
+
+import nl.peterbjornx.openlogiceda.util.impl.SimpleRefAlloc;
 
 import java.io.Serializable;
 
@@ -24,5 +29,12 @@ public abstract class RefAllocator implements Serializable {
      * @param ref The reference to release.
      */
     public abstract void free( long ref );
+
+    /**
+     * Creates an instance of the default allocator
+     */
+    public static RefAllocator create() {
+        return new SimpleRefAlloc();
+    }
 
 }
