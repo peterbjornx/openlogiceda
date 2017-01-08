@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import nl.peterbjornx.openlogiceda.model.Value;
 import nl.peterbjornx.openlogiceda.sim.SignalHistory;
+import nl.peterbjornx.openlogiceda.util.TimeUtil;
 import sun.misc.Signal;
 
 import javax.swing.*;
@@ -34,10 +35,17 @@ public class SignalTraceView extends JPanel {
     private int labelWidth = 100;
     private int signalHeight = 30;
     private Color labelBgColour = Color.gray;
-    private Font labelFont = new Font("Sans Serif",Font.BOLD,12);
+    private Font labelFont = new Font("Sans Serif", Font.BOLD,12);
     private long startTime = 0;
     private long timeScale = 20;
     private java.util.List<Trace> traces = new LinkedList<>();
+    private Font tickFont = new Font( "Sans Serif", Font.PLAIN, 8);
+    private Color tickColour = Color.white;
+    private long majorTickInterval = 500;
+    private int scrollY = 0;
+    private Color gridColor = Color.gray.darker();
+    private int SIGNAL_SPACE = 5;
+    private int LABEL_SPACE = 5;
 
     public SignalTraceView() {
     }
@@ -52,6 +60,28 @@ public class SignalTraceView extends JPanel {
         g.fillRoundRect( x, y, 15, signalHeight, 5, 5 );
         g.drawRoundRect( x, y, labelWidth, signalHeight, 5, 5 );
         g.drawString( name, x + 30, y + signalHeight/2 + th );
+    }
+
+    private void drawMajorTick( Graphics g, int x, int y, long time )
+    {
+        g.setFont(tickFont);
+        String ts = TimeUtil.formatTimeShort(time);
+        int tw = g.getFontMetrics().stringWidth( ts );
+        int th = g.getFontMetrics().getDescent();
+        g.setColor(tickColour);
+        g.drawString(ts, x - tw / 2, y + signalHeight / 2 + th);
+        g.drawLine(x, y + signalHeight / 2 + th + 1, x, y + signalHeight );
+    }
+
+    private void drawMinorTick( Graphics g, int x, int y, long time )
+    {
+        g.setFont(tickFont);
+        String ts = Long.toString( time );//TODO: Time formatter
+        int tw = g.getFontMetrics().stringWidth( ts );
+        int th = g.getFontMetrics().getDescent();
+        g.setColor(tickColour);
+      //  g.drawString(ts, x - tw / 2, y + signalHeight / 2 + th);
+        g.drawLine(x, y + (signalHeight *5)/6, x, y + signalHeight );
     }
 
     private int valueY( Value v ){
@@ -92,8 +122,8 @@ public class SignalTraceView extends JPanel {
             long transitTime = c.getTimestamp() - 3;
             long settleTime = c.getTimestamp();
             v = c.getValue();
-            int transitX = (int) (transitTime / timeScale);
-            int settleX = (int) (settleTime / timeScale);
+            int transitX = (int) ((transitTime - startTime) / timeScale);
+            int settleX = (int) ((settleTime - startTime) / timeScale);
             int settleY = valueY(v);
             Color settleColour = valueColour(v);
             if ( c.getTimestamp() >= startTime ) {
@@ -107,8 +137,8 @@ public class SignalTraceView extends JPanel {
                if ( settleX >= w )
                    return;
             }
-            lastX = settleX;
-            lastY = settleY;
+            lastX = Integer.max(0,settleX);
+            lastY = Integer.max( 0,settleY);
             lastColour = settleColour;
         }
 
@@ -122,16 +152,86 @@ public class SignalTraceView extends JPanel {
         g.setColor(bgColour);
         g.fillRect( 0, 0, w, h );
         int y = 0;
+        int traceX = labelWidth + LABEL_SPACE;
+        for ( int x = traceX; x < w; x++) {
+            long time = (x - traceX) * timeScale + startTime;
+            if ( time % majorTickInterval == 0 ) {
+                drawMajorTick(g, x, 0, time);
+                drawGridLine(g, x, signalHeight, h - signalHeight );
+            }
+        }
+        y += signalHeight + 1;
+        Shape oldClip = g.getClip();
+        g.setClip(0, y, w - 5, h - y - 5);
+        g.translate( 0, -scrollY );
         for ( Trace t : traces ) {
             drawLabel( g, 0,y, t.name, t.colour );
-            drawTrace( g, labelWidth + 5, y, t.history);
-            y += signalHeight + 5;
-
+            drawTrace( g, traceX, y, t.history);
+            y += signalHeight + SIGNAL_SPACE;
         }
+        g.translate( 0, scrollY );
+        g.setClip(oldClip);
+    }
+
+    private void drawGridLine(Graphics g, int x, int y, int h) {
+        g.setColor(gridColor);
+        g.drawLine(x,y,x,y+h);
     }
 
     public void addTrace( Color colour, String name, SignalHistory history ) {
         traces.add( new Trace(colour, name, history));
+    }
+
+    public int getScrollYMax() {
+        int contentHeight = (signalHeight + SIGNAL_SPACE) * (traces.size() + 1) - getHeight();
+        return Integer.max(contentHeight, 0);
+    }
+
+    public int getVisibleHeight() {
+        return  getHeight() - signalHeight - SIGNAL_SPACE;
+    }
+    public int getVisibleWidth() {
+        return  getWidth() - labelWidth - LABEL_SPACE - 5;
+    }
+
+    public int getScrollXMax() {
+        long longestTime = 0;
+        for ( Trace t : traces )
+            longestTime = Long.max(t.history.getDuration(), longestTime);
+        int xContent =  (int) (longestTime / timeScale);
+        xContent += labelWidth + LABEL_SPACE + 5;
+        xContent -= getWidth();
+        return Integer.max(xContent, 0);
+    }
+
+    public void setScroll( int x, int y ) {
+        if ( x < 0 || y < 0 )
+            throw new IllegalArgumentException("scroll position can not be smaller than 0");
+        startTime = x * timeScale;
+        scrollY = y;
+    }
+
+    public void setScrollX( int x ) {
+        if ( x < 0 )
+            throw new IllegalArgumentException("scroll position can not be smaller than 0");
+        startTime = x * timeScale;
+        repaint();
+    }
+
+    public void setScrollY( int y ) {
+        if (  y < 0 )
+            throw new IllegalArgumentException("scroll position can not be smaller than 0");
+        scrollY = y;
+        repaint();
+    }
+
+    public long getTimeScale() {
+        return timeScale;
+    }
+
+    public void setTimeScale(long timeScale) {
+        this.timeScale = timeScale;
+        repaint();
     }
 
     private static class Trace {
@@ -139,7 +239,7 @@ public class SignalTraceView extends JPanel {
         String name;
         SignalHistory history;
 
-        public Trace(Color colour, String name, SignalHistory history) {
+        Trace(Color colour, String name, SignalHistory history) {
             this.colour = colour;
             this.name = name;
             this.history = history;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="nl.peterbjornx.openlogiceda.gui.SignalTracePane">
+  <grid id="27dc6" binding="mainPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="420"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="ca640" class="javax.swing.JScrollBar" binding="horizontalScrollBar" default-binding="true">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <orientation value="0"/>
+        </properties>
+      </component>
+      <component id="74f90" class="javax.swing.JScrollBar" binding="verticalScrollBar">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <maximum value="20"/>
+          <value value="1"/>
+          <valueIsAdjusting value="false"/>
+          <visibleAmount value="19"/>
+        </properties>
+      </component>
+      <toolbar id="c0e5b">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="a0ad0" class="javax.swing.JButton" binding="zoomInBtn">
+            <constraints/>
+            <properties>
+              <text value="Z+"/>
+            </properties>
+          </component>
+          <component id="b1fed" class="javax.swing.JButton" binding="zoomOutBtn">
+            <constraints/>
+            <properties>
+              <text value="Z-"/>
+            </properties>
+          </component>
+          <component id="6920c" class="javax.swing.JButton" binding="zoomDefaultBtn">
+            <constraints/>
+            <properties>
+              <text value="Z0"/>
+            </properties>
+          </component>
+          <component id="3db2a" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </toolbar>
+      <component id="1f626" class="nl.peterbjornx.openlogiceda.gui.SignalTraceView" binding="signalView">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+    </children>
+  </grid>
+</form>

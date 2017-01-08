@@ -1,5 +1,6 @@
 package nl.peterbjornx.openlogiceda;
 
+import nl.peterbjornx.openlogiceda.gui.SignalTracePane;
 import nl.peterbjornx.openlogiceda.gui.SignalTraceView;
 import nl.peterbjornx.openlogiceda.lib.Clock;
 import nl.peterbjornx.openlogiceda.lib.CombinatorialComponent;
@@ -21,7 +22,7 @@ public class Main {
         Net b = new Net("b" );
         Net c = new Net("c" );
         Clock ca = new Clock("ca", 2000 );
-        Clock cb = new Clock("cb", 4000 );
+        Clock cb = new Clock("cb", 1123 );
         Probe pa = new Probe();
         Probe pb = new Probe();
         Probe pc = new Probe();
@@ -40,11 +41,11 @@ public class Main {
         for ( int i = 0; i < 50; i++ )
             sim.step();
         JFrame tf = new JFrame("Test");
-        SignalTraceView stf = new SignalTraceView();
+        SignalTracePane stf = new SignalTracePane();
         stf.addTrace(Color.RED, "A", pa.getHistory());
         stf.addTrace(Color.ORANGE, "B", pb.getHistory());
-        stf.addTrace(Color.YELLOW, "C", pc.getHistory());
-        tf.add(stf);
+        stf.addTrace(Color.YELLOW, "A & B ", pc.getHistory());
+        tf.add(stf.getMainPane());
         tf.setResizable(true);
         tf.setVisible(true);
     }

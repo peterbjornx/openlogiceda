@@ -29,16 +29,22 @@ import java.util.Queue;
 public class SignalHistory {
 
     private LinkedList<SignalChange> list = new LinkedList<>();
+    private long duration = 0;
 
 
     public SignalHistory(){}
 
     public void addChange(long timestamp, Value value ){
+        duration = Long.max( timestamp, duration );
         list.add(new SignalChange(timestamp, value));
     }
 
     public List<SignalChange> getHistory() {
         return list;
+    }
+
+    public long getDuration() {
+        return duration;
     }
 
     public class SignalChange {
