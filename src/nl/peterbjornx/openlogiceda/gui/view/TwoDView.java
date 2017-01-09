@@ -62,7 +62,7 @@ public abstract class TwoDView extends JPanel implements MouseListener, MouseMot
     /**
      * The viewport zoom
      */
-    private double viewportZoom = 1.0d;
+    protected double viewportZoom = 1.0d;
 
     /**
      * Are we dragging the viewport?
