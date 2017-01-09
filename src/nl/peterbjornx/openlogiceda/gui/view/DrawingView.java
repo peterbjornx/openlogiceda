@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.config.KeyBindings;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -33,23 +34,42 @@ public class DrawingView extends GridView {
     private Drawing drawing;
     protected int editMode = MODE_SELECT;
 
+    /**
+     * Whether multiple selection is enabled
+     */
+    private boolean selectMultiple = false;
+
     public DrawingView(Drawing drawing) {
         this.drawing = drawing;
         setViewSize( drawing.getWidth(), drawing.getHeight() );
     }
 
     @Override
-    protected void onMouseClick(int button, int x, int y) {
+    protected boolean onMouseClick(int button, int x, int y) {
+        if ( super.onMouseClick(button, x, y) )
+            return true;
         List<DrawingPart> parts = drawing.getParts(x,y);
         switch ( editMode ) {
             case MODE_SELECT:
                 if ( parts.isEmpty())
-                    return;
+                    return true;
                 if ( button == MouseEvent.BUTTON1 )
                     //TODO: Add disambiguation menu option
                     selectPart( parts.get(0) );
-                break;
+                return true;
         }
+        return false;
+    }
+
+    @Override
+    protected boolean onKeyDown(int kc) {
+        if ( super.onKeyDown( kc ))
+            return true;
+        if ( kc == KeyBindings.getDrawingSelectMultiple() ) {
+            selectMultiple = true;
+            return true;
+        }
+        return false;
     }
 
     public void addPart(DrawingPart part) {

@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 
+import nl.peterbjornx.openlogiceda.config.KeyBindings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,7 +29,8 @@ import java.awt.event.*;
  * Handles a moveable viewport and zoom.
  * @author Peter Bosch
  */
-public abstract class TwoDView extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
+public abstract class TwoDView extends JPanel implements MouseListener,
+        MouseMotionListener, MouseWheelListener,KeyListener {
 
     /**
      * The mouse button bound to drag.
@@ -82,11 +85,12 @@ public abstract class TwoDView extends JPanel implements MouseListener, MouseMot
     /**
      * Creates a new 2D view
      */
-    public TwoDView() {
+    protected TwoDView() {
         setDoubleBuffered( true );
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
+        addKeyListener(this);
         setViewSize(5000,5000);
     }
 
@@ -102,6 +106,83 @@ public abstract class TwoDView extends JPanel implements MouseListener, MouseMot
         viewportY = viewHeight/2;
     }
 
+    /**
+     * Called when the user presses a mouse button.
+     * @param button The button that was pressed
+     * @param x The x coordinate of the cursor in view coordinates
+     * @param y The y coordinate of the cursor in view coordinates
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onMouseDown(int button, int x, int y) {return false;}
+
+    /**
+     * Called when the user releases a mouse button.
+     * @param button The button that was releases
+     * @param x The x coordinate of the cursor in view coordinates
+     * @param y The y coordinate of the cursor in view coordinates
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onMouseUp(int button, int x, int y) {return false;}
+
+    /**
+     * Called when the user clicks a mouse button.
+     * @param button The button that was click
+     * @param x The x coordinate of the cursor in view coordinates
+     * @param y The y coordinate of the cursor in view coordinates
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onMouseClick(int button, int x, int y) {return false;}
+
+    /**
+     * Called when the user drags the mouse
+     * @param dx The difference of the x coordinate since the last event
+     * @param dy The difference of the y coordinate since the last event
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onMouseDrag(int dx, int dy) {return false;}
+
+    /**
+     * Called when the user moves the mouse
+     * @param x The x coordinate of the cursor in view coordinates
+     * @param y The y coordinate of the cursor in view coordinates
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onMouseMove(int x, int y) {return false;}
+
+    /**
+     * Called when the user presses a key
+     * @param kc The code of the key that was pressed
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onKeyDown( int kc ) {return false;}
+
+    /**
+     * Called when the user presses a key
+     * @param kc The code of the key that was pressed
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected boolean onKeyUp( int kc ) {return false;}
+
+    /**
+     * Called when the user types a character
+     * @param c The character that was typed
+     * @return Whether the event was handled
+     */
+    @SuppressWarnings({"UnusedParameters", "WeakerAccess"})
+    protected  boolean onKeyTyped( char c ) {return false;}
+
+    /**
+     * Paint the view
+     */
+    protected abstract void paintView();
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -115,44 +196,6 @@ public abstract class TwoDView extends JPanel implements MouseListener, MouseMot
         graphics.fillRect( 0, 0, viewWidth, viewHeight);
         paintView();
     }
-
-    /**
-     * Called when the user presses a mouse button.
-     * @param button The button that was pressed
-     * @param x The x coordinate of the cursor in view coordinates
-     * @param y The y coordinate of the cursor in view coordinates
-     */
-    protected void onMouseDown(int button, int x, int y) {}
-
-    /**
-     * Called when the user releases a mouse button.
-     * @param button The button that was releases
-     * @param x The x coordinate of the cursor in view coordinates
-     * @param y The y coordinate of the cursor in view coordinates
-     */
-    protected void onMouseUp(int button, int x, int y) {}
-
-    /**
-     * Called when the user clicks a mouse button.
-     * @param button The button that was click
-     * @param x The x coordinate of the cursor in view coordinates
-     * @param y The y coordinate of the cursor in view coordinates
-     */
-    protected void onMouseClick(int button, int x, int y) {}
-
-    /**
-     * Called when the user drags the mouse
-     * @param dx The difference of the x coordinate since the last event
-     * @param dy The difference of the y coordinate since the last event
-     */
-    protected void onMouseDrag(int dx, int dy) {}
-
-    /**
-     * Called when the user moves the mouse
-     * @param x The x coordinate of the cursor in view coordinates
-     * @param y The y coordinate of the cursor in view coordinates
-     */
-    protected void onMouseMove(int x, int y) {}
 
     private int screenToViewX( int x ) {
         int vpX = x - getWidth() / 2;
@@ -227,10 +270,20 @@ public abstract class TwoDView extends JPanel implements MouseListener, MouseMot
         repaint();
     }
 
-    /**
-     * Paint the view
-     */
-    protected abstract void paintView();
+    @Override
+    public void keyTyped(KeyEvent e) {
+        onKeyTyped( e.getKeyChar() );
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        onKeyDown( e.getKeyCode() );
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        onKeyUp( e.getKeyCode() );
+    }
 
     /**
      * Gets the background colour
