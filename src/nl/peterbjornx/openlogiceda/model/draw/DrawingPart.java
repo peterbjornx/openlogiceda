@@ -26,12 +26,12 @@ import java.awt.*;
 public abstract class DrawingPart {
 
     /**
-     * The x coordinate of the parts centre
+     * The x coordinate of the part
      */
     protected int x;
 
     /**
-     * The y coordinate of the parts centre
+     * The y coordinate of the part
      */
     protected int y;
 
@@ -59,42 +59,74 @@ public abstract class DrawingPart {
         return Math.abs(x) <= width/2 && Math.abs(y) <= height/2;
     }
 
+    /**
+     * Gets the center X coordinate of a part
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * Sets the center X coordinate of a part
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * Gets the center Y coordinate of a part
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * Sets the center Y coordinate of a part
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * Gets the parts width
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Sets the part's width
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * Gets the part's height
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Sets the part's height
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * Is this part selected?
+     */
     public boolean isSelected() {
         return selected;
     }
 
+    /**
+     * Renders the part
+     * @param g The graphics context used to render the part
+     * @param zoom The current zoom level
+     */
     public abstract void paintPart(Graphics2D g , double zoom);
 
 }
