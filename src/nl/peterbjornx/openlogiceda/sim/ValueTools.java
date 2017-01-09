@@ -32,7 +32,7 @@ public class ValueTools {
         return state ? Value.HIGH : Value.LOW;
     }
 
-    public static Value drivenCombinatorics(CombinatorialEquation eqn, Value... inputs ) {
+    public static Value drivenSequential(BooleanEquation eqn, Value... inputs ) {
         boolean[] bvalues = new boolean[ inputs.length ];
         for ( int i = 0; i < inputs.length; i++ ) {
             if ( !inputs[i].valid )

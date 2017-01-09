@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 /**
  * @author Peter Bosch
  */
-public interface CombinatorialEquation {
+public interface BooleanEquation {
 
     boolean compute( boolean... inputs );
 

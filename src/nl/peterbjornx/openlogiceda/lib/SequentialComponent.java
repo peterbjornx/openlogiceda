@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import nl.peterbjornx.openlogiceda.model.Component;
 import nl.peterbjornx.openlogiceda.model.Node;
 import nl.peterbjornx.openlogiceda.model.Value;
-import nl.peterbjornx.openlogiceda.sim.CombinatorialEquation;
+import nl.peterbjornx.openlogiceda.sim.BooleanEquation;
 import nl.peterbjornx.openlogiceda.sim.Process;
 import nl.peterbjornx.openlogiceda.sim.Simulator;
 import nl.peterbjornx.openlogiceda.sim.ValueTools;
@@ -29,8 +29,8 @@ import nl.peterbjornx.openlogiceda.util.SimulationException;
 /**
  * @author Peter Bosch
  */
-public class CombinatorialComponent extends Component {
-    private final CombinatorialEquation eqn;
+public class SequentialComponent extends Component {
+    private final BooleanEquation eqn;
     private final Node inputs[];
     private final Node output;
     private Process process;
@@ -41,7 +41,7 @@ public class CombinatorialComponent extends Component {
      *
      * @param name The name of the component
      */
-    public CombinatorialComponent(String name, int count, long delay, CombinatorialEquation eqn) {
+    public SequentialComponent(String name, int count, long delay, BooleanEquation eqn) {
         super(name);
         this.eqn = eqn;
         this.inputs = new Node[count];
@@ -60,7 +60,7 @@ public class CombinatorialComponent extends Component {
         Value[] vals = new Value[inputs.length];
         for ( int i = 0; i < inputs.length; i++ )
             vals[i] = inputs[i].getNet().getValue();
-        sim.setNode( output, ValueTools.drivenCombinatorics(eqn, vals), delay );
+        sim.setNode( output, ValueTools.drivenSequential(eqn, vals), delay );
     }
 
     public Node getInput(int i) {

@@ -2,9 +2,8 @@ package nl.peterbjornx.openlogiceda;
 
 import com.sun.java.swing.plaf.gtk.GTKLookAndFeel;
 import nl.peterbjornx.openlogiceda.gui.SignalTracePane;
-import nl.peterbjornx.openlogiceda.gui.SignalTraceView;
 import nl.peterbjornx.openlogiceda.lib.Clock;
-import nl.peterbjornx.openlogiceda.lib.CombinatorialComponent;
+import nl.peterbjornx.openlogiceda.lib.SequentialComponent;
 import nl.peterbjornx.openlogiceda.lib.Probe;
 import nl.peterbjornx.openlogiceda.model.Circuit;
 import nl.peterbjornx.openlogiceda.model.Net;
@@ -30,7 +29,7 @@ public class Main {
         test.connectNode(a, pa.getInput() );
         test.connectNode(b, pb.getInput() );
         test.connectNode(c, pc.getInput() );
-        CombinatorialComponent comp = new CombinatorialComponent("and1", 2, 200,
+        SequentialComponent comp = new SequentialComponent("and1", 2, 200,
                 (v)-> (v[0] & v[1]));
         test.connectNode(a, comp.getInput(0));
         test.connectNode(b, comp.getInput(1));
