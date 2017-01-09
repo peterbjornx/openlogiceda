@@ -1,4 +1,4 @@
-package nl.peterbjornx.openlogiceda;
+package nl.peterbjornx.openlogiceda.test;
 
 import com.sun.java.swing.plaf.gtk.GTKLookAndFeel;
 import nl.peterbjornx.openlogiceda.gui.SignalTracePane;
@@ -14,7 +14,7 @@ import nl.peterbjornx.openlogiceda.util.SimulationException;
 import javax.swing.*;
 import java.awt.*;
 
-public class Main {
+public class SimTest {
 
     public static void main(String[] args) throws ModificationException, SimulationException {
         Circuit test = new Circuit("root");
