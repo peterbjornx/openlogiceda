@@ -76,8 +76,10 @@ public class DrawTest {
         public TestPart( int x, int y ){
             this.x = x;
             this.y = y;
-            this.width = 600;
-            this.height = 600;
+            this.leftExtent = 100;
+            this.rightExtent = 100;
+            this.topExtent = 100;
+            this.bottomExtent = 100;
         }
 
         @Override
@@ -87,7 +89,7 @@ public class DrawTest {
             else
                 g.setColor(Color.blue);
             g.setStroke(new BasicStroke((float) (3/zoom)));
-            g.drawRect(-width/2,-height/2,width,height);
+            g.drawRect(-leftExtent, -topExtent, rightExtent + leftExtent, bottomExtent +topExtent);
         }
     }
 }

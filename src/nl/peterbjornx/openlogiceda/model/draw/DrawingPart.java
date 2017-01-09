@@ -36,14 +36,24 @@ public abstract class DrawingPart {
     protected int y;
 
     /**
-     * The width of the part
+     * The size of the part to the left of the center
      */
-    protected int width;
+    protected int leftExtent;
 
     /**
-     * The height of the part
+     * The size of the part to the right of the center
      */
-    protected int height;
+    protected int rightExtent;
+
+    /**
+     * The size of the part above the center
+     */
+    protected int topExtent;
+
+    /**
+     * The size of the part below the center
+     */
+    protected int bottomExtent;
 
     /**
      * Whether this part was selected
@@ -56,7 +66,7 @@ public abstract class DrawingPart {
     public boolean contains(int x, int y ) {
         x -= this.x;
         y -= this.y;
-        return Math.abs(x) <= width/2 && Math.abs(y) <= height/2;
+        return x > -leftExtent && x < rightExtent && y > -topExtent && y < bottomExtent;
     }
 
     /**
@@ -91,28 +101,98 @@ public abstract class DrawingPart {
      * Gets the parts width
      */
     public int getWidth() {
-        return width;
-    }
-
-    /**
-     * Sets the part's width
-     */
-    public void setWidth(int width) {
-        this.width = width;
+        return leftExtent + rightExtent;
     }
 
     /**
      * Gets the part's height
      */
     public int getHeight() {
-        return height;
+        return topExtent + bottomExtent;
     }
 
     /**
-     * Sets the part's height
+     * Gets the leftmost coordinate in the part
      */
-    public void setHeight(int height) {
-        this.height = height;
+    public int getLeft() {
+        return x - leftExtent;
+    }
+
+    /**
+     * Gets the rightmost coordinate in the part
+     */
+    public int getRight() {
+        return x + rightExtent;
+    }
+
+    /**
+     * Gets the topmost coordinate in the part
+     */
+    public int getTop() {
+        return y - topExtent;
+    }
+
+    /**
+     * Gets the bottommost coordinate in the part
+     */
+    public int getBottom() {
+        return y + bottomExtent;
+    }
+
+    /**
+     * Gets the size of the part to the left of the center
+     */
+    public int getLeftExtent() {
+        return leftExtent;
+    }
+
+    /**
+     * Sets the size of the part to the left of the center
+     */
+    public void setLeftExtent(int leftExtent) {
+        this.leftExtent = leftExtent;
+    }
+
+    /**
+     * Gets the size of the part to the right of the center
+     */
+    public int getRightExtent() {
+        return rightExtent;
+    }
+
+    /**
+     * Sets the size of the part to the right of the center
+     */
+    public void setRightExtent(int rightExtent) {
+        this.rightExtent = rightExtent;
+    }
+
+    /**
+     * Gets the size of the part above the center
+     */
+    public int getTopExtent() {
+        return topExtent;
+    }
+
+    /**
+     * Sets the size of the part above the center
+     */
+    public void setTopExtent(int topExtent) {
+        this.topExtent = topExtent;
+    }
+
+    /**
+     * Gets the size of the part below the center
+     */
+    public int getBottomExtent() {
+        return bottomExtent;
+    }
+
+    /**
+     * Sets the size of the part below the center
+     */
+    public void setBottomExtent(int bottomExtent) {
+        this.bottomExtent = bottomExtent;
     }
 
     /**
@@ -120,6 +200,13 @@ public abstract class DrawingPart {
      */
     public boolean isSelected() {
         return selected;
+    }
+
+    /**
+     * Indicate whether or not this part is selected
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     /**

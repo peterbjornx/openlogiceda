@@ -55,7 +55,7 @@ public class Drawing {
      */
     public void selectPart( DrawingPart part ) {
         selectedParts.add(part);
-        part.selected = true;
+        part.setSelected(true);
     }
 
     /**
@@ -63,7 +63,7 @@ public class Drawing {
      */
     public void unselectPart(DrawingPart part ) {
         selectedParts.remove(part);
-        part.selected = false;
+        part.setSelected(false);
     }
 
     /**
