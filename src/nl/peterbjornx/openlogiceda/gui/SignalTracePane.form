@@ -35,26 +35,37 @@
           </grid>
         </constraints>
         <properties>
+          <borderPainted value="true"/>
           <floatable value="false"/>
+          <rollover value="true"/>
         </properties>
+        <clientProperties>
+          <JToolBar.isRollover class="java.lang.Boolean" value="true"/>
+        </clientProperties>
         <border type="none"/>
         <children>
           <component id="a0ad0" class="javax.swing.JButton" binding="zoomInBtn">
             <constraints/>
             <properties>
-              <text value="Z+"/>
+              <borderPainted value="true"/>
+              <contentAreaFilled value="true"/>
+              <hideActionText value="false"/>
+              <icon value="zoom-in.png"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="b1fed" class="javax.swing.JButton" binding="zoomOutBtn">
             <constraints/>
             <properties>
-              <text value="Z-"/>
+              <icon value="zoom-out.png"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="6920c" class="javax.swing.JButton" binding="zoomDefaultBtn">
             <constraints/>
             <properties>
-              <text value="Z0"/>
+              <icon value="zoom-original.png"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="3db2a" class="javax.swing.JToolBar$Separator">

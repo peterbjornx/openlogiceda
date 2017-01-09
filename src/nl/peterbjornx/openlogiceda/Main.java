@@ -1,5 +1,6 @@
 package nl.peterbjornx.openlogiceda;
 
+import com.sun.java.swing.plaf.gtk.GTKLookAndFeel;
 import nl.peterbjornx.openlogiceda.gui.SignalTracePane;
 import nl.peterbjornx.openlogiceda.gui.SignalTraceView;
 import nl.peterbjornx.openlogiceda.lib.Clock;
@@ -40,6 +41,11 @@ public class Main {
         sim.start(test);
         for ( int i = 0; i < 50; i++ )
             sim.step();
+        try {
+            UIManager.setLookAndFeel(new GTKLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         JFrame tf = new JFrame("Test");
         SignalTracePane stf = new SignalTracePane();
         stf.addTrace(Color.RED, "A", pa.getHistory());
