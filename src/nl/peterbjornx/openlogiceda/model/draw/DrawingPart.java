@@ -56,7 +56,7 @@ public abstract class DrawingPart {
     public boolean contains(int x, int y ) {
         x -= this.x;
         y -= this.y;
-        return Math.abs(x) <= width && Math.abs(y) <= height;
+        return Math.abs(x) <= width/2 && Math.abs(y) <= height/2;
     }
 
     public int getX() {

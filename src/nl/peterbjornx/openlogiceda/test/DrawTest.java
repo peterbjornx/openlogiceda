@@ -18,7 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
-import nl.peterbjornx.openlogiceda.gui.view.GridView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -59,14 +58,16 @@ public class DrawTest {
         }
 
         @Override
-        protected void onMouseClick(int button, int x, int y) {
-            super.onMouseClick(button, x, y);
+        protected boolean onMouseClick(int button, int x, int y) {
+            if (super.onMouseClick(button, x, y))
+                return true;
             switch( editMode ) {
                 case MODE_ADD:
                     editMode = MODE_SELECT;
                     addPart(new TestPart(x,y));
-                    break;
+                    return true;
             }
+            return false;
         }
     }
 

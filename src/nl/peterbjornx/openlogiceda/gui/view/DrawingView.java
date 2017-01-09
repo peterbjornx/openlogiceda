@@ -51,8 +51,11 @@ public class DrawingView extends GridView {
         List<DrawingPart> parts = drawing.getParts(x,y);
         switch ( editMode ) {
             case MODE_SELECT:
-                if ( parts.isEmpty())
+                if ( parts.isEmpty()) {
+                    if ( !selectMultiple )
+                        clearSelection();
                     return true;
+                }
                 if ( button == MouseEvent.BUTTON1 )
                     //TODO: Add disambiguation menu option
                     selectPart( parts.get(0) );
@@ -72,12 +75,25 @@ public class DrawingView extends GridView {
         return false;
     }
 
+    @Override
+    protected boolean onKeyUp(int kc) {
+        if ( super.onKeyUp( kc ))
+            return true;
+        if ( kc == KeyBindings.getDrawingSelectMultiple() ) {
+            selectMultiple = false;
+            return true;
+        }
+        return false;
+    }
+
     public void addPart(DrawingPart part) {
         drawing.addPart(part);
         repaint();
     }
 
     public void selectPart(DrawingPart part) {
+        if (!selectMultiple)
+            clearSelection();
         drawing.selectPart(part);
         repaint();
     }
@@ -109,6 +125,14 @@ public class DrawingView extends GridView {
             p.translate(d.getX(),d.getY());
             d.paintPart(p,viewportZoom);
         }
+    }
+
+    public boolean isSelectMultiple() {
+        return selectMultiple;
+    }
+
+    public void setSelectMultiple(boolean selectMultiple) {
+        this.selectMultiple = selectMultiple;
     }
 
     /**
