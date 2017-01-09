@@ -1,4 +1,4 @@
-package nl.peterbjornx.openlogiceda.gui;/*
+package nl.peterbjornx.openlogiceda.gui.view;/*
 Part of OpenLogicEDA
 Copyright (C) 2017 Peter Bosch
 
