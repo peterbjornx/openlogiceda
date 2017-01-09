@@ -18,11 +18,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
+import nl.peterbjornx.openlogiceda.gui.view.event.EditModeListener;
+import nl.peterbjornx.openlogiceda.gui.view.event.PartSelectionListener;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -30,8 +33,29 @@ import java.util.List;
  */
 public class DrawingView extends GridView {
 
+    /**
+     * The listeners for edit mode changes
+     */
+    private List<EditModeListener> editModeListeners = new LinkedList<>();
+
+    /**
+     * The listeners for selection changes
+     */
+    private List<PartSelectionListener> selectionListeners = new LinkedList<>();
+
+    /**
+     * ID for the selection mode, this is the default mode
+     */
     public static final int MODE_SELECT = 0;
+
+    /**
+     * The drawing we are viewing/editing
+     */
     private Drawing drawing;
+
+    /**
+     * The selected edit mode
+     */
     protected int editMode = MODE_SELECT;
 
     /**
@@ -39,6 +63,10 @@ public class DrawingView extends GridView {
      */
     private boolean selectMultiple = false;
 
+    /**
+     * Creates a new drawing view
+     * @param drawing The drawing to view/edit
+     */
     public DrawingView(Drawing drawing) {
         this.drawing = drawing;
         setViewSize( drawing.getWidth(), drawing.getHeight() );
@@ -86,32 +114,53 @@ public class DrawingView extends GridView {
         return false;
     }
 
+    /**
+     * Add a part
+     */
     public void addPart(DrawingPart part) {
         drawing.addPart(part);
         repaint();
     }
 
+    /**
+     * Selects a part
+     */
     public void selectPart(DrawingPart part) {
         if (!selectMultiple)
             clearSelection();
         drawing.selectPart(part);
         repaint();
+        fireSelectionListener();
     }
 
+    /**
+     * Unselects a part
+     */
     public void unselectPart(DrawingPart part) {
         drawing.unselectPart(part);
         repaint();
+        fireSelectionListener();
     }
 
+    /**
+     * Clear selection
+     */
     public void clearSelection() {
         drawing.clearSelection();
         repaint();
+        fireSelectionListener();
     }
 
+    /**
+     * Gets the parts at the given coordinate
+     */
     public List<DrawingPart> getParts(int x, int y) {
         return drawing.getParts(x, y);
     }
 
+    /**
+     * Gets the parts in the drawing
+     */
     public List<DrawingPart> getParts() {
         return drawing.getParts();
     }
@@ -127,12 +176,52 @@ public class DrawingView extends GridView {
         }
     }
 
-    public boolean isSelectMultiple() {
+    /**
+     * Call the selection change listeners
+     */
+    private void fireSelectionListener() {
+        for ( PartSelectionListener list : selectionListeners )
+            list.onSelectionChanged( this );
+    }
+
+    /**
+     * Call the edit mode change listeners
+     */
+    private void fireEditModeListener() {
+        for ( EditModeListener list : editModeListeners )
+            list.onEditModeChanged( this );
+    }
+
+    /**
+     * Gets whether or not we are currently selecting multiple objects.
+     * If we are not, selectPart will unselect any previously
+     * selected parts.
+     */
+    public boolean getSelectMultiple() {
         return selectMultiple;
     }
 
+    /**
+     * Sets whether or not we are currently selecting multiple objects.
+     * If we are not, selectPart will unselect any previously
+     * selected parts.
+     */
     public void setSelectMultiple(boolean selectMultiple) {
         this.selectMultiple = selectMultiple;
+    }
+
+    /**
+     * Registers a listener for changes to the edit mode
+     */
+    public void addEditModeListener(EditModeListener editModeListener) {
+        editModeListeners.add(editModeListener);
+    }
+
+    /**
+     * Registers a listener for changes to the selected part list
+     */
+    public void addPartSelectionListener(PartSelectionListener selectionListener) {
+        selectionListeners.add(selectionListener);
     }
 
     /**
@@ -147,5 +236,6 @@ public class DrawingView extends GridView {
      */
     public void setEditMode(int editMode) {
         this.editMode = editMode;
+        fireEditModeListener();
     }
 }
