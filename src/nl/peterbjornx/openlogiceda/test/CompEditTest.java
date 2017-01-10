@@ -28,5 +28,6 @@ public class CompEditTest {
         tf.add(ed.getMainPane());
         tf.setResizable(true);
         tf.setVisible(true);
+        ed.postInit();
     }
 }

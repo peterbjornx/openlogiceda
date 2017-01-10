@@ -72,6 +72,13 @@ public class DrawingView extends GridView {
         setViewSize( drawing.getWidth(), drawing.getHeight() );
     }
 
+    /**
+     * Get the parts that were selected
+     */
+    public List<DrawingPart> getSelectedParts() {
+        return drawing.getSelectedParts();
+    }
+
     @Override
     protected boolean onMouseClick(int button, int x, int y) {
         if ( super.onMouseClick(button, x, y) )
@@ -164,6 +171,10 @@ public class DrawingView extends GridView {
     public List<DrawingPart> getParts() {
         return drawing.getParts();
     }
+
+    /**
+     *
+     */
 
     @Override
     protected void paintView() {

@@ -111,6 +111,7 @@ public abstract class TwoDView extends JPanel implements MouseListener,
         addMouseMotionListener(this);
         addMouseWheelListener(this);
         addKeyListener(this);
+        setFocusable(true);
         setViewSize(5000,5000);
     }
 

@@ -28,6 +28,9 @@ public class KeyBindings {
      * The key code for selecting multiple items
      */
     private static int drawingSelectMultiple = KeyEvent.VK_SHIFT;
+    private static int componentModePin = KeyEvent.VK_P;
+    private static int componentModeSelect = KeyEvent.VK_ESCAPE;
+    private static int componentRotate = KeyEvent.VK_R;
 
     public static int getDrawingSelectMultiple() {
         return drawingSelectMultiple;
@@ -35,5 +38,17 @@ public class KeyBindings {
 
     public static void setDrawingSelectMultiple(int drawingSelectMultiple) {
         KeyBindings.drawingSelectMultiple = drawingSelectMultiple;
+    }
+
+    public static int getComponentModePin() {
+        return componentModePin;
+    }
+
+    public static int getComponentModeSelect() {
+        return componentModeSelect;
+    }
+
+    public static int getComponentRotate() {
+        return componentRotate;
     }
 }

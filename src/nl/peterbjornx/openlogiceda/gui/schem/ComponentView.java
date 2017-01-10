@@ -17,12 +17,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.config.KeyBindings;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
+import nl.peterbjornx.openlogiceda.model.schem.CompSymbolPart;
 import nl.peterbjornx.openlogiceda.model.schem.PinPart;
+import nl.peterbjornx.openlogiceda.model.schem.Rotation;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 /**
  * @author Peter Bosch
@@ -42,13 +47,28 @@ public class ComponentView extends DrawingView {
 
     @Override
     protected boolean onKeyDown(int kc) {
-        if (!super.onKeyDown(kc))
+        if (super.onKeyDown(kc))
             return true;
-        switch( kc ){
-            case 's':
-            case 'p':
+        if ( kc == KeyBindings.getComponentModeSelect()) {
+            setEditMode(MODE_SELECT);
+            return true;
+        } else if ( kc == KeyBindings.getComponentModePin()) {
+            setEditMode(MODE_PIN);
+            return true;
+        } else if ( kc == KeyBindings.getComponentRotate()) {
+            rotate();
+            return true;
         }
         return false;
+    }
+
+    private void rotate() {
+        List<DrawingPart> parts = getSelectedParts();
+        for ( DrawingPart _p : parts ){
+            CompSymbolPart p = (CompSymbolPart) _p;
+            p.setOrientation(Rotation.getNext(p.getOrientation()));
+        }
+        repaint();
     }
 
     @Override
@@ -57,7 +77,7 @@ public class ComponentView extends DrawingView {
             return true;
         switch( editMode ) {
             case MODE_PIN:
-                editMode = MODE_SELECT;
+                setEditMode(MODE_SELECT);
                 addPart(new PinPart("none",x,y));
                 return true;
         }

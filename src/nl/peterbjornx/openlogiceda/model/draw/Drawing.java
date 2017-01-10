@@ -92,6 +92,13 @@ public class Drawing {
         return parts;
     }
 
+    /**
+     * Get the parts that were selected
+     */
+    public List<DrawingPart> getSelectedParts() {
+        return selectedParts;
+    }
+
 
     public int getWidth() {
         return width;

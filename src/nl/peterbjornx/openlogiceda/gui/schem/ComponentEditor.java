@@ -99,4 +99,8 @@ public class ComponentEditor {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
+
+    public void postInit() {
+        componentView.requestFocusInWindow();
+    }
 }

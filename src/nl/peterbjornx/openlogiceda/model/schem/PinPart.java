@@ -40,9 +40,10 @@ public class PinPart extends CompSymbolPart{
      */
     private String name;
 
-    private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 40);
+    private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 160);
     private static Color pinColour = Color.BLACK;
     private static Color selectedPinColour = Color.GREEN;
+    private FontMetrics labelFontMetrics;
 
     public PinPart(String name, int x, int y) {
         this.name = name;
@@ -52,30 +53,34 @@ public class PinPart extends CompSymbolPart{
     }
 
     private void updateSize() {
+        if (labelFontMetrics == null ) {
+            Canvas c = new Canvas();
+            labelFontMetrics = c.getFontMetrics(labelFont);
+        }
         switch (orientation) {
             case EAST:
                 rightExtent = PIN_LENGTH;
                 topExtent = PIN_SPACING;
                 bottomExtent = PIN_SPACING;
-                leftExtent = labelFont.getSize() * name.length();
+                leftExtent = labelFontMetrics.stringWidth(name);
                 break;
             case WEST:
                 leftExtent = PIN_LENGTH;
                 topExtent = PIN_SPACING;
                 bottomExtent = PIN_SPACING;
-                rightExtent = labelFont.getSize() * name.length();
+                rightExtent = labelFontMetrics.stringWidth(name);
                 break;
             case NORTH:
                 topExtent = PIN_LENGTH;
                 rightExtent = PIN_SPACING;
                 leftExtent = PIN_SPACING;
-                bottomExtent = labelFont.getSize() * name.length();
+                bottomExtent = labelFontMetrics.stringWidth(name);
                 break;
             case SOUTH:
                 bottomExtent = PIN_LENGTH;
                 rightExtent = PIN_SPACING;
                 leftExtent = PIN_SPACING;
-                topExtent = labelFont.getSize() * name.length();
+                topExtent = labelFontMetrics.stringWidth(name);
                 break;
         }
 
@@ -94,17 +99,12 @@ public class PinPart extends CompSymbolPart{
     public void paintPart(Graphics2D g, double zoom) {
         g.setStroke(new BasicStroke((float) (3/zoom)));
         g.setFont(labelFont);
-        switch( orientation ) {
-            case EAST:
-                if (selected)
-                    g.setColor(selectedPinColour);
-                else
-                    g.setColor(pinColour);
-                g.drawLine(0,0,PIN_LENGTH,0);
-                g.drawString(name, -leftExtent, labelFont.getSize()/4);
-                break;
-        }
-
+        g.setColor(pinColour);
+        if (selected)
+            g.drawRect(-leftExtent,-topExtent,leftExtent+rightExtent,topExtent+bottomExtent);
+        g.rotate(orientation.getAngle());
+        g.drawLine(0,0,PIN_LENGTH,0);
+        g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
     }
 
 }

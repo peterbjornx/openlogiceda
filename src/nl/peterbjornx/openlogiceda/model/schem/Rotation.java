@@ -22,8 +22,34 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Peter Bosch
  */
 public enum Rotation {
-    NORTH ,
-    EAST,
-    SOUTH,
-    WEST
+    NORTH(-Math.PI/2),
+    EAST(0),
+    SOUTH(-(3*Math.PI)/2),
+    WEST(-Math.PI);
+
+
+    private final double angle;
+    private Rotation next;
+
+    Rotation(double v) {
+        angle = v;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
+    public static Rotation getNext(Rotation r) {
+        switch(r){
+            case NORTH:
+                return EAST;
+            case EAST:
+                return SOUTH;
+            case SOUTH:
+                return WEST;
+            case WEST:
+                return NORTH;
+        }
+        throw new RuntimeException("impossible");
+    }
 }
