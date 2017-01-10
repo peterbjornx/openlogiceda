@@ -235,12 +235,14 @@ public abstract class TwoDView extends JPanel implements MouseListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        requestFocusInWindow();
         if ( e.getButton() != DRAG_BUTTON )
             onMouseClick( e.getButton(), screenToViewX(e.getX()), screenToViewY(e.getY()) );
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        requestFocusInWindow();
         dragStartX = e.getX();
         dragStartY = e.getY();
         if ( e.getButton() == DRAG_BUTTON )
@@ -260,7 +262,9 @@ public abstract class TwoDView extends JPanel implements MouseListener,
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+        requestFocusInWindow();
+    }
 
     @Override
     public void mouseExited(MouseEvent e) {}
