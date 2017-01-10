@@ -83,7 +83,9 @@ public class DrawingView extends GridView {
     protected boolean onMouseClick(int button, int x, int y) {
         if ( super.onMouseClick(button, x, y) )
             return true;
-        List<DrawingPart> parts = drawing.getParts(x,y);
+        int rx = roundToGrid(x);
+        int ry = roundToGrid(y);
+        List<DrawingPart> parts = drawing.getParts(rx,ry);
         switch ( editMode ) {
             case MODE_SELECT:
                 if ( parts.isEmpty()) {

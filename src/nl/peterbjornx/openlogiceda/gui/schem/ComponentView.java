@@ -75,10 +75,12 @@ public class ComponentView extends DrawingView {
     protected boolean onMouseClick(int button, int x, int y) {
         if (super.onMouseClick(button, x, y))
             return true;
+        int rx = roundToGrid(x);
+        int ry = roundToGrid(y);
         switch( editMode ) {
             case MODE_PIN:
                 setEditMode(MODE_SELECT);
-                addPart(new PinPart("none",x,y));
+                addPart(new PinPart("none",rx,ry));
                 return true;
         }
         return false;
