@@ -67,10 +67,16 @@ public class ComponentView extends DrawingView {
         } else if ( kc == KeyBindings.getComponentRotate()) {
             rotate();
             return true;
+        } else if ( kc == KeyBindings.getComponentMove()) {
+            move();
+            return true;
         }
         return false;
     }
 
+    /**
+     * Initiates the rotate action
+     */
     private void rotate() {
         List<DrawingPart> parts = getSelectedParts();
         for ( DrawingPart _p : parts ){
@@ -80,15 +86,23 @@ public class ComponentView extends DrawingView {
         repaint();
     }
 
+    /**
+     * Initiates the move action
+     */
+    private void move() {
+        editState = STATE_MOVE;
+        repaint();
+    }
+
     @Override
     protected boolean onMouseClick(int button, int x, int y) {
-        if (super.onMouseClick(button, x, y))
-            return true;
         int rx = roundToGrid(x);
         int ry = roundToGrid(y);
         if ( editState == STATE_ADD || editState == STATE_MOVE ) {
             editState = STATE_NORMAL;
         } else if ( editState == STATE_NORMAL ) {
+            if (super.onMouseClick(button, x, y))
+                return true;
             switch (editMode) {
                 case MODE_PIN:
                     editState = STATE_PREADD;
@@ -122,11 +136,17 @@ public class ComponentView extends DrawingView {
         return false;
     }
 
+    /**
+     * Called when a property dialog cancels
+     */
     public void onDialogCancel() {
         if ( editState == STATE_PREADD )
             editState = STATE_NORMAL;
     }
 
+    /**
+     * Called when the property dialog for a pin completes
+     */
     public void onPinDialog(String name, Rotation orientation) {
         PinPart p;
         if ( editState == STATE_PREADD ) {

@@ -42,9 +42,17 @@ public class PinPart extends CompSymbolPart{
      */
     private String name;
 
+    /**
+     * The font used to render the label
+     */
     private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 160);
+
+    /**
+     * The colour of the pin
+     */
     private static Color pinColour = Color.BLACK;
-    private static Color selectedPinColour = Color.GREEN;
+
+
     private FontMetrics labelFontMetrics;
 
     public PinPart(String name, int x, int y) {
@@ -109,10 +117,16 @@ public class PinPart extends CompSymbolPart{
         g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
     }
 
+    /**
+     * Gets the name of the pin
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name of the pin
+     */
     public void setName(String name) {
         this.name = name;
         updateSize();
