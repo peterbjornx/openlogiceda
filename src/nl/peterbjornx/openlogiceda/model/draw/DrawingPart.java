@@ -66,7 +66,7 @@ public abstract class DrawingPart {
     public boolean contains(int x, int y ) {
         x -= this.x;
         y -= this.y;
-        return x > -leftExtent && x < rightExtent && y > -topExtent && y < bottomExtent;
+        return x >= -leftExtent && x <= rightExtent && y >= -topExtent && y <= bottomExtent;
     }
 
     /**

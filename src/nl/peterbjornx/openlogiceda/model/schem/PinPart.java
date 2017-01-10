@@ -109,4 +109,12 @@ public class PinPart extends CompSymbolPart{
         g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        updateSize();
+    }
 }

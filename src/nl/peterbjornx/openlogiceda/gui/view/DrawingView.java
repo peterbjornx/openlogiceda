@@ -161,6 +161,15 @@ public class DrawingView extends GridView {
     }
 
     /**
+     * Deletes all parts in the selection
+     */
+    public void deleteSelection() {
+        drawing.deleteSelection();
+        repaint();
+        fireSelectionListener();
+    }
+
+    /**
      * Gets the parts at the given coordinate
      */
     public List<DrawingPart> getParts(int x, int y) {
@@ -173,10 +182,6 @@ public class DrawingView extends GridView {
     public List<DrawingPart> getParts() {
         return drawing.getParts();
     }
-
-    /**
-     *
-     */
 
     @Override
     protected void paintView() {

@@ -51,6 +51,13 @@ public class Drawing {
     }
 
     /**
+     * Delete a part
+     */
+    public void deletePart(DrawingPart part) {
+        parts.remove( part );
+    }
+
+    /**
      * Selects a part
      */
     public void selectPart( DrawingPart part ) {
@@ -72,6 +79,18 @@ public class Drawing {
     public void clearSelection() {
         while ( !selectedParts.isEmpty() )
             unselectPart(selectedParts.get(0));
+    }
+
+    /**
+     * Deletes all parts in the selection
+     */
+    public void deleteSelection() {
+        while ( !selectedParts.isEmpty() ) {
+            DrawingPart d = selectedParts.get(0);
+            unselectPart(d);
+            deletePart(d);
+        }
+
     }
 
     /**

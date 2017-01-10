@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.PinDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
@@ -29,6 +30,8 @@ import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import static nl.peterbjornx.openlogiceda.gui.schem.ComponentView.EditState.*;
+
 /**
  * @author Peter Bosch
  */
@@ -37,12 +40,18 @@ public class ComponentView extends DrawingView {
     public final static int MODE_RECT = 2;
     public final static int MODE_LINE = 3;
     public final static int MODE_LABEL = 4;
-
+    private EditState editState = STATE_NORMAL;
     /**
      * Creates a new drawing view
      */
     public ComponentView() {
         super(new SchematicComponent("testing"));
+        addEditModeListener(c->{
+            if ( editState == STATE_ADD ) {
+                deleteSelection();
+            }
+            editState = STATE_NORMAL;
+        });
     }
 
     @Override
@@ -77,12 +86,65 @@ public class ComponentView extends DrawingView {
             return true;
         int rx = roundToGrid(x);
         int ry = roundToGrid(y);
-        switch( editMode ) {
-            case MODE_PIN:
-                setEditMode(MODE_SELECT);
-                addPart(new PinPart("none",rx,ry));
-                return true;
+        if ( editState == STATE_ADD || editState == STATE_MOVE ) {
+            editState = STATE_NORMAL;
+        } else if ( editState == STATE_NORMAL ) {
+            switch (editMode) {
+                case MODE_PIN:
+                    editState = STATE_PREADD;
+                    PinDialog.showDialog(this, null);
+                    return true;
+            }
         }
         return false;
+    }
+
+    @Override
+    protected boolean onMouseMove(int x, int y) {
+        if (super.onMouseMove(x, y))
+            return true;
+        if ( editState == STATE_ADD || editState == STATE_MOVE ) {
+            List<DrawingPart> parts = getSelectedParts();
+            for (DrawingPart _p : parts ){
+                _p.setX( roundToGrid(x) );
+                _p.setY( roundToGrid(y) );
+            }
+            repaint();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean onMouseDown(int button, int x, int y) {
+        if (super.onMouseDown(button, x, y))
+            return true;
+        return false;
+    }
+
+    public void onDialogCancel() {
+        if ( editState == STATE_PREADD )
+            editState = STATE_NORMAL;
+    }
+
+    public void onPinDialog(String name, Rotation orientation) {
+        PinPart p;
+        if ( editState == STATE_PREADD ) {
+            p = new PinPart("", 0, 0);
+            addPart(p);
+            selectPart(p);
+        } else
+            p = (PinPart) getSelectedParts().get(0);
+        p.setOrientation(orientation);
+        p.setName(name);
+        if ( editState == STATE_PREADD )
+            editState = STATE_ADD;
+    }
+
+    public enum EditState {
+        STATE_NORMAL,
+        STATE_MOVE,
+        STATE_PREADD,
+        STATE_ADD
     }
 }
