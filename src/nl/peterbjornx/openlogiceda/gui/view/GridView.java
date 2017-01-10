@@ -39,6 +39,9 @@ public class GridView extends TwoDView {
      * The spacing of the grid dots
      */
     private int gridSpacing = 400;
+    private int lastMouseX;
+    private int lastMouseY;
+    private Color cursorColour = Color.BLACK;
 
     /**
      * Draws a grid point
@@ -48,15 +51,43 @@ public class GridView extends TwoDView {
         graphics.fillRect( x - gridRadius, y - gridRadius, gridRadius * 2, gridRadius * 2 );
     }
 
-    private int roundToGrid( int c ) {
+    private int roundDownToGrid(int c ) {
         return ( c / gridSpacing ) * gridSpacing;
+    }
+
+    protected int roundToGrid( int c ) {
+        return ((c + gridSpacing/2) / gridSpacing) * gridSpacing;
     }
 
     @Override
     protected void paintView() {
-        for ( int x = roundToGrid(viewportLeft); x <= roundToGrid(viewportRight); x+=gridSpacing )
-            for ( int y = roundToGrid(viewportTop); y <= roundToGrid(viewportBottom); y+=gridSpacing )
-                drawGridPoint( roundToGrid(x), roundToGrid(y) );
+        for (int x = roundDownToGrid(viewportLeft); x <= roundDownToGrid(viewportRight); x+=gridSpacing )
+            for (int y = roundDownToGrid(viewportTop); y <= roundDownToGrid(viewportBottom); y+=gridSpacing )
+                drawGridPoint( roundDownToGrid(x), roundDownToGrid(y) );
+        drawCursor();
+    }
+
+    private void drawCursor() {
+        graphics.setColor(cursorColour);
+        int size = (int) (10/viewportZoom);
+        graphics.drawLine(lastMouseX - size, lastMouseY, lastMouseX + size, lastMouseY);
+        graphics.drawLine(lastMouseX, lastMouseY - size, lastMouseX, lastMouseY + size);
+    }
+
+    /**
+     * Called when the user moves the mouse
+     *
+     * @param x The x coordinate of the cursor in view coordinates
+     * @param y The y coordinate of the cursor in view coordinates
+     * @return Whether the event was handled
+     */
+    @Override
+    protected boolean onMouseMove(int x, int y) {
+        boolean s = super.onMouseMove(x,y);
+        lastMouseX = roundToGrid(x);
+        lastMouseY = roundToGrid(y);
+        repaint();
+        return s;
     }
 
     /**
