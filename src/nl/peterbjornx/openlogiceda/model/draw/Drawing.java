@@ -35,9 +35,20 @@ public class Drawing {
      * The list of selected parts
      */
     private List<DrawingPart> selectedParts = new LinkedList<>();
+
+    /**
+     * The width of this drawing
+     */
     private int width;
+
+    /**
+     * The height of this drawing
+     */
     private int height;
 
+    /**
+     * Creates a new drawing of the given size
+     */
     public Drawing( int width, int height ){
         this.width = width;
         this.height = height;
@@ -118,11 +129,16 @@ public class Drawing {
         return selectedParts;
     }
 
-
+    /**
+     * Gets the width of this drawing
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets the height of this drawing
+     */
     public int getHeight() {
         return height;
     }

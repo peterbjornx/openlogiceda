@@ -23,7 +23,10 @@ import nl.peterbjornx.openlogiceda.gui.view.event.PartSelectionListener;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
@@ -94,8 +97,7 @@ public class DrawingView extends GridView {
                     return true;
                 }
                 if ( button == MouseEvent.BUTTON1 )
-                    //TODO: Add disambiguation menu option
-                    selectPart( parts.get(0) );
+                    disambiguationMenu(parts);
                 return true;
         }
         return false;
@@ -121,6 +123,17 @@ public class DrawingView extends GridView {
             return true;
         }
         return false;
+    }
+
+    protected void disambiguationMenu(List<DrawingPart> parts) {
+        JPopupMenu menu = new JPopupMenu();
+        for (DrawingPart p : parts) {
+            JMenuItem it = new JMenuItem(p.toString());
+            it.addActionListener(e -> selectPart(p));
+            menu.add(it);
+        }
+        Point mouse = getMousePosition();
+        menu.show(this,mouse.x,mouse.y);
     }
 
     /**
