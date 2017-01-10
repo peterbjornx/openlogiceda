@@ -36,7 +36,10 @@ public class TimeUtil {
         String ms = Long.toString(time);
         String ts = ms;
         if ( ms.length() < 3 && dot != 0)
-            ts += "." +ds.substring(0, Integer.max(0, 3 - ms.length()));
+            ts += "." +ds.substring(0,
+                    Integer.min(ds.length(),
+                    Integer.max(0, 3 - ms.length()))
+            );
         return ts + SI_TIME[div];
     }
 

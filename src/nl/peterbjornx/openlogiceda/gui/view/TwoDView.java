@@ -53,6 +53,26 @@ public abstract class TwoDView extends JPanel implements MouseListener,
     protected int viewHeight = 5000;
 
     /**
+     * The left border of the viewport in view coordinates
+     */
+    protected int viewportLeft = 5000;
+
+    /**
+     * The right border of the viewport in view coordinates
+     */
+    protected int viewportRight = 5000;
+
+    /**
+     * The top border of the viewport in view coordinates
+     */
+    protected int viewportTop = 5000;
+
+    /**
+     * The bottom border of the viewport in view coordinates
+     */
+    protected int viewportBottom = 5000;
+
+    /**
      * The viewport center X
      */
     private double viewportX = 0.0d;
@@ -191,6 +211,11 @@ public abstract class TwoDView extends JPanel implements MouseListener,
         graphics.translate(getWidth()/2, getHeight()/2);
         graphics.scale(viewportZoom, viewportZoom);
         graphics.translate(-viewportX, -viewportY);
+
+        viewportLeft = Integer.max(0,screenToViewX(0));
+        viewportTop = Integer.max(0,screenToViewY(0));
+        viewportRight = Integer.min(viewWidth,screenToViewX( getWidth() ));
+        viewportBottom = Integer.min(viewHeight,screenToViewY( getHeight() ));
 
         graphics.setColor( backgroundColour );
         graphics.fillRect( 0, 0, viewWidth, viewHeight);

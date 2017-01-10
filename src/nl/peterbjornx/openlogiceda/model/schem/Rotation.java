@@ -1,4 +1,4 @@
-package nl.peterbjornx.openlogiceda.gui.schem;/*
+package nl.peterbjornx.openlogiceda.model.schem;/*
 Part of OpenLogicEDA
 Copyright (C) 2017 Peter Bosch
 
@@ -17,17 +17,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import javax.swing.*;
-
 /**
+ * Represents the orientation of a part on a schematic
  * @author Peter Bosch
  */
-public class SchematicEditor {
-    private JPanel mainPane;
-    private SchematicView schematicView;
-    private JButton button1;
-    private JButton button2;
-    private JToggleButton selectModeBtn;
-    private JToggleButton addModeBtn;
-
+public enum Rotation {
+    NORTH ,
+    EAST,
+    SOUTH,
+    WEST
 }

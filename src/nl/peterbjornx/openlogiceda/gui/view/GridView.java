@@ -38,7 +38,7 @@ public class GridView extends TwoDView {
     /**
      * The spacing of the grid dots
      */
-    private int gridSpacing = 100;
+    private int gridSpacing = 400;
 
     /**
      * Draws a grid point
@@ -48,11 +48,15 @@ public class GridView extends TwoDView {
         graphics.fillRect( x - gridRadius, y - gridRadius, gridRadius * 2, gridRadius * 2 );
     }
 
+    private int roundToGrid( int c ) {
+        return ( c / gridSpacing ) * gridSpacing;
+    }
+
     @Override
     protected void paintView() {
-        for ( int x = 0; x < viewWidth; x+=gridSpacing )
-            for ( int y = 0; y < viewHeight; y+=gridSpacing )
-                drawGridPoint(x,y);
+        for ( int x = roundToGrid(viewportLeft); x <= roundToGrid(viewportRight); x+=gridSpacing )
+            for ( int y = roundToGrid(viewportTop); y <= roundToGrid(viewportBottom); y+=gridSpacing )
+                drawGridPoint( roundToGrid(x), roundToGrid(y) );
     }
 
     /**

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="nl.peterbjornx.openlogiceda.gui.SignalTracePane">
-  <grid id="27dc6" binding="mainPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainPane" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="500" height="420"/>
@@ -10,7 +10,7 @@
     <children>
       <component id="ca640" class="javax.swing.JScrollBar" binding="horizontalScrollBar" default-binding="true">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <orientation value="0"/>
@@ -18,7 +18,7 @@
       </component>
       <component id="74f90" class="javax.swing.JScrollBar" binding="verticalScrollBar">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <enabled value="true"/>
@@ -30,7 +30,7 @@
       </component>
       <toolbar id="c0e5b">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="20"/>
           </grid>
         </constraints>
@@ -50,21 +50,21 @@
               <borderPainted value="true"/>
               <contentAreaFilled value="true"/>
               <hideActionText value="false"/>
-              <icon value="zoom-in.png"/>
+              <icon value="res/zoom-in.png"/>
               <text value=""/>
             </properties>
           </component>
           <component id="b1fed" class="javax.swing.JButton" binding="zoomOutBtn">
             <constraints/>
             <properties>
-              <icon value="zoom-out.png"/>
+              <icon value="res/zoom-out.png"/>
               <text value=""/>
             </properties>
           </component>
           <component id="6920c" class="javax.swing.JButton" binding="zoomDefaultBtn">
             <constraints/>
             <properties>
-              <icon value="zoom-original.png"/>
+              <icon value="res/zoom-original.png"/>
               <text value=""/>
             </properties>
           </component>
@@ -76,10 +76,20 @@
       </toolbar>
       <component id="1f626" class="nl.peterbjornx.openlogiceda.gui.SignalTraceView" binding="signalView">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
+      <hspacer id="573fd">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="e05ee">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

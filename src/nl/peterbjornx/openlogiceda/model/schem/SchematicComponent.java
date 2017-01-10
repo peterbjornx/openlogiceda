@@ -1,4 +1,4 @@
-package nl.peterbjornx.openlogiceda.gui.schem;/*
+package nl.peterbjornx.openlogiceda.model.schem;/*
 Part of OpenLogicEDA
 Copyright (C) 2017 Peter Bosch
 
@@ -17,17 +17,25 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import javax.swing.*;
+import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 
 /**
+ * Represents a component in the schematic
  * @author Peter Bosch
  */
-public class SchematicEditor {
-    private JPanel mainPane;
-    private SchematicView schematicView;
-    private JButton button1;
-    private JButton button2;
-    private JToggleButton selectModeBtn;
-    private JToggleButton addModeBtn;
+public class SchematicComponent extends Drawing {
 
+    /**
+     * This component's name
+     */
+    private String name;
+
+    /**
+     * Creates a new component
+     * @param name The name of the component
+     */
+    public SchematicComponent( String name ) {
+        super(10000,10000);
+        this.name = name;
+    }
 }

@@ -17,8 +17,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
+import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+
 /**
  * @author Peter Bosch
  */
-public class SchematicView {
+public class SchematicView extends DrawingView {
+    /**
+     * Creates a new drawing view
+     */
+    public SchematicView() {
+        super(new Drawing(5000,5000));
+    }
 }

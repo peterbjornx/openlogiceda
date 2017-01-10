@@ -17,17 +17,23 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import javax.swing.*;
+import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
+import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 /**
  * @author Peter Bosch
  */
-public class SchematicEditor {
-    private JPanel mainPane;
-    private SchematicView schematicView;
-    private JButton button1;
-    private JButton button2;
-    private JToggleButton selectModeBtn;
-    private JToggleButton addModeBtn;
+public class ComponentView extends DrawingView {
+    public final static int MODE_PIN = 1;
+    public final static int MODE_RECT = 2;
+    public final static int MODE_LINE = 3;
+    public final static int MODE_LABEL = 4;
 
+    /**
+     * Creates a new drawing view
+     */
+    public ComponentView() {
+        super(new SchematicComponent("testing"));
+    }
 }
