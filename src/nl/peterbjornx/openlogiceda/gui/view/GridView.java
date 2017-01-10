@@ -31,23 +31,45 @@ public class GridView extends TwoDView {
     private Color gridColour = Color.BLACK;
 
     /**
+     * The colour used to render the cursor
+     */
+    private Color cursorColour = Color.BLACK;
+
+    /**
+     * Whether or not to use a screen filling cursor
+     */
+    private boolean longCursor = true;
+
+    /**
      * The radius of the grid dots
      */
-    private int gridRadius = 10;
+    private float gridRadius = 2.0f;
+
+    /**
+     * The width of the cursor lines
+     */
+    private float cursorWidth = 2.0f;
 
     /**
      * The spacing of the grid dots
      */
     private int gridSpacing = 200;
+
+    /**
+     * The last detected X coordinate of the mouse in view coordinates
+     */
     private int lastMouseX;
+
+    /**
+     * The last detected Y coordinate of the mouse in view coordinates
+     */
     private int lastMouseY;
-    private Color cursorColour = Color.BLACK;
 
     /**
      * Draws a grid point
      */
     private void drawGridPoint( int x, int y ){
-        graphics.setStroke(2,true);
+        graphics.setStroke(gridRadius,true);
         graphics.setColor(gridColour);
         graphics.drawLine(x,y,x,y);
     }
@@ -69,11 +91,18 @@ public class GridView extends TwoDView {
     }
 
     private void drawCursor() {
-        graphics.setColor(cursorColour);
-        int size = (int) (10/viewportZoom);
-        graphics.setStroke(1,true);
-        graphics.drawLine(lastMouseX - size, lastMouseY, lastMouseX + size, lastMouseY);
-        graphics.drawLine(lastMouseX, lastMouseY - size, lastMouseX, lastMouseY + size);
+        graphics.setColor(getBackgroundColour());
+        graphics.setXORMode(cursorColour);
+        graphics.setStroke(cursorWidth,false);
+        if ( longCursor ) {
+            graphics.drawLine(viewportLeft, lastMouseY, viewportRight, lastMouseY);
+            graphics.drawLine(lastMouseX, viewportTop, lastMouseX, viewportBottom);
+        } else {
+            int size = (int) (10 / viewportZoom);
+            graphics.drawLine(lastMouseX - size, lastMouseY, lastMouseX + size, lastMouseY);
+            graphics.drawLine(lastMouseX, lastMouseY - size, lastMouseX, lastMouseY + size);
+        }
+        graphics.setPaintMode();
     }
 
     /**
