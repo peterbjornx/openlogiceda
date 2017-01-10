@@ -19,7 +19,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+import nl.peterbjornx.openlogiceda.model.schem.PinPart;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
+
+import java.awt.event.KeyEvent;
 
 /**
  * @author Peter Bosch
@@ -35,5 +38,29 @@ public class ComponentView extends DrawingView {
      */
     public ComponentView() {
         super(new SchematicComponent("testing"));
+    }
+
+    @Override
+    protected boolean onKeyDown(int kc) {
+        if (!super.onKeyDown(kc))
+            return true;
+        switch( kc ){
+            case 's':
+            case 'p':
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean onMouseClick(int button, int x, int y) {
+        if (super.onMouseClick(button, x, y))
+            return true;
+        switch( editMode ) {
+            case MODE_PIN:
+                editMode = MODE_SELECT;
+                addPart(new PinPart("none",x,y));
+                return true;
+        }
+        return false;
     }
 }

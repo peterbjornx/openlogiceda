@@ -44,8 +44,11 @@ public class PinPart extends CompSymbolPart{
     private static Color pinColour = Color.BLACK;
     private static Color selectedPinColour = Color.GREEN;
 
-    public PinPart(String name) {
+    public PinPart(String name, int x, int y) {
         this.name = name;
+        this.x = x;
+        this.y = y;
+        updateSize();
     }
 
     private void updateSize() {
@@ -97,7 +100,7 @@ public class PinPart extends CompSymbolPart{
                     g.setColor(selectedPinColour);
                 else
                     g.setColor(pinColour);
-                g.drawLine(0,0,0,PIN_LENGTH);
+                g.drawLine(0,0,PIN_LENGTH,0);
                 g.drawString(name, -leftExtent, labelFont.getSize()/4);
                 break;
         }
