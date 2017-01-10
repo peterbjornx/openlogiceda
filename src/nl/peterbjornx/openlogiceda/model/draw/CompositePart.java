@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
+
 import java.awt.*;
 
 /**
@@ -54,10 +56,10 @@ public class CompositePart extends DrawingPart {
     }
 
     @Override
-    public void paintPart(Graphics2D g, double zoom) {
+    public void paintPart(TwoDGraphics g, double zoom) {
         java.util.List<DrawingPart> parts = subDrawing.getParts();
         for ( DrawingPart d : parts ){
-            Graphics2D p = (Graphics2D) g.create();
+            TwoDGraphics p = g.create();
             p.translate(d.getX(),d.getY());
             d.paintPart(p, zoom);
         }

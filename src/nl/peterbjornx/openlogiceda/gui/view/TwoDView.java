@@ -95,7 +95,7 @@ public abstract class TwoDView extends JPanel implements MouseListener,
     /**
      * The graphics object used to draw the contents
      */
-    protected Graphics2D graphics;
+    protected TwoDGraphics graphics;
 
     /**
      * The origin of mouse drag
@@ -207,7 +207,7 @@ public abstract class TwoDView extends JPanel implements MouseListener,
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        graphics = ((Graphics2D) g.create());
+        Graphics2D graphics = ((Graphics2D) g.create());
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.translate(getWidth()/2, getHeight()/2);
         graphics.scale(viewportZoom, viewportZoom);
@@ -220,6 +220,9 @@ public abstract class TwoDView extends JPanel implements MouseListener,
 
         graphics.setColor( backgroundColour );
         graphics.fillRect( 0, 0, viewWidth, viewHeight);
+
+        this.graphics = new TwoDGraphics(this,graphics);
+
         paintView();
     }
 

@@ -181,7 +181,7 @@ public class DrawingView extends GridView {
         super.paintView();
         List<DrawingPart> parts = drawing.getParts();
         for ( DrawingPart d : parts ){
-            Graphics2D p = (Graphics2D) graphics.create();
+            TwoDGraphics p = graphics.create();
             p.translate(d.getX(),d.getY());
             d.paintPart(p,viewportZoom);
         }

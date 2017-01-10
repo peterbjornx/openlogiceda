@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import java.awt.*;
+import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 
 /**
  * Represents a part of a drawing, such as a component or a label
@@ -214,6 +214,6 @@ public abstract class DrawingPart {
      * @param g The graphics context used to render the part
      * @param zoom The current zoom level
      */
-    public abstract void paintPart(Graphics2D g , double zoom);
+    public abstract void paintPart(TwoDGraphics g , double zoom);
 
 }

@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
+import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -83,12 +84,12 @@ public class DrawTest {
         }
 
         @Override
-        public void paintPart(Graphics2D g, double zoom) {
+        public void paintPart(TwoDGraphics g, double zoom) {
             if ( selected )
                 g.setColor(Color.magenta);
             else
                 g.setColor(Color.blue);
-            g.setStroke(new BasicStroke((float) (3/zoom)));
+            g.setStroke(3,true);
             g.drawRect(-leftExtent, -topExtent, rightExtent + leftExtent, bottomExtent +topExtent);
         }
     }

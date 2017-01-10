@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
+
 import java.awt.*;
 
 /**
@@ -96,8 +98,8 @@ public class PinPart extends CompSymbolPart{
     }
 
     @Override
-    public void paintPart(Graphics2D g, double zoom) {
-        g.setStroke(new BasicStroke((float) (3/zoom)));
+    public void paintPart(TwoDGraphics g, double zoom) {
+        g.setStroke(3,false);
         g.setFont(labelFont);
         g.setColor(pinColour);
         if (selected)

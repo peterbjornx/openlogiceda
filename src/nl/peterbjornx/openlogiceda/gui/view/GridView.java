@@ -38,7 +38,7 @@ public class GridView extends TwoDView {
     /**
      * The spacing of the grid dots
      */
-    private int gridSpacing = 400;
+    private int gridSpacing = 200;
     private int lastMouseX;
     private int lastMouseY;
     private Color cursorColour = Color.BLACK;
@@ -47,8 +47,9 @@ public class GridView extends TwoDView {
      * Draws a grid point
      */
     private void drawGridPoint( int x, int y ){
-        graphics.setColor( gridColour );
-        graphics.fillRect( x - gridRadius, y - gridRadius, gridRadius * 2, gridRadius * 2 );
+        graphics.setStroke(2,true);
+        graphics.setColor(gridColour);
+        graphics.drawLine(x,y,x,y);
     }
 
     private int roundDownToGrid(int c ) {
@@ -70,6 +71,7 @@ public class GridView extends TwoDView {
     private void drawCursor() {
         graphics.setColor(cursorColour);
         int size = (int) (10/viewportZoom);
+        graphics.setStroke(1,true);
         graphics.drawLine(lastMouseX - size, lastMouseY, lastMouseX + size, lastMouseY);
         graphics.drawLine(lastMouseX, lastMouseY - size, lastMouseX, lastMouseY + size);
     }
