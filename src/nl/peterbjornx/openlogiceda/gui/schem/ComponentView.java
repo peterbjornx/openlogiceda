@@ -146,13 +146,15 @@ public class ComponentView extends DrawingView {
 
     @Override
     protected boolean onMouseMove(int x, int y) {
+        int oldX = cursorX;//TODO: Make this better
+        int oldY = cursorY;
         if (super.onMouseMove(x, y))
             return true;
         if ( editState == STATE_ADD || editState == STATE_MOVE ) {
             List<DrawingPart> parts = getSelectedParts();
             for (DrawingPart _p : parts ){
-                _p.setX( roundToGrid(x) );
-                _p.setY( roundToGrid(y) );
+                _p.setX( roundToGrid(x) - oldX + _p.getX() );
+                _p.setY( roundToGrid(y) - oldY + _p.getY() );
             }
             repaint();
             return true;
@@ -181,7 +183,7 @@ public class ComponentView extends DrawingView {
     public void onPinDialog(String name, Rotation orientation) {
         PinPart p;
         if ( editState == STATE_PREADD ) {
-            p = new PinPart("", 0, 0);
+            p = new PinPart("", cursorX, cursorY);
             addPart(p);
             selectPart(p);
         } else
