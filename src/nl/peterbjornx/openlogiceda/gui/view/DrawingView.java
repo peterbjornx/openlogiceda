@@ -86,21 +86,53 @@ public class DrawingView extends GridView {
     protected boolean onMouseClick(int button, int x, int y) {
         if ( super.onMouseClick(button, x, y) )
             return true;
-        int rx = roundToGrid(x);
-        int ry = roundToGrid(y);
-        List<DrawingPart> parts = drawing.getParts(rx,ry);
         switch ( editMode ) {
             case MODE_SELECT:
-                if ( parts.isEmpty()) {
-                    if ( !selectMultiple )
-                        clearSelection();
-                    return true;
-                }
-                if ( button == MouseEvent.BUTTON1 )
-                    disambiguationMenu(parts);
+                select(null);
+                repaint();
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Executes the select action
+     */
+    protected boolean select(JMenu disambiguation) {
+        List<DrawingPart> parts = drawing.getParts(cursorX,cursorY);
+        if ( parts.isEmpty()) {
+            if ( !selectMultiple ) {
+                clearSelection();
+                return true;
+            }
+            return false;
+        }
+        if ( parts.size() > 1 )
+            disambiguationMenu(disambiguation, parts);
+        else
+            selectPart(parts.get(0));
+        return true;
+    }
+
+    /**
+     * Shows a menu to select a part
+     */
+    protected void disambiguationMenu(JMenu parent,List<DrawingPart> parts) {
+        JPopupMenu menu = null;
+        if ( parent == null )
+            menu = new JPopupMenu();
+        for (DrawingPart p : parts) {
+            JMenuItem it = new JMenuItem(p.toString());
+            it.addActionListener(e -> selectPart(p));
+            if ( parent == null )
+                menu.add(it);
+            else
+                parent.add(it);
+        }
+        if ( parent == null ) {
+            Point mouse = getMousePosition();
+            menu.show(this, mouse.x, mouse.y);
+        }
     }
 
     @Override
@@ -123,17 +155,6 @@ public class DrawingView extends GridView {
             return true;
         }
         return false;
-    }
-
-    protected void disambiguationMenu(List<DrawingPart> parts) {
-        JPopupMenu menu = new JPopupMenu();
-        for (DrawingPart p : parts) {
-            JMenuItem it = new JMenuItem(p.toString());
-            it.addActionListener(e -> selectPart(p));
-            menu.add(it);
-        }
-        Point mouse = getMousePosition();
-        menu.show(this,mouse.x,mouse.y);
     }
 
     /**

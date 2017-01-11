@@ -58,12 +58,12 @@ public class GridView extends TwoDView {
     /**
      * The last detected X coordinate of the mouse in view coordinates
      */
-    private int lastMouseX;
+    protected int cursorX;
 
     /**
      * The last detected Y coordinate of the mouse in view coordinates
      */
-    private int lastMouseY;
+    protected int cursorY;
 
     /**
      * Draws a grid point
@@ -95,12 +95,12 @@ public class GridView extends TwoDView {
         graphics.setXORMode(cursorColour);
         graphics.setStroke(cursorWidth,false);
         if ( longCursor ) {
-            graphics.drawLine(viewportLeft, lastMouseY, viewportRight, lastMouseY);
-            graphics.drawLine(lastMouseX, viewportTop, lastMouseX, viewportBottom);
+            graphics.drawLine(viewportLeft, cursorY, viewportRight, cursorY);
+            graphics.drawLine(cursorX, viewportTop, cursorX, viewportBottom);
         } else {
             int size = (int) (10 / viewportZoom);
-            graphics.drawLine(lastMouseX - size, lastMouseY, lastMouseX + size, lastMouseY);
-            graphics.drawLine(lastMouseX, lastMouseY - size, lastMouseX, lastMouseY + size);
+            graphics.drawLine(cursorX - size, cursorY, cursorX + size, cursorY);
+            graphics.drawLine(cursorX, cursorY - size, cursorX, cursorY + size);
         }
         graphics.setPaintMode();
     }
@@ -115,8 +115,23 @@ public class GridView extends TwoDView {
     @Override
     protected boolean onMouseMove(int x, int y) {
         boolean s = super.onMouseMove(x,y);
-        lastMouseX = roundToGrid(x);
-        lastMouseY = roundToGrid(y);
+        cursorX = roundToGrid(x);
+        cursorY = roundToGrid(y);
+        repaint();
+        return s;
+    }
+
+    /**
+     * Called when the user drags the mouse
+     * @param dx The difference of the x coordinate since the last event
+     * @param dy The difference of the y coordinate since the last event
+     * @return Whether the event was handled
+     */
+    @Override
+    protected boolean onMouseDrag(int dx, int dy) {
+        boolean s = super.onMouseDrag(dx,dy);
+        cursorX += dx;
+        cursorY += dy;
         repaint();
         return s;
     }
