@@ -28,6 +28,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ import java.util.List;
  */
 public class DrawingView extends GridView {
 
+    private static final int CONTEXT_BUTTON = MouseEvent.BUTTON3;
     /**
      * The listeners for edit mode changes
      */
@@ -79,13 +81,17 @@ public class DrawingView extends GridView {
      * Get the parts that were selected
      */
     public List<DrawingPart> getSelectedParts() {
-        return drawing.getSelectedParts();
+        return Collections.unmodifiableList(drawing.getSelectedParts());
     }
 
     @Override
     protected boolean onMouseClick(int button, int x, int y) {
-        if ( super.onMouseClick(button, x, y) )
+        if (super.onMouseClick(button, x, y))
             return true;
+        if (button == CONTEXT_BUTTON){
+            contextMenu();
+            return true;
+        }
         switch ( editMode ) {
             case MODE_SELECT:
                 select(null);
@@ -93,6 +99,11 @@ public class DrawingView extends GridView {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    protected boolean onMouseDown(int button, int x, int y) {
+        return super.onMouseDown(button, x, y) || button == CONTEXT_BUTTON;
     }
 
     /**
@@ -166,6 +177,23 @@ public class DrawingView extends GridView {
             menu.show(this, mouse.x, mouse.y);
         }
     }
+
+    /**
+     * Shows the context menu
+     */
+    private void contextMenu() {
+        JPopupMenu menu = new JPopupMenu();
+        buildContextMenu(menu);
+        menu.addSeparator();
+        menu.add("Close");
+        Point mouse = getMousePosition();
+        menu.show(this, mouse.x, mouse.y);
+    }
+
+    /**
+     * Override this to add popup menu actions
+     */
+    protected void buildContextMenu(JPopupMenu menu){};
 
     @Override
     protected boolean onKeyDown(int kc) {

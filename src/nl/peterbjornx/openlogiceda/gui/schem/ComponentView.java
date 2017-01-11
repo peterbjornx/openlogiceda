@@ -18,7 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
-import nl.peterbjornx.openlogiceda.gui.schem.dialog.PinDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
@@ -27,7 +26,8 @@ import nl.peterbjornx.openlogiceda.model.schem.PinPart;
 import nl.peterbjornx.openlogiceda.model.schem.Rotation;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
-import java.awt.event.KeyEvent;
+import javax.swing.*;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -147,6 +147,118 @@ public class ComponentView extends DrawingView {
             editState = STATE_ADD;
             repaint();
         }, true);
+    }
+
+    @Override
+    protected void buildContextMenu(JPopupMenu menu) {
+        if (editMode != MODE_SELECT) {
+            menu.add("End mode").addActionListener(e -> setEditMode(MODE_SELECT));
+            menu.addSeparator();
+        }
+        List<DrawingPart> parts = getSelectedParts();
+        if ( parts.size() <= 1 )
+            parts = getParts(cursorX, cursorY);
+        if ( parts.size() == 1 )
+            buildPartMenu((CompSymbolPart) parts.get(0),menu);
+        else if ( parts.size() > 1 ) {
+            for (DrawingPart p : parts){
+                JMenu submenu = new JMenu(p.toString());
+                menu.add(submenu);
+                buildPartMenu((CompSymbolPart) p,submenu);
+            }
+            menu.addSeparator();
+            buildBlockMenu(parts,menu);
+        }
+        super.buildContextMenu(menu);
+    }
+
+    private void buildPartMenu(CompSymbolPart part, JComponent menu) {
+        JMenuItem item = new JMenuItem("Move");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentMove(),0));
+        item.addActionListener(e->{
+            setSelectMultiple(false);
+            selectPart(part);
+            move();
+        });
+        menu.add(item);
+        item = new JMenuItem("Rotate");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentRotate(),0));
+        item.addActionListener(e->{
+            setSelectMultiple(false);
+            selectPart(part);
+            rotate();
+        });
+        menu.add(item);
+        item = new JMenuItem("Copy");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentCopy(),0));
+        item.addActionListener(e->{
+            setSelectMultiple(false);
+            selectPart(part);
+            copy();
+        });
+        menu.add(item);
+        item = new JMenuItem("Edit");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentEdit(),0));
+        item.addActionListener(e->{
+            setSelectMultiple(false);
+            selectPart(part);
+            edit();
+        });
+        menu.add(item);
+        item = new JMenuItem("Delete");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentDelete(),0));
+        item.addActionListener(e->{
+            setSelectMultiple(false);
+            selectPart(part);
+            delete();
+        });
+        menu.add(item);
+    }
+
+    private void buildBlockMenu(List<DrawingPart> parts, JComponent menu) {
+        JMenuItem item = new JMenuItem("Move");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentMove(),0));
+        List<DrawingPart> newParts = new LinkedList<>();
+        for (DrawingPart p : parts)
+            newParts.add(p);
+        item.addActionListener(e->{
+            clearSelection();
+            setSelectMultiple(true);
+            selectParts(newParts);
+            move();
+            setSelectMultiple(false);
+        });
+        menu.add(item);
+        item = new JMenuItem("Rotate");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentRotate(),0));
+        item.addActionListener(e->{
+            clearSelection();
+            setSelectMultiple(true);
+            selectParts(newParts);
+            rotate();
+            setSelectMultiple(false);
+        });
+        menu.add(item);
+        item = new JMenuItem("Copy");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentCopy(),0));
+        item.addActionListener(e->{
+            clearSelection();
+            setSelectMultiple(true);
+            selectParts(newParts);
+            copy();
+            setSelectMultiple(false);
+        });
+        menu.add(item);
+        item = new JMenuItem("Delete");
+        item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentDelete(),0));
+        item.addActionListener(e->{
+            clearSelection();
+            setSelectMultiple(true);
+            selectParts(newParts);
+            delete();
+            setSelectMultiple(false);
+        });
+        menu.add(item);
     }
 
     @Override
