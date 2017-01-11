@@ -74,6 +74,9 @@ public class ComponentView extends DrawingView {
         } else if ( kc == KeyBindings.getComponentEdit()) {
             edit();
             return true;
+        } else if ( kc == KeyBindings.getComponentDelete()) {
+            delete();
+            return true;
         }
         return false;
     }
@@ -96,6 +99,19 @@ public class ComponentView extends DrawingView {
             for ( DrawingPart _p : parts ){
                 CompSymbolPart p = (CompSymbolPart) _p;
                 p.setOrientation(Rotation.getNext(p.getOrientation()));
+                repaint();
+            }
+        }, true);
+    }
+
+    /**
+     * Initiates the delete action
+     */
+    private void delete() {
+        doAction(null, parts -> {
+            for ( DrawingPart _p : parts ){
+                CompSymbolPart p = (CompSymbolPart) _p;
+                deleteSelection();
                 repaint();
             }
         }, true);

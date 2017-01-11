@@ -34,6 +34,7 @@ public class KeyBindings {
     private static int componentMove = KeyEvent.VK_M;
     private static int componentCopy = KeyEvent.VK_C;
     private static int componentEdit = KeyEvent.VK_E;
+    private static int componentDelete = KeyEvent.VK_D;
 
     public static int getDrawingSelectMultiple() {
         return drawingSelectMultiple;
@@ -65,5 +66,9 @@ public class KeyBindings {
 
     public static int getComponentEdit() {
         return componentEdit;
+    }
+
+    public static int getComponentDelete() {
+        return componentDelete;
     }
 }
