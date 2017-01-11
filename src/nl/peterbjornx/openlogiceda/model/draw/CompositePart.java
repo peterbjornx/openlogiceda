@@ -64,4 +64,12 @@ public class CompositePart extends DrawingPart {
             d.paintPart(p, zoom);
         }
     }
+
+    /**
+     * Creates a copy of this part
+     */
+    @Override
+    public DrawingPart copy() {
+        return new CompositePart(subDrawing);
+    }
 }

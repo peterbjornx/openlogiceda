@@ -92,5 +92,13 @@ public class DrawTest {
             g.setStroke(3,true);
             g.drawRect(-leftExtent, -topExtent, rightExtent + leftExtent, bottomExtent +topExtent);
         }
+
+        /**
+         * Creates a copy of this part
+         */
+        @Override
+        public DrawingPart copy() {
+            return null;
+        }
     }
 }

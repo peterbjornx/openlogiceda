@@ -32,6 +32,7 @@ public class KeyBindings {
     private static int componentModeSelect = KeyEvent.VK_ESCAPE;
     private static int componentRotate = KeyEvent.VK_R;
     private static int componentMove = KeyEvent.VK_M;
+    private static int componentCopy = KeyEvent.VK_C;
 
     public static int getDrawingSelectMultiple() {
         return drawingSelectMultiple;
@@ -55,5 +56,9 @@ public class KeyBindings {
 
     public static int getComponentMove() {
         return componentMove;
+    }
+
+    public static int getComponentCopy() {
+        return componentCopy;
     }
 }

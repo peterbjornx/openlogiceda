@@ -204,6 +204,14 @@ public class DrawingView extends GridView {
     }
 
     /**
+     * Select the parts
+     */
+    public void selectParts(List<DrawingPart> list) {
+        drawing.selectParts(list);
+        repaint();
+    }
+
+    /**
      * Gets the parts at the given coordinate
      */
     public List<DrawingPart> getParts(int x, int y) {

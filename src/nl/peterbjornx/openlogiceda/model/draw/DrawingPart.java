@@ -216,4 +216,8 @@ public abstract class DrawingPart {
      */
     public abstract void paintPart(TwoDGraphics g , double zoom);
 
+    /**
+     * Creates a copy of this part
+     */
+    public abstract DrawingPart copy();
 }

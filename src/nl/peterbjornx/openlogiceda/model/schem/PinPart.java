@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
+import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 import java.awt.*;
 
@@ -38,11 +39,6 @@ public class PinPart extends CompSymbolPart{
     private static final int PIN_SPACING = 40;
 
     /**
-     * The name of the pin
-     */
-    private String name;
-
-    /**
      * The font used to render the label
      */
     private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 160);
@@ -51,6 +47,11 @@ public class PinPart extends CompSymbolPart{
      * The colour of the pin
      */
     private static Color pinColour = Color.BLACK;
+
+    /**
+     * The name of the pin
+     */
+    private String name;
 
 
     private FontMetrics labelFontMetrics;
@@ -115,6 +116,17 @@ public class PinPart extends CompSymbolPart{
         g.rotate(orientation.getAngle());
         g.drawLine(0,0,PIN_LENGTH,0);
         g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
+    }
+
+    /**
+     * Creates and returns a copy of this object
+     */
+    @Override
+    public DrawingPart copy() {
+        PinPart p = new PinPart(name,x,y);
+        p.orientation = orientation;
+        p.updateSize();
+        return p;
     }
 
     /**

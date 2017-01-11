@@ -28,6 +28,7 @@ import nl.peterbjornx.openlogiceda.model.schem.Rotation;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 import java.util.List;
 
 import static nl.peterbjornx.openlogiceda.gui.schem.ComponentView.EditState.*;
@@ -70,6 +71,9 @@ public class ComponentView extends DrawingView {
         } else if ( kc == KeyBindings.getComponentMove()) {
             move();
             return true;
+        } else if ( kc == KeyBindings.getComponentCopy()) {
+            copy();
+            return true;
         }
         return false;
     }
@@ -79,6 +83,10 @@ public class ComponentView extends DrawingView {
      */
     private void rotate() {
         List<DrawingPart> parts = getSelectedParts();
+        if ( parts.size() == 0 ) {
+            select(null);
+            parts = getSelectedParts();
+        }
         for ( DrawingPart _p : parts ){
             CompSymbolPart p = (CompSymbolPart) _p;
             p.setOrientation(Rotation.getNext(p.getOrientation()));
@@ -90,14 +98,37 @@ public class ComponentView extends DrawingView {
      * Initiates the move action
      */
     private void move() {
+        List<DrawingPart> parts = getSelectedParts();
+        if ( parts.size() == 0 ) {
+            select(null);
+        }
         editState = STATE_MOVE;
+        repaint();
+    }
+
+    /**
+     * Initiates the move action
+     */
+    private void copy() {
+        List<DrawingPart> list = new LinkedList<>();
+        List<DrawingPart> orig = getSelectedParts();
+        if ( orig.size() == 0 ) {
+            select(null);
+            orig = getSelectedParts();
+        }
+        for ( DrawingPart p : orig ) {
+            DrawingPart c = p.copy();
+            addPart(c);
+            list.add(c);
+        }
+        clearSelection();
+        selectParts(list);
+        editState = STATE_ADD;
         repaint();
     }
 
     @Override
     protected boolean onMouseClick(int button, int x, int y) {
-        int rx = roundToGrid(x);
-        int ry = roundToGrid(y);
         if ( editState == STATE_ADD || editState == STATE_MOVE ) {
             editState = STATE_NORMAL;
         } else if ( editState == STATE_NORMAL ) {

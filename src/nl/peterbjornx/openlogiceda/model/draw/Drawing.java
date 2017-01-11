@@ -142,4 +142,12 @@ public class Drawing {
     public int getHeight() {
         return height;
     }
+
+    /**
+     * Select the parts
+     */
+    public void selectParts(List<DrawingPart> list) {
+        for ( DrawingPart part : list )
+            selectPart(part);
+    }
 }
