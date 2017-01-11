@@ -71,57 +71,66 @@ public class ComponentView extends DrawingView {
         } else if ( kc == KeyBindings.getComponentCopy()) {
             copy();
             return true;
+        } else if ( kc == KeyBindings.getComponentEdit()) {
+            edit();
+            return true;
         }
         return false;
+    }
+
+    /**
+     * Initiates the edit action
+     */
+    private void edit() {
+        doAction(null, l -> {
+            ((CompSymbolPart) l.get(0)).edit(this);
+            repaint();
+        }, false);
     }
 
     /**
      * Initiates the rotate action
      */
     private void rotate() {
-        List<DrawingPart> parts = getSelectedParts();
-        if ( parts.size() == 0 ) {
-            select(null);
-            parts = getSelectedParts();
-        }
-        for ( DrawingPart _p : parts ){
-            CompSymbolPart p = (CompSymbolPart) _p;
-            p.setOrientation(Rotation.getNext(p.getOrientation()));
-        }
-        repaint();
+        doAction(null, parts -> {
+            for ( DrawingPart _p : parts ){
+                CompSymbolPart p = (CompSymbolPart) _p;
+                p.setOrientation(Rotation.getNext(p.getOrientation()));
+                repaint();
+            }
+        }, true);
     }
 
     /**
      * Initiates the move action
      */
     private void move() {
-        List<DrawingPart> parts = getSelectedParts();
-        if ( parts.size() == 0 ) {
-            select(null);
-        }
-        editState = STATE_MOVE;
-        repaint();
+        doAction(null, parts -> {
+            editState = STATE_MOVE;
+            repaint();
+        },true);
     }
 
     /**
      * Initiates the move action
      */
     private void copy() {
-        List<DrawingPart> list = new LinkedList<>();
-        List<DrawingPart> orig = getSelectedParts();
-        if ( orig.size() == 0 ) {
-            select(null);
-            orig = getSelectedParts();
-        }
-        for ( DrawingPart p : orig ) {
-            DrawingPart c = p.copy();
-            addPart(c);
-            list.add(c);
-        }
-        clearSelection();
-        selectParts(list);
-        editState = STATE_ADD;
-        repaint();
+        doAction(null, orig -> {
+            List<DrawingPart> list = new LinkedList<>();
+            if (orig.size() == 0) {
+                select(null);
+                orig = getSelectedParts();
+            }
+            for (DrawingPart p : orig) {
+                DrawingPart c = p.copy();
+                addPart(c);
+                list.add(c);
+            }
+            clearSelection();
+            selectParts(list);
+            editState = STATE_ADD;
+            repaint();
+        }, true);
     }
 
     @Override

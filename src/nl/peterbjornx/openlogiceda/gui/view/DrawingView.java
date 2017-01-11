@@ -99,6 +99,13 @@ public class DrawingView extends GridView {
      * Executes the select action
      */
     protected boolean select(JMenu disambiguation) {
+        return select(disambiguation, null);
+    }
+
+    /**
+     * Executes the select action
+     */
+    protected boolean select(JMenu disambiguation, SelectDoneListener listener) {
         List<DrawingPart> parts = drawing.getParts(cursorX,cursorY);
         if ( parts.isEmpty()) {
             if ( !selectMultiple ) {
@@ -108,22 +115,47 @@ public class DrawingView extends GridView {
             return false;
         }
         if ( parts.size() > 1 )
-            disambiguationMenu(disambiguation, parts);
+            selectDisambiguation(disambiguation, parts);
         else
             selectPart(parts.get(0));
+        if (listener != null)
+            listener.handle(parts);
         return true;
+    }
+
+    /**
+     * Executes the given action for the selected objects, if there
+     * are no selected objects, try to select the objects currently
+     * under the cursor.
+     */
+    protected void doAction(JMenu disambiguation, SelectDoneListener listener, boolean multiple) {
+        List<DrawingPart> parts = getSelectedParts();
+        if ( (multiple && parts.isEmpty()) || ((!multiple) && parts.size() != 1) ) {
+            setSelectMultiple(multiple);
+            select(null, listener);
+        } else
+            listener.handle(parts);
+
+    }
+
+    /**
+     * Select a part by disambiguation menu
+     */
+    protected void selectDisambiguation(JMenu parent, List<DrawingPart> parts)
+    {
+        disambiguationMenu(parent, parts, this::selectPart);
     }
 
     /**
      * Shows a menu to select a part
      */
-    protected void disambiguationMenu(JMenu parent,List<DrawingPart> parts) {
+    protected void disambiguationMenu(JMenu parent,List<DrawingPart> parts, DisambiguationListener listener) {
         JPopupMenu menu = null;
         if ( parent == null )
             menu = new JPopupMenu();
         for (DrawingPart p : parts) {
             JMenuItem it = new JMenuItem(p.toString());
-            it.addActionListener(e -> selectPart(p));
+            it.addActionListener(e -> listener.handle(p));
             if ( parent == null )
                 menu.add(it);
             else
@@ -297,5 +329,13 @@ public class DrawingView extends GridView {
     public void setEditMode(int editMode) {
         this.editMode = editMode;
         fireEditModeListener();
+    }
+
+    public interface DisambiguationListener {
+        void handle(DrawingPart part);
+    }
+
+    public interface SelectDoneListener {
+        void handle(List<DrawingPart> part);
     }
 }
