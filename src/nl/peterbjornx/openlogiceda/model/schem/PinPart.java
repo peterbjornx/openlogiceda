@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.PinDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -104,6 +106,14 @@ public class PinPart extends CompSymbolPart{
     public void setOrientation(Rotation orientation) {
         super.setOrientation(orientation);
         updateSize();
+    }
+
+    /**
+     * Open the property window for this part.
+     */
+    @Override
+    public void edit(ComponentView editor) {
+        PinDialog.showDialog(editor,this);
     }
 
     @Override

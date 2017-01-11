@@ -48,10 +48,7 @@ public class ComponentView extends DrawingView {
     public ComponentView() {
         super(new SchematicComponent("testing"));
         addEditModeListener(c->{
-            if ( editState == STATE_ADD ) {
-                deleteSelection();
-            }
-            editState = STATE_NORMAL;
+            cancel();
         });
     }
 
@@ -136,12 +133,19 @@ public class ComponentView extends DrawingView {
                 return true;
             switch (editMode) {
                 case MODE_PIN:
-                    editState = STATE_PREADD;
-                    PinDialog.showDialog(this, null);
+                    add(new PinPart("", cursorX, cursorY));
                     return true;
             }
         }
         return false;
+    }
+
+    public void add(CompSymbolPart p){
+        editState = STATE_ADD;
+        addPart(p);
+        setSelectMultiple(false);
+        selectPart(p);
+        p.edit(this);
     }
 
     @Override
@@ -170,34 +174,18 @@ public class ComponentView extends DrawingView {
     }
 
     /**
-     * Called when a property dialog cancels
+     * Cancels whatever editor action is running
      */
-    public void onDialogCancel() {
-        if ( editState == STATE_PREADD )
-            editState = STATE_NORMAL;
-    }
-
-    /**
-     * Called when the property dialog for a pin completes
-     */
-    public void onPinDialog(String name, Rotation orientation) {
-        PinPart p;
-        if ( editState == STATE_PREADD ) {
-            p = new PinPart("", cursorX, cursorY);
-            addPart(p);
-            selectPart(p);
-        } else
-            p = (PinPart) getSelectedParts().get(0);
-        p.setOrientation(orientation);
-        p.setName(name);
-        if ( editState == STATE_PREADD )
-            editState = STATE_ADD;
+    public void cancel() {
+        if ( editState == STATE_ADD ) {
+            deleteSelection();
+        }
+        editState = STATE_NORMAL;
     }
 
     public enum EditState {
         STATE_NORMAL,
         STATE_MOVE,
-        STATE_PREADD,
         STATE_ADD
     }
 }

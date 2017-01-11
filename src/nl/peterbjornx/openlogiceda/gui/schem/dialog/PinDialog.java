@@ -18,6 +18,7 @@ public class PinDialog extends JDialog {
     private JRadioButton southRadioButton;
     private JRadioButton westRadioButton;
     private ButtonGroup orientationGroup;
+    private PinPart part;
 
     public PinDialog(ComponentView view, PinPart edit) {
         this.view = view;
@@ -52,32 +53,32 @@ public class PinDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        if (edit != null){
-            switch( edit.getOrientation() ){
-                case NORTH:
-                    northRadioButton.setSelected(true);
-                    break;
-                case EAST:
-                    eastRadioButton.setSelected(true);
-                    break;
-                case SOUTH:
-                    southRadioButton.setSelected(true);
-                    break;
-                case WEST:
-                    westRadioButton.setSelected(true);
-                    break;
-            }
-            pinNameField.setText(edit.getName());
+        switch( edit.getOrientation() ){
+            case NORTH:
+                northRadioButton.setSelected(true);
+                break;
+            case EAST:
+                eastRadioButton.setSelected(true);
+                break;
+            case SOUTH:
+                southRadioButton.setSelected(true);
+                break;
+            case WEST:
+                westRadioButton.setSelected(true);
+                break;
         }
+        pinNameField.setText(edit.getName());
+        this.part = edit;
     }
 
     private void onOK() {
-        view.onPinDialog(pinNameField.getText(),Rotation.valueOf(orientationGroup.getSelection().getActionCommand()));
+        part.setOrientation(Rotation.valueOf(orientationGroup.getSelection().getActionCommand()));
+        part.setName(pinNameField.getText());
         dispose();
     }
 
     private void onCancel() {
-        view.onDialogCancel();
+        view.cancel();
         dispose();
     }
 

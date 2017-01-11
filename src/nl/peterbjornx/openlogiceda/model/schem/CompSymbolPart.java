@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 /**
@@ -43,4 +44,9 @@ public abstract class CompSymbolPart extends DrawingPart {
     public void setOrientation(Rotation orientation) {
         this.orientation = orientation;
     }
+
+    /**
+     * Open the property window for this part.
+     */
+    public abstract void edit(ComponentView editor);
 }
