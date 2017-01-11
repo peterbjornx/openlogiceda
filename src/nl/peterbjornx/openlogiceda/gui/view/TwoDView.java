@@ -300,6 +300,16 @@ public abstract class TwoDView extends JPanel implements MouseListener,
         if ( vpz <= 1 )
             vpz = 1;
         viewportZoom = 1.0d/vpz;
+        viewportX = screenToViewX(e.getX());
+        viewportY = screenToViewY(e.getY());
+        try {
+            Robot r = new Robot();
+            int screenDeltaX = e.getXOnScreen() - e.getX();
+            int screenDeltaY = e.getYOnScreen() - e.getY();
+            r.mouseMove(screenDeltaX+getWidth()/2, screenDeltaY+getHeight()/2);
+        } catch (AWTException e1) {
+            e1.printStackTrace();
+        }
         repaint();
     }
 
