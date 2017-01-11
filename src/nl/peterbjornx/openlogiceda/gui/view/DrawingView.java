@@ -22,6 +22,7 @@ import nl.peterbjornx.openlogiceda.gui.view.event.EditModeListener;
 import nl.peterbjornx.openlogiceda.gui.view.event.PartSelectionListener;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
+import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,6 +83,14 @@ public class DrawingView extends GridView {
      */
     public List<DrawingPart> getSelectedParts() {
         return Collections.unmodifiableList(drawing.getSelectedParts());
+    }
+
+    public void setDrawing(SchematicComponent drawing) {
+        this.drawing = drawing;
+    }
+
+    public Drawing getDrawing() {
+        return drawing;
     }
 
     @Override

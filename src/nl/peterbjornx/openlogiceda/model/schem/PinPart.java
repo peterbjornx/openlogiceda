@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.PinDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
@@ -28,6 +30,7 @@ import java.awt.*;
  * A pin in a component
  * @author Peter Bosch
  */
+@XStreamAlias("pin")
 public class PinPart extends CompSymbolPart{
 
     /**
@@ -55,7 +58,7 @@ public class PinPart extends CompSymbolPart{
      */
     private String name;
 
-
+    @XStreamOmitField
     private FontMetrics labelFontMetrics;
 
     public PinPart(String name, int x, int y) {

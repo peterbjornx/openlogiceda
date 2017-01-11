@@ -17,6 +17,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,21 +34,25 @@ public class Drawing {
     /**
      * The parts on this drawing
      */
+    @XStreamImplicit
     private List<DrawingPart> parts = new LinkedList<>();
 
     /**
      * The list of selected parts
      */
+    @XStreamOmitField
     private List<DrawingPart> selectedParts = new LinkedList<>();
 
     /**
      * The width of this drawing
      */
+    @XStreamAsAttribute
     private int width;
 
     /**
      * The height of this drawing
      */
+    @XStreamAsAttribute
     private int height;
 
     /**
@@ -150,4 +159,5 @@ public class Drawing {
         for ( DrawingPart part : list )
             selectPart(part);
     }
+
 }

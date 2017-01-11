@@ -27,7 +27,8 @@ import nl.peterbjornx.openlogiceda.model.schem.Rotation;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 import javax.swing.*;
-import java.util.Collections;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class ComponentView extends DrawingView {
     public final static int MODE_LINE = 3;
     public final static int MODE_LABEL = 4;
     private EditState editState = STATE_NORMAL;
+    private File openFile = null;
     /**
      * Creates a new drawing view
      */
@@ -170,6 +172,77 @@ public class ComponentView extends DrawingView {
             buildBlockMenu(parts,menu);
         }
         super.buildContextMenu(menu);
+    }
+
+    public void openComponent() {
+        if (openFile != null && !saveChangesDialog())
+            return;
+        if (!openDialog())
+            return;
+        try {
+            setDrawing(SchematicComponent.load(openFile));
+        } catch (Exception e) {
+            //TODO: Show error dialog
+            e.printStackTrace();
+        }
+    }
+
+    public void saveComponent() {
+        if (openFile == null && !saveAsDialog())
+            return;
+        try {
+            SchematicComponent c = (SchematicComponent) getDrawing();
+            c.store(openFile);
+        } catch (Exception e) {
+            //TODO: Show error dialog
+            e.printStackTrace();
+        }
+    }
+
+    public boolean saveChangesDialog() {
+        int option = JOptionPane.showConfirmDialog(this,"Do you want to save the current document?",
+                "Possible loss of data!",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+        switch (option) {
+            case JOptionPane.YES_OPTION:
+                saveComponent();
+            case JOptionPane.NO_OPTION:
+                return true;
+        }
+        return false;
+    }
+
+    private boolean saveAsDialog() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Schematic Components", "cmp");
+        chooser.setFileFilter(filter);
+        chooser.setDialogTitle("Save As");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            openFile = chooser.getSelectedFile();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean openDialog() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Schematic Components", "cmp","xml");
+        chooser.setFileFilter(filter);
+        chooser.setDialogTitle("Save As");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+        int returnVal = chooser.showOpenDialog(this);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            openFile = chooser.getSelectedFile();
+            return true;
+        }
+        return false;
     }
 
     private void buildPartMenu(CompSymbolPart part, JComponent menu) {

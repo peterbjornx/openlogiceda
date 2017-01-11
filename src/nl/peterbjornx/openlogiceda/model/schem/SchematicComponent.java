@@ -17,13 +17,26 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Represents a component in the schematic
  * @author Peter Bosch
  */
+@XStreamAlias("scomponent")
 public class SchematicComponent extends Drawing {
+
+    /**
+     * The XStream used for serialization
+     */
+    private static XStream serializer;
 
     /**
      * This component's name
@@ -37,5 +50,30 @@ public class SchematicComponent extends Drawing {
     public SchematicComponent( String name ) {
         super(10000,10000);
         this.name = name;
+    }
+
+    static {
+        serializer = new XStream();
+        serializer.processAnnotations(SchematicComponent.class);
+        serializer.processAnnotations(PinPart.class);
+        serializer.processAnnotations(CompSymbolPart.class);
+        serializer.processAnnotations(Drawing.class);
+        serializer.processAnnotations(DrawingPart.class);
+    }
+
+    /**
+     * Loads a component from disk
+     */
+    public static SchematicComponent load( File file ) {
+        return (SchematicComponent) serializer.fromXML(file);
+    }
+
+    /**
+     * Saves a component to disk
+     */
+    public void store( File file ) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        serializer.toXML(this,writer);
+        writer.close();
     }
 }

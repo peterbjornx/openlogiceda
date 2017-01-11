@@ -26,6 +26,7 @@ public class CompEditTest {
         ComponentEditor ed = new ComponentEditor();
         JFrame tf = new JFrame("Test");
         tf.add(ed.getMainPane());
+        tf.setJMenuBar(ed.getMenuBar());
         tf.setResizable(true);
         tf.setVisible(true);
         ed.postInit();

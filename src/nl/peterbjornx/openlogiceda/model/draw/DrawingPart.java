@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 
 /**
@@ -28,11 +30,13 @@ public abstract class DrawingPart {
     /**
      * The x coordinate of the part
      */
+    @XStreamAsAttribute
     protected int x;
 
     /**
      * The y coordinate of the part
      */
+    @XStreamAsAttribute
     protected int y;
 
     /**
@@ -58,6 +62,7 @@ public abstract class DrawingPart {
     /**
      * Whether this part was selected
      */
+    @XStreamOmitField
     protected boolean selected = false;
 
     /**

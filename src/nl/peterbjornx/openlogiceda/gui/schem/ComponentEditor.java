@@ -22,6 +22,7 @@ import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * @author Peter Bosch
@@ -37,8 +38,24 @@ public class ComponentEditor {
     private JToggleButton textModeBtn;
     private JToggleButton lineModeBtn;
     private ButtonGroup modeGroup;
+    private JMenuBar menuBar;
 
     public ComponentEditor() {
+        menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        menuBar.add(file);
+        file.setMnemonic('F');
+        JMenuItem open = file.add("Open");
+        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
+        open.addActionListener(e->componentView.openComponent());
+        JMenuItem save = file.add("Save");
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
+        save.addActionListener(e->componentView.saveComponent());
+        file.addSeparator();
+        JMenuItem quit = file.add("Quit");
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
+        save.addActionListener(e->quitAction());
+
         selectModeBtn.addActionListener(e -> updateFromMode());
         pinModeBtn.addActionListener(e -> updateFromMode());
         textModeBtn.addActionListener(e -> updateFromMode());
@@ -50,6 +67,11 @@ public class ComponentEditor {
         textModeBtn.setActionCommand("T");
         rectModeBtn.setActionCommand("R");
         lineModeBtn.setActionCommand("L");
+    }
+
+    private void quitAction() {
+        componentView.saveChangesDialog();
+        //TODO: Actually close editor
     }
 
     private void updateToMode() {
@@ -91,6 +113,8 @@ public class ComponentEditor {
                 break;
         }
     }
+
+    public JMenuBar getMenuBar() {return menuBar;}
 
     public JPanel getMainPane() {
         return mainPane;
