@@ -160,4 +160,13 @@ public class Drawing {
             selectPart(part);
     }
 
+    /**
+     * Do post read fixups
+     */
+    @SuppressWarnings("unused")
+    private Object readResolve() {
+        selectedParts = new LinkedList<>();
+        return this;
+    }
+
 }
