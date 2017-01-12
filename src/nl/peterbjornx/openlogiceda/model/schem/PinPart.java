@@ -128,7 +128,10 @@ public class PinPart extends CompSymbolPart{
             g.drawRect(-leftExtent,-topExtent,leftExtent+rightExtent,topExtent+bottomExtent);
         g.rotate(orientation.getAngle());
         g.drawLine(0,0,PIN_LENGTH,0);
-        g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
+        if (orientation == Rotation.WEST )
+            g.drawStringUpsideDown(name, 0, -labelFont.getSize()/4);
+        else
+            g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
     }
 
     /**

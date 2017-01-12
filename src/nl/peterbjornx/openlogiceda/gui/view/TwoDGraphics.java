@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * Wrapper routines to make drawing on a TwoDView easier
@@ -29,10 +30,12 @@ public class TwoDGraphics {
 
     private TwoDView view;
     private Graphics2D g;
+    private Font upsideDownFont;
 
     TwoDGraphics( TwoDView view, Graphics2D g ) {
         this.view = view;
         this.g = g;
+        upsideDownFont = getFont().deriveFont(AffineTransform.getRotateInstance(Math.PI));
     }
 
     /**
@@ -226,6 +229,36 @@ public class TwoDGraphics {
     }
 
     /**
+     * Renders the text of the specified <code>String</code>, using the
+     * current text attribute state in the <code>Graphics2D</code> context.
+     * The baseline of the
+     * first character is at position (<i>x</i>,&nbsp;<i>y</i>) in
+     * the User Space.
+     * The rendering attributes applied include the <code>Clip</code>,
+     * <code>Transform</code>, <code>Paint</code>, <code>Font</code> and
+     * <code>Composite</code> attributes.  For characters in script
+     * systems such as Hebrew and Arabic, the glyphs can be rendered from
+     * right to left, in which case the coordinate supplied is the
+     * location of the leftmost character on the baseline.
+     * @param str the string to be rendered
+     * @param x the x coordinate of the location where the
+     * <code>String</code> should be rendered
+     * @param y the y coordinate of the location where the
+     * <code>String</code> should be rendered
+     * @throws NullPointerException if <code>str</code> is
+     *         <code>null</code>
+     * @see         Graphics#drawBytes
+     * @see         Graphics#drawChars
+     * @since JDK1.0
+     */
+    public void drawStringUpsideDown(String str, int x, int y) {
+        Font o = g.getFont();
+        g.setFont(upsideDownFont);
+        g.drawString(str, x, y);
+        g.setFont(o);
+    }
+
+    /**
      * Translates the origin of the <code>Graphics2D</code> context to the
      * point (<i>x</i>,&nbsp;<i>y</i>) in the current coordinate system.
      * Modifies the <code>Graphics2D</code> context so that its new origin
@@ -378,6 +411,7 @@ public class TwoDGraphics {
      */
     public void setFont(Font font) {
         g.setFont(font);
+        upsideDownFont = font.deriveFont(AffineTransform.getRotateInstance(Math.PI));
     }
 
     /**
