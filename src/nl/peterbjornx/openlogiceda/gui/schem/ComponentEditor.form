@@ -115,8 +115,9 @@
                 <properties>
                   <enabled value="true"/>
                   <hideActionText value="false"/>
+                  <icon value="res/select.png"/>
                   <selected value="true"/>
-                  <text value="S"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="b51ea" class="javax.swing.JToggleButton" binding="pinModeBtn">
@@ -124,7 +125,8 @@
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="P"/>
+                  <icon value="res/add_pin.png"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="7392a" class="javax.swing.JToggleButton" binding="rectModeBtn">
@@ -132,24 +134,27 @@
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="R"/>
+                  <icon value="res/add_rectangle.png"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="7847a" class="javax.swing.JToggleButton" binding="textModeBtn">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <icon value="res/add_text.png"/>
                   <selected value="false"/>
-                  <text value="T"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="7ef2f" class="javax.swing.JToggleButton" binding="lineModeBtn">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="L"/>
+                  <icon value="res/add_line.png"/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>

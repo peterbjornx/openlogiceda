@@ -46,9 +46,11 @@ public class ComponentEditor {
         menuBar.add(file);
         file.setMnemonic('F');
         JMenuItem open = file.add("Open");
+        open.setIcon(new ImageIcon(getClass().getResource("/res/open.png")));
         open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
         open.addActionListener(e->componentView.openComponent());
         JMenuItem save = file.add("Save");
+        save.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
         save.addActionListener(e->componentView.saveComponent());
         file.addSeparator();
@@ -59,9 +61,11 @@ public class ComponentEditor {
         menuBar.add(edit);
         edit.setMnemonic('E');
         JMenuItem undo = edit.add("Undo");
+        undo.setIcon(new ImageIcon(getClass().getResource("/res/undo.png")));
         undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,KeyEvent.CTRL_MASK));
         undo.addActionListener(e->componentView.undo());
         JMenuItem redo = edit.add("Redo");
+        redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
         redo.addActionListener(e->componentView.redo());
         edit.addSeparator();

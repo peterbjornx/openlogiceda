@@ -358,6 +358,8 @@ public class ComponentView extends DrawingView {
 
     private void buildPartMenu(CompSymbolPart part, JComponent menu) {
         JMenuItem item = new JMenuItem("Move");
+        System.out.println(getClass().getResource("/res/move.png"));
+        item.setIcon(new ImageIcon(getClass().getResource("/res/move.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentMove(),0));
         item.addActionListener(e->{
             setSelectMultiple(false);
@@ -366,6 +368,7 @@ public class ComponentView extends DrawingView {
         });
         menu.add(item);
         item = new JMenuItem("Rotate");
+        item.setIcon(new ImageIcon(getClass().getResource("/res/rotate_ccw.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentRotate(),0));
         item.addActionListener(e->{
             setSelectMultiple(false);
@@ -374,6 +377,7 @@ public class ComponentView extends DrawingView {
         });
         menu.add(item);
         item = new JMenuItem("Copy");
+        item.setIcon(new ImageIcon(getClass().getResource("/res/copy.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentCopy(),0));
         item.addActionListener(e->{
             setSelectMultiple(false);
@@ -382,6 +386,7 @@ public class ComponentView extends DrawingView {
         });
         menu.add(item);
         item = new JMenuItem("Edit");
+        item.setIcon(new ImageIcon(getClass().getResource("/res/edit.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentEdit(),0));
         item.addActionListener(e->{
             setSelectMultiple(false);
@@ -390,6 +395,7 @@ public class ComponentView extends DrawingView {
         });
         menu.add(item);
         item = new JMenuItem("Delete");
+        item.setIcon(new ImageIcon(getClass().getResource("/res/delete.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentDelete(),0));
         item.addActionListener(e->{
             setSelectMultiple(false);
@@ -411,6 +417,7 @@ public class ComponentView extends DrawingView {
 
     private void buildBlockMenu(List<DrawingPart> parts, JComponent menu) {
         JMenuItem item = new JMenuItem("Move");
+        item.setIcon(new ImageIcon(getClass().getResource("/res/move.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentMove(),0));
         List<DrawingPart> newParts = new LinkedList<>();
         for (DrawingPart p : parts)
@@ -425,6 +432,7 @@ public class ComponentView extends DrawingView {
         menu.add(item);
         item = new JMenuItem("Rotate");
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentRotate(),0));
+        item.setIcon(new ImageIcon(getClass().getResource("/res/rotate_ccw.png")));
         item.addActionListener(e->{
             clearSelection();
             setSelectMultiple(true);
@@ -435,6 +443,7 @@ public class ComponentView extends DrawingView {
         menu.add(item);
         item = new JMenuItem("Copy");
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentCopy(),0));
+        item.setIcon(new ImageIcon(getClass().getResource("/res/copy.png")));
         item.addActionListener(e->{
             clearSelection();
             setSelectMultiple(true);
@@ -444,6 +453,7 @@ public class ComponentView extends DrawingView {
         });
         menu.add(item);
         item = new JMenuItem("Delete");
+        item.setIcon(new ImageIcon(getClass().getResource("/res/delete.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentDelete(),0));
         item.addActionListener(e->{
             clearSelection();
