@@ -17,8 +17,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.TextDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -27,12 +29,14 @@ import java.awt.*;
 /**
  * @author Peter Bosch
  */
+@XStreamAlias("text")
 public class TextPart extends CompSymbolPart {
 
     /**
      * The font used to render the label
      */
-    private Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 160);
+    @XStreamOmitField
+    private Font labelFont;
 
     /**
      * The colour of the text
@@ -47,11 +51,18 @@ public class TextPart extends CompSymbolPart {
     @XStreamOmitField
     private FontMetrics labelFontMetrics;
 
+    /**
+     * The size of the label font
+     */
+    private int fontSize = 160;
+
     public TextPart() {
         updateSize();
     }
 
     private void updateSize() {
+        if (labelFont == null || labelFont.getSize() != fontSize)
+            labelFont = new Font(Font.MONOSPACED, Font.PLAIN, fontSize);
         if (labelFontMetrics == null ) {
             Canvas c = new Canvas();
             labelFontMetrics = c.getFontMetrics(labelFont);
@@ -70,15 +81,15 @@ public class TextPart extends CompSymbolPart {
                 rightExtent = 0;
                 break;
             case NORTH:
-                topExtent = 0;
-                rightExtent = labelFontMetrics.getMaxAscent();
-                leftExtent = labelFontMetrics.getMaxDescent();
-                bottomExtent = labelFontMetrics.stringWidth(text);
+                bottomExtent = 0;
+                leftExtent = labelFontMetrics.getMaxAscent();
+                rightExtent = labelFontMetrics.getMaxDescent();
+                topExtent = labelFontMetrics.stringWidth(text);
                 break;
             case SOUTH:
                 topExtent = 0;
-                rightExtent = labelFontMetrics.getMaxDescent();
-                leftExtent = labelFontMetrics.getMaxAscent();
+                leftExtent = labelFontMetrics.getMaxDescent();
+                rightExtent = labelFontMetrics.getMaxAscent();
                 bottomExtent = labelFontMetrics.stringWidth(text);
                 break;
         }
@@ -99,11 +110,15 @@ public class TextPart extends CompSymbolPart {
      */
     @Override
     public void edit(ComponentView editor) {
-        //TextDialog.showDialog(editor,this);
+        TextDialog.main(editor,this);
     }
 
     @Override
     public void paintPart(TwoDGraphics g, double zoom) {
+        if (labelFont == null || labelFont.getSize() != fontSize)
+            labelFont = new Font(Font.MONOSPACED, Font.PLAIN, fontSize);
+        if (labelFontMetrics == null)
+            updateSize();
         g.setStroke(2,false);
         g.setFont(labelFont);
         g.setColor(textColour);
@@ -111,7 +126,7 @@ public class TextPart extends CompSymbolPart {
             g.drawRect(-leftExtent,-topExtent,leftExtent+rightExtent,topExtent+bottomExtent);
         g.rotate(orientation.getAngle());
         if (orientation == Rotation.WEST )
-            g.drawStringUpsideDown(text, 0, -labelFont.getSize()/4);
+            g.drawStringUpsideDown(text, labelFontMetrics.stringWidth(text), -labelFont.getSize()/4);
         else
             g.drawString(text, 0, labelFont.getSize()/4);
     }
@@ -145,4 +160,19 @@ public class TextPart extends CompSymbolPart {
         updateSize();
     }
 
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(int fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public void setTextColour(Color textColour) {
+        this.textColour = textColour;
+    }
+
+    public Color getTextColour() {
+        return textColour;
+    }
 }
