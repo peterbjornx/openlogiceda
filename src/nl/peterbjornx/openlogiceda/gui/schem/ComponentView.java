@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import static nl.peterbjornx.openlogiceda.gui.schem.ComponentView.EditState.*;
 
@@ -47,6 +48,8 @@ public class ComponentView extends DrawingView {
     public final static int MODE_LABEL = 4;
     private EditState editState = STATE_NORMAL;
     private File openFile = null;
+    private Stack<String> undoStack = new Stack<>();
+    private Stack<String> redoStack = new Stack<>();
     /**
      * Creates a new drawing view
      */
@@ -90,6 +93,7 @@ public class ComponentView extends DrawingView {
      * Initiates the edit action
      */
     private void edit() {
+        markUndo();
         doAction(null, l -> {
             ((CompSymbolPart) l.get(0)).edit(this);
             repaint();
@@ -100,6 +104,7 @@ public class ComponentView extends DrawingView {
      * Initiates the rotate action
      */
     private void rotate() {
+        markUndo();
         doAction(null, parts -> {
             for ( DrawingPart _p : parts ){
                 CompSymbolPart p = (CompSymbolPart) _p;
@@ -113,6 +118,7 @@ public class ComponentView extends DrawingView {
      * Initiates the delete action
      */
     private void delete() {
+        markUndo();
         doAction(null, parts -> {
             for ( DrawingPart _p : parts ){
                 CompSymbolPart p = (CompSymbolPart) _p;
@@ -126,6 +132,7 @@ public class ComponentView extends DrawingView {
      * Initiates the move action
      */
     private void move() {
+        markUndo();
         doAction(null, parts -> {
             editState = STATE_MOVE;
             repaint();
@@ -136,6 +143,7 @@ public class ComponentView extends DrawingView {
      * Initiates the move action
      */
     private void copy() {
+        markUndo();
         doAction(null, orig -> {
             List<DrawingPart> list = new LinkedList<>();
             if (orig.size() == 0) {
@@ -153,6 +161,44 @@ public class ComponentView extends DrawingView {
             repaint();
         }, true);
     }
+
+    /**
+     * Undoes the last change
+     */
+    public void undo() {
+        if (undoStack.isEmpty())
+            return;
+        SchematicComponent c= (SchematicComponent) getDrawing();
+        String lastChange = c.store();
+        redoStack.push(lastChange);
+        setDrawing(SchematicComponent.load(undoStack.pop()));
+        repaint();
+    }
+
+    /**
+     * Redoes the last undone change
+     */
+    public void redo() {
+        if (redoStack.isEmpty())
+            return;
+        SchematicComponent c= (SchematicComponent) getDrawing();
+        String lastChange = c.store();
+        undoStack.push(lastChange);
+        setDrawing(SchematicComponent.load(redoStack.pop()));
+        repaint();
+    }
+
+    /**
+     * Stores a change for undo
+     */
+    private void markUndo() {
+        if (!redoStack.isEmpty())
+            redoStack.clear();
+        SchematicComponent c= (SchematicComponent) getDrawing();
+        String lastChange = c.store();
+        undoStack.push(lastChange);
+    }
+
 
     @Override
     protected void buildContextMenu(JPopupMenu menu) {
@@ -177,8 +223,19 @@ public class ComponentView extends DrawingView {
         super.buildContextMenu(menu);
     }
 
+    public boolean close() {
+        if (!saveChangesDialog())
+            return false;
+        redoStack.clear();
+        undoStack.clear();
+        cancel();
+        setEditMode(MODE_SELECT);
+        clearSelection();
+        return true;
+    }
+
     public void openComponent() {
-        if (openFile != null && !saveChangesDialog())
+        if (openFile != null && !close())
             return;
         if (!openDialog())
             return;
@@ -400,6 +457,7 @@ public class ComponentView extends DrawingView {
     }
 
     public void add(CompSymbolPart p){
+        markUndo();
         editState = STATE_ADD;
         addPart(p);
         setSelectMultiple(false);

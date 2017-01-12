@@ -62,6 +62,13 @@ public class SchematicComponent extends Drawing {
     }
 
     /**
+     * Loads a component from a string
+     */
+    public static SchematicComponent load( String xml ) {
+        return (SchematicComponent) serializer.fromXML(xml);
+    }
+
+    /**
      * Loads a component from disk
      */
     public static SchematicComponent load( File file ) {
@@ -78,10 +85,31 @@ public class SchematicComponent extends Drawing {
     }
 
     /**
+     * Saves a component to a string
+     */
+    public String store( ) {
+        return serializer.toXML(this);
+    }
+
+    /**
      * Do post read fixups
      */
     @SuppressWarnings("unused")
     protected Object readResolve() {
         return super.readResolve();
+    }
+
+    /**
+     * Get this component's name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set this component's name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

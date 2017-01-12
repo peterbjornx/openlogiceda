@@ -55,6 +55,16 @@ public class ComponentEditor {
         JMenuItem quit = file.add("Quit");
         quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
         quit.addActionListener(e->quitAction());
+        JMenu edit = new JMenu("Edit");
+        menuBar.add(edit);
+        edit.setMnemonic('E');
+        JMenuItem undo = edit.add("Undo");
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,KeyEvent.CTRL_MASK));
+        undo.addActionListener(e->componentView.undo());
+        JMenuItem redo = edit.add("Redo");
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
+        redo.addActionListener(e->componentView.redo());
+        edit.addSeparator();
 
         selectModeBtn.addActionListener(e -> updateFromMode());
         pinModeBtn.addActionListener(e -> updateFromMode());
@@ -70,7 +80,7 @@ public class ComponentEditor {
     }
 
     private void quitAction() {
-        componentView.saveChangesDialog();
+        componentView.close();
         //TODO: Actually close editor
     }
 
