@@ -303,6 +303,7 @@ public class DrawingView extends GridView {
             p.translate(d.getX(),d.getY());
             d.paintPart(p,viewportZoom);
         }
+        drawCursor();
     }
 
     /**

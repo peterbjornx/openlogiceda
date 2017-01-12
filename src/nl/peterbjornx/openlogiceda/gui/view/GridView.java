@@ -87,10 +87,9 @@ public class GridView extends TwoDView {
         for (int x = roundDownToGrid(viewportLeft); x <= roundDownToGrid(viewportRight); x+=gridSpacing )
             for (int y = roundDownToGrid(viewportTop); y <= roundDownToGrid(viewportBottom); y+=gridSpacing )
                 drawGridPoint( roundDownToGrid(x), roundDownToGrid(y) );
-        drawCursor();
     }
 
-    private void drawCursor() {
+    protected void drawCursor() {
         graphics.setColor(getBackgroundColour());
         graphics.setXORMode(cursorColour);
         graphics.setStroke(cursorWidth,false);
