@@ -81,6 +81,8 @@ public class Drawing {
      * Selects a part
      */
     public void selectPart( DrawingPart part ) {
+        if ( part.isSelected() )
+            return;
         selectedParts.add(part);
         part.setSelected(true);
     }
