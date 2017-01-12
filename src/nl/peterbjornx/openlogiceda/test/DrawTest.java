@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+import nl.peterbjornx.openlogiceda.model.draw.DrawingIO;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 import javax.swing.*;
@@ -34,7 +35,12 @@ public class DrawTest {
 
     public static void main(String[] args) {
         JFrame tf = new JFrame("Test");
-        tf.add(new TestDrawingView(new Drawing(5000,5000)));
+        tf.add(new TestDrawingView(new Drawing(5000, 5000) {
+            @Override
+            public DrawingIO getIO() {
+                return null;
+            }
+        }));
         //  tf.pack();
         tf.setResizable(true);
         tf.setVisible(true);

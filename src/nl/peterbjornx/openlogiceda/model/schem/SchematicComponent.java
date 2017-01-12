@@ -17,14 +17,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
+import nl.peterbjornx.openlogiceda.model.draw.DrawingIO;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * Represents a component in the schematic
@@ -34,14 +30,21 @@ import java.io.IOException;
 public class SchematicComponent extends Drawing {
 
     /**
-     * The XStream used for serialization
-     */
-    private static XStream serializer;
-
-    /**
      * This component's name
      */
     private String name;
+    private static DrawingIO io;
+
+    static {
+        io = new DrawingIO();
+        io.getSerializer().processAnnotations(SchematicComponent.class);
+        io.getSerializer().processAnnotations(PinPart.class);
+        io.getSerializer().processAnnotations(BaseSchematicPart.class);
+        io.getSerializer().processAnnotations(Drawing.class);
+        io.getSerializer().processAnnotations(DrawingPart.class);
+        io.getSerializer().processAnnotations(CompRectPart.class);
+        io.getSerializer().processAnnotations(TextPart.class);
+    }
 
     /**
      * Creates a new component
@@ -52,53 +55,17 @@ public class SchematicComponent extends Drawing {
         this.name = name;
     }
 
-    static {
-        serializer = new XStream();
-        serializer.processAnnotations(SchematicComponent.class);
-        serializer.processAnnotations(PinPart.class);
-        serializer.processAnnotations(CompSymbolPart.class);
-        serializer.processAnnotations(Drawing.class);
-        serializer.processAnnotations(DrawingPart.class);
-        serializer.processAnnotations(CompRectPart.class);
-        serializer.processAnnotations(TextPart.class);
-    }
-
-    /**
-     * Loads a component from a string
-     */
-    public static SchematicComponent load( String xml ) {
-        return (SchematicComponent) serializer.fromXML(xml);
-    }
-
-    /**
-     * Loads a component from disk
-     */
-    public static SchematicComponent load( File file ) {
-        return (SchematicComponent) serializer.fromXML(file);
-    }
-
-    /**
-     * Saves a component to disk
-     */
-    public void store( File file ) throws IOException {
-        FileWriter writer = new FileWriter(file);
-        serializer.toXML(this,writer);
-        writer.close();
-    }
-
-    /**
-     * Saves a component to a string
-     */
-    public String store( ) {
-        return serializer.toXML(this);
-    }
-
     /**
      * Do post read fixups
      */
     @SuppressWarnings("unused")
     protected Object readResolve() {
         return super.readResolve();
+    }
+
+    @Override
+    public DrawingIO getIO() {
+        return io;
     }
 
     /**

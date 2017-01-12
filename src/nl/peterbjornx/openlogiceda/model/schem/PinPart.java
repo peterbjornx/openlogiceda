@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.PinDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
@@ -31,7 +32,7 @@ import java.awt.*;
  * @author Peter Bosch
  */
 @XStreamAlias("pin")
-public class PinPart extends CompSymbolPart{
+public class PinPart extends BaseSchematicPart {
 
     /**
      * The length of the actual pin line segment
@@ -56,7 +57,7 @@ public class PinPart extends CompSymbolPart{
     /**
      * The name of the pin
      */
-    private String name;
+    private String name = "";
 
     /**
      * The style of the pin
@@ -118,7 +119,7 @@ public class PinPart extends CompSymbolPart{
      * Open the property window for this part.
      */
     @Override
-    public void edit(ComponentView editor) {
+    public void edit(BaseSchematicView editor) {
         PinDialog.showDialog(editor,this);
     }
 

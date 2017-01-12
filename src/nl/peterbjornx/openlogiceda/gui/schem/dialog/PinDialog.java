@@ -1,5 +1,6 @@
 package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 
+import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.model.schem.PinPart;
 import nl.peterbjornx.openlogiceda.model.schem.Rotation;
@@ -8,7 +9,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class PinDialog extends JDialog {
-    private final ComponentView view;
+    private final BaseSchematicView view;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -25,7 +26,7 @@ public class PinDialog extends JDialog {
     private ButtonGroup orientationGroup;
     private PinPart part;
 
-    public PinDialog(ComponentView view, PinPart edit) {
+    public PinDialog(BaseSchematicView view, PinPart edit) {
         this.view = view;
         setTitle("Edit pin");
         setContentPane(contentPane);
@@ -104,7 +105,7 @@ public class PinDialog extends JDialog {
         dispose();
     }
 
-    public static void showDialog(ComponentView view,PinPart edit) {
+    public static void showDialog(BaseSchematicView view, PinPart edit) {
         PinDialog dialog = new PinDialog(view,edit);
         dialog.setLocationByPlatform(true);
         dialog.pack();

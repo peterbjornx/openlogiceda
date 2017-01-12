@@ -90,7 +90,7 @@ public class DrawingView extends GridView {
         return Collections.unmodifiableList(drawing.getSelectedParts());
     }
 
-    public void setDrawing(SchematicComponent drawing) {
+    public void setDrawing(Drawing drawing) {
         this.drawing = drawing;
     }
 

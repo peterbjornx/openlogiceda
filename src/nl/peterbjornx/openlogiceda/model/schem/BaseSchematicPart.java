@@ -17,14 +17,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 /**
- * This represents a part of the component symbol
+ * This represents a part of a schematic drawing
  * @author Peter Bosch
  */
-public abstract class CompSymbolPart extends DrawingPart {
+public abstract class BaseSchematicPart extends DrawingPart {
 
     /**
      * The orientation of this part
@@ -48,5 +49,5 @@ public abstract class CompSymbolPart extends DrawingPart {
     /**
      * Open the property window for this part.
      */
-    public abstract void edit(ComponentView editor);
+    public abstract void edit(BaseSchematicView editor);
 }

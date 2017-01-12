@@ -29,7 +29,7 @@ import java.util.List;
  * Represents a drawing
  * @author Peter Bosch
  */
-public class Drawing {
+public abstract class Drawing {
 
     /**
      * The parts on this drawing
@@ -170,5 +170,7 @@ public class Drawing {
         selectedParts = new LinkedList<>();
         return this;
     }
+
+    public abstract DrawingIO getIO();
 
 }

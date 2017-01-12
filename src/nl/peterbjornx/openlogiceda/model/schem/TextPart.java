@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.TextDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
@@ -30,7 +31,7 @@ import java.awt.*;
  * @author Peter Bosch
  */
 @XStreamAlias("text")
-public class TextPart extends CompSymbolPart {
+public class TextPart extends BaseSchematicPart {
 
     /**
      * The font used to render the label
@@ -109,7 +110,7 @@ public class TextPart extends CompSymbolPart {
      * Open the property window for this part.
      */
     @Override
-    public void edit(ComponentView editor) {
+    public void edit(BaseSchematicView editor) {
         TextDialog.main(editor,this);
     }
 
