@@ -164,7 +164,7 @@ public class Drawing {
      * Do post read fixups
      */
     @SuppressWarnings("unused")
-    private Object readResolve() {
+    protected Object readResolve() {
         selectedParts = new LinkedList<>();
         return this;
     }

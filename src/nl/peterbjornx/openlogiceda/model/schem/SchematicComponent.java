@@ -76,4 +76,12 @@ public class SchematicComponent extends Drawing {
         serializer.toXML(this,writer);
         writer.close();
     }
+
+    /**
+     * Do post read fixups
+     */
+    @SuppressWarnings("unused")
+    protected Object readResolve() {
+        return super.readResolve();
+    }
 }
