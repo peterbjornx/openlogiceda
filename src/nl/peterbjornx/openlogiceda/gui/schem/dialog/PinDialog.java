@@ -17,6 +17,11 @@ public class PinDialog extends JDialog {
     private JRadioButton eastRadioButton;
     private JRadioButton southRadioButton;
     private JRadioButton westRadioButton;
+    private JRadioButton normalRadioButton;
+    private JRadioButton invertedRadioButton;
+    private JRadioButton clockRadioButton;
+    private JRadioButton invertedClockRadioButton;
+    private ButtonGroup typeGroup;
     private ButtonGroup orientationGroup;
     private PinPart part;
 
@@ -67,12 +72,28 @@ public class PinDialog extends JDialog {
                 westRadioButton.setSelected(true);
                 break;
         }
+
+        switch( edit.getStyle() ){
+            case NORMAL:
+                normalRadioButton.setSelected(true);
+                break;
+            case INVERTED:
+                invertedRadioButton.setSelected(true);
+                break;
+            case INVERTED_CLOCK:
+                invertedClockRadioButton.setSelected(true);
+                break;
+            case CLOCK:
+                clockRadioButton.setSelected(true);
+                break;
+        }
         pinNameField.setText(edit.getName());
         this.part = edit;
     }
 
     private void onOK() {
         part.setOrientation(Rotation.valueOf(orientationGroup.getSelection().getActionCommand()));
+        part.setStyle(PinPart.PinStyle.valueOf(typeGroup.getSelection().getActionCommand()));
         part.setName(pinNameField.getText());
         dispose();
     }

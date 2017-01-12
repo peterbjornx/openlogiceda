@@ -41,7 +41,7 @@ public class PinPart extends CompSymbolPart{
     /**
      * The length of the actual pin line segment
      */
-    private static final int PIN_SPACING = 40;
+    private static final int PIN_SPACING = 100;
 
     /**
      * The font used to render the label
@@ -58,8 +58,14 @@ public class PinPart extends CompSymbolPart{
      */
     private String name;
 
+    /**
+     * The style of the pin
+     */
+    private PinStyle style = PinStyle.INVERTED_CLOCK;
+
     @XStreamOmitField
     private FontMetrics labelFontMetrics;
+    private static final int BUBBLE_DIAM = 50;
 
     public PinPart(String name, int x, int y) {
         this.name = name;
@@ -121,17 +127,23 @@ public class PinPart extends CompSymbolPart{
 
     @Override
     public void paintPart(TwoDGraphics g, double zoom) {
-        g.setStroke(3,false);
+        g.setStroke(15,false);
         g.setFont(labelFont);
         g.setColor(pinColour);
         if (selected)
             g.drawRect(-leftExtent,-topExtent,leftExtent+rightExtent,topExtent+bottomExtent);
         g.rotate(orientation.getAngle());
-        g.drawLine(0,0,PIN_LENGTH,0);
+        if ( style == PinStyle.INVERTED || style == PinStyle.INVERTED_CLOCK) {
+            g.drawLine(BUBBLE_DIAM, 0, PIN_LENGTH, 0);
+            g.drawOval(0, -BUBBLE_DIAM / 2, BUBBLE_DIAM, BUBBLE_DIAM);
+        } else
+            g.drawLine(0, 0, PIN_LENGTH, 0);
+        if ( style == PinStyle.INVERTED_CLOCK || style == PinStyle.CLOCK )
+            g.drawPolyline(new int[]{0,-PIN_SPACING,0},new int[]{-PIN_SPACING,0,PIN_SPACING},3);
         if (orientation == Rotation.WEST )
-            g.drawStringUpsideDown(name, 0, -labelFont.getSize()/4);
+            g.drawStringUpsideDown(name, -PIN_SPACING, -labelFont.getSize()/4);
         else
-            g.drawString(name, -g.getFontMetrics().stringWidth(name), labelFont.getSize()/4);
+            g.drawString(name, -g.getFontMetrics().stringWidth(name)-PIN_SPACING, labelFont.getSize()/4);
     }
 
     /**
@@ -141,6 +153,7 @@ public class PinPart extends CompSymbolPart{
     public DrawingPart copy() {
         PinPart p = new PinPart(name,x,y);
         p.orientation = orientation;
+        p.style = style;
         p.updateSize();
         return p;
     }
@@ -159,4 +172,26 @@ public class PinPart extends CompSymbolPart{
         this.name = name;
         updateSize();
     }
+
+    /**
+     * Gets the style of the pin
+     */
+    public PinStyle getStyle() {
+        return style;
+    }
+
+    /**
+     * Sets the style of the pin
+     */
+    public void setStyle(PinStyle style) {
+        this.style = style;
+    }
+
+    public enum PinStyle {
+        NORMAL,
+        INVERTED,
+        CLOCK,
+        INVERTED_CLOCK
+    }
+
 }
