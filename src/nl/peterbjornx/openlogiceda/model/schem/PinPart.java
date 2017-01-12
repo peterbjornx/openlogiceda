@@ -84,25 +84,25 @@ public class PinPart extends CompSymbolPart{
                 rightExtent = PIN_LENGTH;
                 topExtent = PIN_SPACING;
                 bottomExtent = PIN_SPACING;
-                leftExtent = labelFontMetrics.stringWidth(name);
+                leftExtent = labelFontMetrics.stringWidth(name)+PIN_SPACING;
                 break;
             case WEST:
                 leftExtent = PIN_LENGTH;
                 topExtent = PIN_SPACING;
                 bottomExtent = PIN_SPACING;
-                rightExtent = labelFontMetrics.stringWidth(name);
+                rightExtent = labelFontMetrics.stringWidth(name)+PIN_SPACING;
                 break;
             case NORTH:
                 topExtent = PIN_LENGTH;
                 rightExtent = PIN_SPACING;
                 leftExtent = PIN_SPACING;
-                bottomExtent = labelFontMetrics.stringWidth(name);
+                bottomExtent = labelFontMetrics.stringWidth(name)+PIN_SPACING;
                 break;
             case SOUTH:
                 bottomExtent = PIN_LENGTH;
                 rightExtent = PIN_SPACING;
                 leftExtent = PIN_SPACING;
-                topExtent = labelFontMetrics.stringWidth(name);
+                topExtent = labelFontMetrics.stringWidth(name)+PIN_SPACING;
                 break;
         }
 
