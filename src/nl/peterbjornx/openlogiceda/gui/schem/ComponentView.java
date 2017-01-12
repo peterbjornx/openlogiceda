@@ -20,7 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import nl.peterbjornx.openlogiceda.config.GlobalConfig;
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
-import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 import nl.peterbjornx.openlogiceda.model.schem.*;
 
@@ -42,7 +41,7 @@ public class ComponentView extends DrawingView {
     public final static int MODE_PIN = 1;
     public final static int MODE_RECT = 2;
     public final static int MODE_LINE = 3;
-    public final static int MODE_LABEL = 4;
+    public final static int MODE_TEXT = 4;
     private EditState editState = STATE_NORMAL;
     private File openFile = null;
     private Stack<String> undoStack = new Stack<>();
@@ -477,10 +476,14 @@ public class ComponentView extends DrawingView {
                 return true;
             switch (editMode) {
                 case MODE_PIN:
-                    add(new PinPart("", cursorX, cursorY));
+                    add(new PinPart());
                     return true;
                 case MODE_RECT:
                     addShape(new CompRectPart());
+                    return true;
+                case MODE_TEXT:
+                    add(new TextPart());
+                    return true;
             }
         }
         return false;
@@ -489,6 +492,8 @@ public class ComponentView extends DrawingView {
     public void add(CompSymbolPart p){
         markUndo();
         editState = STATE_ADD;
+        p.setX(cursorX);
+        p.setY(cursorY);
         addPart(p);
         setSelectMultiple(false);
         selectPart(p);

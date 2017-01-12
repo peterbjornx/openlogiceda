@@ -20,8 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 /**
@@ -96,7 +94,7 @@ public class ComponentEditor {
             case ComponentView.MODE_PIN:
                 pinModeBtn.setSelected(true);
                 break;
-            case ComponentView.MODE_LABEL:
+            case ComponentView.MODE_TEXT:
                 textModeBtn.setSelected(true);
                 break;
             case ComponentView.MODE_RECT:
@@ -120,7 +118,7 @@ public class ComponentEditor {
                 componentView.setEditMode(ComponentView.MODE_RECT);
                 break;
             case "T":
-                componentView.setEditMode(ComponentView.MODE_LABEL);
+                componentView.setEditMode(ComponentView.MODE_TEXT);
                 break;
             case "L":
                 componentView.setEditMode(ComponentView.MODE_LINE);

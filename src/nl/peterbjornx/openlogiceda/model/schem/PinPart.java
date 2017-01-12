@@ -67,10 +67,7 @@ public class PinPart extends CompSymbolPart{
     private FontMetrics labelFontMetrics;
     private static final int BUBBLE_DIAM = 100;
 
-    public PinPart(String name, int x, int y) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
+    public PinPart() {
         updateSize();
     }
 
@@ -151,7 +148,10 @@ public class PinPart extends CompSymbolPart{
      */
     @Override
     public DrawingPart copy() {
-        PinPart p = new PinPart(name,x,y);
+        PinPart p = new PinPart();
+        p.setX(x);
+        p.setY(y);
+        p.setName(name);
         p.orientation = orientation;
         p.style = style;
         p.updateSize();
