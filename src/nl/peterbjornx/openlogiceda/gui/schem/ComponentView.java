@@ -294,7 +294,7 @@ public class ComponentView extends DrawingView {
             });
             chooser.setMode(FileDialog.SAVE);
             chooser.setMultipleMode(false);
-            chooser.setLocationRelativeTo(this);
+            chooser.setLocationByPlatform(true);
             chooser.setVisible(true);
             if ( chooser.getFile() == null)
                 return false;
@@ -333,7 +333,7 @@ public class ComponentView extends DrawingView {
             });
             chooser.setMode(FileDialog.LOAD);
             chooser.setMultipleMode(false);
-            chooser.setLocationRelativeTo(this);
+            chooser.setLocationByPlatform(true);
             chooser.setVisible(true);
             if ( chooser.getFile() == null)
                 return false;
@@ -493,7 +493,6 @@ public class ComponentView extends DrawingView {
         addPart(p);
         setSelectMultiple(false);
         selectPart(p);
-        p.edit(this);
     }
 
     @Override
