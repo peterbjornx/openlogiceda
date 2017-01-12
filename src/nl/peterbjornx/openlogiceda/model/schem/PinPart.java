@@ -65,7 +65,7 @@ public class PinPart extends CompSymbolPart{
 
     @XStreamOmitField
     private FontMetrics labelFontMetrics;
-    private static final int BUBBLE_DIAM = 50;
+    private static final int BUBBLE_DIAM = 100;
 
     public PinPart(String name, int x, int y) {
         this.name = name;
