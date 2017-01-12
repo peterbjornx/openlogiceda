@@ -27,6 +27,7 @@ public class PinDialog extends JDialog {
 
     public PinDialog(ComponentView view, PinPart edit) {
         this.view = view;
+        setTitle("Edit pin");
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -105,7 +106,7 @@ public class PinDialog extends JDialog {
 
     public static void showDialog(ComponentView view,PinPart edit) {
         PinDialog dialog = new PinDialog(view,edit);
-        dialog.setLocationRelativeTo(view);
+        dialog.setLocationByPlatform(true);
         dialog.pack();
         dialog.setVisible(true);
     }

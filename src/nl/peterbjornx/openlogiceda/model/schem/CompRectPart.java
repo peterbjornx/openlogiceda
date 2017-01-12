@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.RectDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -29,22 +30,22 @@ import java.awt.*;
  */
 @XStreamAlias("comprect")
 public class CompRectPart extends  CompSymbolPart {
-    private Color normalColour = Color.BLUE;
+    private Color lineColour = Color.BLUE;
     private int lineWidth = 15;
 
     @Override
     public void edit(ComponentView editor) {
-
+        RectDialog.main(editor,this);
     }
 
     @Override
     public void paintPart(TwoDGraphics g, double zoom) {
         if ( selected )
-            g.setColor(new Color(255-normalColour.getRed(),
-                    255-normalColour.getGreen(),
-                    255-normalColour.getBlue()));
+            g.setColor(new Color(255- lineColour.getRed(),
+                    255- lineColour.getGreen(),
+                    255- lineColour.getBlue()));
         else
-            g.setColor(normalColour);
+            g.setColor(lineColour);
         g.setStroke(lineWidth,false);
         g.drawRect(-leftExtent,-topExtent,leftExtent+rightExtent,topExtent+bottomExtent);
     }
@@ -60,5 +61,21 @@ public class CompRectPart extends  CompSymbolPart {
         rect.setTopExtent(getTopExtent());
         rect.setRightExtent(getRightExtent());
         return rect;
+    }
+
+    public Color getLineColour() {
+        return lineColour;
+    }
+
+    public void setLineWidth(int lineWidth) {
+        this.lineWidth = lineWidth;
+    }
+
+    public int getLineWidth() {
+        return lineWidth;
+    }
+
+    public void setLineColour(Color lineColour) {
+        this.lineColour = lineColour;
     }
 }
