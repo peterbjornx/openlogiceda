@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.config.GlobalConfig;
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
@@ -28,7 +29,9 @@ import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -214,35 +217,81 @@ public class ComponentView extends DrawingView {
     }
 
     private boolean saveAsDialog() {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Schematic Components", "cmp");
-        chooser.setFileFilter(filter);
-        chooser.setDialogTitle("Save As");
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setDialogType(JFileChooser.SAVE_DIALOG);
-        int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            openFile = chooser.getSelectedFile();
+        if (GlobalConfig.getUseAWTFileDialog()) {
+            FileDialog chooser = new FileDialog((Frame)null,"Test");
+            chooser.setFilenameFilter(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    if (name.toLowerCase().endsWith(".cmp"))
+                        return true;
+                    else if (name.toLowerCase().endsWith(".xml"))
+                        return true;
+                    else
+                        return false;
+                }
+            });
+            chooser.setMode(FileDialog.SAVE);
+            chooser.setMultipleMode(false);
+            chooser.setLocationRelativeTo(this);
+            chooser.setVisible(true);
+            if ( chooser.getFile() == null)
+                return false;
+            openFile = new File(chooser.getDirectory()+chooser.getFile());
             return true;
+        } else {
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Schematic Components", "cmp");
+            chooser.setFileFilter(filter);
+            chooser.setDialogTitle("Save As");
+            chooser.setMultiSelectionEnabled(false);
+            chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                openFile = chooser.getSelectedFile();
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 
     private boolean openDialog() {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "Schematic Components", "cmp","xml");
-        chooser.setFileFilter(filter);
-        chooser.setDialogTitle("Save As");
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setDialogType(JFileChooser.OPEN_DIALOG);
-        int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            openFile = chooser.getSelectedFile();
+        if (GlobalConfig.getUseAWTFileDialog()) {
+            FileDialog chooser = new FileDialog((Frame)null,"Test");
+            chooser.setFilenameFilter(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    if (name.toLowerCase().endsWith(".cmp"))
+                        return true;
+                    else if (name.toLowerCase().endsWith(".xml"))
+                        return true;
+                    else
+                        return false;
+                }
+            });
+            chooser.setMode(FileDialog.LOAD);
+            chooser.setMultipleMode(false);
+            chooser.setLocationRelativeTo(this);
+            chooser.setVisible(true);
+            if ( chooser.getFile() == null)
+                return false;
+            openFile = new File(chooser.getDirectory()+chooser.getFile());
             return true;
+        } else {
+            JFileChooser chooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                    "Schematic Components", "cmp","xml");
+            chooser.setFileFilter(filter);
+            chooser.setDialogTitle("Open");
+            chooser.setMultiSelectionEnabled(false);
+            chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                openFile = chooser.getSelectedFile();
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 
     private void buildPartMenu(CompSymbolPart part, JComponent menu) {

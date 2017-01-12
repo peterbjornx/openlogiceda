@@ -53,8 +53,8 @@ public class ComponentEditor {
         save.addActionListener(e->componentView.saveComponent());
         file.addSeparator();
         JMenuItem quit = file.add("Quit");
-        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
-        save.addActionListener(e->quitAction());
+        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
+        quit.addActionListener(e->quitAction());
 
         selectModeBtn.addActionListener(e -> updateFromMode());
         pinModeBtn.addActionListener(e -> updateFromMode());
