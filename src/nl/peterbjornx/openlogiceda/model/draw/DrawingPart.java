@@ -42,22 +42,22 @@ public abstract class DrawingPart {
     /**
      * The size of the part to the left of the center
      */
-    protected int leftExtent;
+    protected int leftExtent = 0;
 
     /**
      * The size of the part to the right of the center
      */
-    protected int rightExtent;
+    protected int rightExtent = 0;
 
     /**
      * The size of the part above the center
      */
-    protected int topExtent;
+    protected int topExtent = 0;
 
     /**
      * The size of the part below the center
      */
-    protected int bottomExtent;
+    protected int bottomExtent = 0;
 
     /**
      * Whether this part was selected

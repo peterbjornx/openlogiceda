@@ -22,10 +22,7 @@ import nl.peterbjornx.openlogiceda.config.KeyBindings;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
-import nl.peterbjornx.openlogiceda.model.schem.CompSymbolPart;
-import nl.peterbjornx.openlogiceda.model.schem.PinPart;
-import nl.peterbjornx.openlogiceda.model.schem.Rotation;
-import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
+import nl.peterbjornx.openlogiceda.model.schem.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -442,7 +439,7 @@ public class ComponentView extends DrawingView {
 
     @Override
     protected boolean onMouseClick(int button, int x, int y) {
-        if ( editState == STATE_ADD || editState == STATE_MOVE ) {
+        if ( editState == STATE_ADD || editState == STATE_MOVE || editState == STATE_ADD_SHAPE ) {
             editState = STATE_NORMAL;
         } else if ( editState == STATE_NORMAL ) {
             if (super.onMouseClick(button, x, y))
@@ -451,6 +448,8 @@ public class ComponentView extends DrawingView {
                 case MODE_PIN:
                     add(new PinPart("", cursorX, cursorY));
                     return true;
+                case MODE_RECT:
+                    addShape(new CompRectPart());
             }
         }
         return false;
@@ -459,6 +458,17 @@ public class ComponentView extends DrawingView {
     public void add(CompSymbolPart p){
         markUndo();
         editState = STATE_ADD;
+        addPart(p);
+        setSelectMultiple(false);
+        selectPart(p);
+        p.edit(this);
+    }
+
+    public void addShape(CompSymbolPart p){
+        markUndo();
+        editState = STATE_ADD_SHAPE;
+        p.setX(cursorX);
+        p.setY(cursorY);
         addPart(p);
         setSelectMultiple(false);
         selectPart(p);
@@ -479,7 +489,35 @@ public class ComponentView extends DrawingView {
             }
             repaint();
             return true;
+        } else if ( editState == STATE_ADD_SHAPE ) {
+            List<DrawingPart> parts = getSelectedParts();
+            for (DrawingPart _p : parts ){
+                int top = _p.getTop();
+                int left = _p.getLeft();
+                int right = roundToGrid(x);
+                int bottom = roundToGrid(y);
+                _p.setX((left+right)/2);
+                _p.setY((top+bottom)/2);
+                if ( right >= left ){
+                    _p.setLeftExtent(_p.getX() - left);
+                    _p.setRightExtent(right - _p.getX());
+                } else {
+                    _p.setRightExtent(left - _p.getX());
+                    _p.setLeftExtent(_p.getX() - right);
+                }
+                if ( bottom >= top ){
+                    _p.setTopExtent(_p.getY() - top);
+                    _p.setBottomExtent(bottom - _p.getY());
+                } else {
+                    _p.setBottomExtent(top - _p.getY());
+                    _p.setTopExtent(_p.getY() - bottom);
+                }
+
+            }
+            repaint();
+            return true;
         }
+
         return false;
     }
 
@@ -496,6 +534,8 @@ public class ComponentView extends DrawingView {
     public void cancel() {
         if ( editState == STATE_ADD ) {
             deleteSelection();
+        } else if ( editState == STATE_ADD_SHAPE ) {
+            deleteSelection();
         }
         editState = STATE_NORMAL;
     }
@@ -503,6 +543,7 @@ public class ComponentView extends DrawingView {
     public enum EditState {
         STATE_NORMAL,
         STATE_MOVE,
-        STATE_ADD
+        STATE_ADD,
+        STATE_ADD_SHAPE
     }
 }
