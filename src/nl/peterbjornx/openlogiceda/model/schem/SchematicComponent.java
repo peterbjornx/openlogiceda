@@ -59,6 +59,7 @@ public class SchematicComponent extends Drawing {
         serializer.processAnnotations(CompSymbolPart.class);
         serializer.processAnnotations(Drawing.class);
         serializer.processAnnotations(DrawingPart.class);
+        serializer.processAnnotations(CompRectPart.class);
     }
 
     /**
