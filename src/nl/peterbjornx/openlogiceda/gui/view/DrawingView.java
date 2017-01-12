@@ -70,6 +70,11 @@ public class DrawingView extends GridView {
     private boolean selectMultiple = false;
 
     /**
+     * Whether the user activated select multiple mode
+     */
+    private boolean userSelectMultiple = false;
+
+    /**
      * Creates a new drawing view
      * @param drawing The drawing to view/edit
      */
@@ -152,7 +157,10 @@ public class DrawingView extends GridView {
         List<DrawingPart> parts = getSelectedParts();
         if ( (multiple && parts.isEmpty()) || ((!multiple) && parts.size() != 1) ) {
             setSelectMultiple(multiple);
-            select(null, listener);
+            select(null, p-> {
+                listener.handle(p);
+                restoreSelectMultiple();
+            });
         } else
             listener.handle(parts);
 
@@ -209,7 +217,7 @@ public class DrawingView extends GridView {
         if ( super.onKeyDown( kc ))
             return true;
         if ( kc == KeyBindings.getDrawingSelectMultiple() ) {
-            selectMultiple = true;
+            userSelectMultiple = selectMultiple = true;
             return true;
         }
         return false;
@@ -220,10 +228,17 @@ public class DrawingView extends GridView {
         if ( super.onKeyUp( kc ))
             return true;
         if ( kc == KeyBindings.getDrawingSelectMultiple() ) {
-            selectMultiple = false;
+            userSelectMultiple = selectMultiple = false;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Set selectMultiple to the users entered state
+     */
+    protected void restoreSelectMultiple() {
+        selectMultiple = userSelectMultiple;
     }
 
     /**

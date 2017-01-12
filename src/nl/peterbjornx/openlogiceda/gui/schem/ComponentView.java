@@ -136,6 +136,14 @@ public class ComponentView extends DrawingView {
         },true);
     }
 
+    private void resizeAction() {
+        markUndo();
+        doAction(null, parts -> {
+            editState = STATE_RESIZE;
+            repaint();
+        },true);
+    }
+
     /**
      * Initiates the move action
      */
@@ -389,6 +397,16 @@ public class ComponentView extends DrawingView {
             delete();
         });
         menu.add(item);
+        if ( part instanceof CompRectPart ) {
+            item = new JMenuItem("Resize");
+            //item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentRes(), 0));
+            item.addActionListener(e -> {
+                setSelectMultiple(false);
+                selectPart(part);
+                resizeAction();
+            });
+            menu.add(item);
+        }
     }
 
     private void buildBlockMenu(List<DrawingPart> parts, JComponent menu) {
@@ -439,7 +457,10 @@ public class ComponentView extends DrawingView {
 
     @Override
     protected boolean onMouseClick(int button, int x, int y) {
-        if ( editState == STATE_ADD || editState == STATE_MOVE || editState == STATE_ADD_SHAPE ) {
+        if ( editState == STATE_ADD ||
+                editState == STATE_MOVE ||
+                editState == STATE_ADD_SHAPE ||
+                editState == STATE_RESIZE ) {
             editState = STATE_NORMAL;
         } else if ( editState == STATE_NORMAL ) {
             if (super.onMouseClick(button, x, y))
@@ -489,7 +510,7 @@ public class ComponentView extends DrawingView {
             }
             repaint();
             return true;
-        } else if ( editState == STATE_ADD_SHAPE ) {
+        } else if ( editState == STATE_ADD_SHAPE || editState == STATE_RESIZE ) {
             List<DrawingPart> parts = getSelectedParts();
             for (DrawingPart _p : parts ){
                 int top = _p.getTop();
@@ -544,6 +565,7 @@ public class ComponentView extends DrawingView {
         STATE_NORMAL,
         STATE_MOVE,
         STATE_ADD,
-        STATE_ADD_SHAPE
+        STATE_ADD_SHAPE,
+        STATE_RESIZE
     }
 }

@@ -52,6 +52,8 @@ public class CompRectPart extends  CompSymbolPart {
     @Override
     public DrawingPart copy() {
         CompRectPart rect = new CompRectPart();
+        rect.setX(x);
+        rect.setY(y);
         rect.setOrientation(getOrientation());
         rect.setBottomExtent(getBottomExtent());
         rect.setLeftExtent(getLeftExtent());
