@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.CompEditDialog;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.schem.*;
 
@@ -115,5 +116,9 @@ public class ComponentView extends BaseSchematicView {
                 return true;
         }
         return false;
+    }
+
+    public void props() {
+        CompEditDialog.main((SchematicComponent)getDrawing());
     }
 }

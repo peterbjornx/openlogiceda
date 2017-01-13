@@ -68,6 +68,11 @@ public class ComponentEditor {
         redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
         redo.addActionListener(e->componentView.redo());
         edit.addSeparator();
+        JMenuItem prop = edit.add("Component properties");
+        //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
+        //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
+        prop.addActionListener(e->componentView.props());
+        edit.addSeparator();
         JMenuItem prefs = edit.add("Preferences");
         //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
