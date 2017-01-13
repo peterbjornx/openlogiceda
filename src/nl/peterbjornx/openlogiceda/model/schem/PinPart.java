@@ -19,8 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import nl.peterbjornx.openlogiceda.config.SchematicColours;
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
-import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.PinDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
@@ -48,11 +48,6 @@ public class PinPart extends BaseSchematicPart {
      * The font used to render the label
      */
     private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 160);
-
-    /**
-     * The colour of the pin
-     */
-    private static Color pinColour = Color.BLACK;
 
     /**
      * The name of the pin
@@ -127,7 +122,7 @@ public class PinPart extends BaseSchematicPart {
     public void paintPart(TwoDGraphics g, double zoom) {
         g.setStroke(15,false);
         g.setFont(labelFont);
-        g.setColor(pinColour);
+        g.setColor(SchematicColours.pinColour);
         if (selected)
             g.drawRect(-leftExtent,-topExtent,leftExtent+rightExtent,topExtent+bottomExtent);
         g.rotate(orientation.getAngle());

@@ -19,8 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import nl.peterbjornx.openlogiceda.config.SchematicColours;
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
-import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.TextDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
@@ -42,7 +42,7 @@ public class TextPart extends BaseSchematicPart {
     /**
      * The colour of the text
      */
-    private Color textColour = Color.BLACK;
+    private Color textColour = SchematicColours.getDefaultTextColour();
 
     /**
      * The name of the text

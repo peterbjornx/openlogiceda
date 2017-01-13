@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import nl.peterbjornx.openlogiceda.config.SchematicColours;
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.LineDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
@@ -30,7 +31,7 @@ import java.awt.*;
  */
 @XStreamAlias("line")
 public class LinePart extends BaseSchematicPart {
-    protected Color lineColour = Color.BLUE;
+    protected Color lineColour = SchematicColours.getDefaultShapeColour();
     protected int lineWidth = 15;
 
     @Override

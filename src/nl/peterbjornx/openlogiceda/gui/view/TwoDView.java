@@ -19,6 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
+import nl.peterbjornx.openlogiceda.config.SchematicColours;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,11 +37,6 @@ public abstract class TwoDView extends JPanel implements MouseListener,
      * The mouse button bound to drag.
      */
     private static final int DRAG_BUTTON = MouseEvent.BUTTON2;
-
-    /**
-     * The colour of the background
-     */
-    private Color backgroundColour = Color.WHITE;
 
     /**
      * The width of the view
@@ -218,7 +214,7 @@ public abstract class TwoDView extends JPanel implements MouseListener,
         viewportRight = Integer.min(viewWidth,screenToViewX( getWidth() ));
         viewportBottom = Integer.min(viewHeight,screenToViewY( getHeight() ));
 
-        graphics.setColor( backgroundColour );
+        graphics.setColor(SchematicColours.getBackgroundColour());
         graphics.fillRect( 0, 0, viewWidth, viewHeight);
 
         this.graphics = new TwoDGraphics(this,graphics);
@@ -326,20 +322,6 @@ public abstract class TwoDView extends JPanel implements MouseListener,
     @Override
     public void keyReleased(KeyEvent e) {
         onKeyUp( e.getKeyCode() );
-    }
-
-    /**
-     * Gets the background colour
-     */
-    public Color getBackgroundColour() {
-        return backgroundColour;
-    }
-
-    /**
-     * Sets the background colour
-     */
-    public void setBackgroundColour(Color backgroundColour) {
-        this.backgroundColour = backgroundColour;
     }
 
     /**

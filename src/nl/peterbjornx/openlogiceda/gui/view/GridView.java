@@ -17,23 +17,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.config.SchematicColours;
+
 import java.awt.*;
+
+import static nl.peterbjornx.openlogiceda.config.SchematicColours.getBackgroundColour;
 
 /**
  * A version of Two2DView that has a configurable grid
  * @author Peter Bosch
  */
 public class GridView extends TwoDView {
-
-    /**
-     * The colour of the grid
-     */
-    private Color gridColour = Color.BLACK;
-
-    /**
-     * The colour used to render the cursor
-     */
-    private Color cursorColour = Color.BLACK;
 
     /**
      * Whether or not to use a screen filling cursor
@@ -70,7 +64,7 @@ public class GridView extends TwoDView {
      */
     private void drawGridPoint( int x, int y ){
         graphics.setStroke(gridRadius,false);
-        graphics.setColor(gridColour);
+        graphics.setColor(SchematicColours.gridColour);
         graphics.drawLine(x,y,x,y);
     }
 
@@ -91,7 +85,7 @@ public class GridView extends TwoDView {
 
     protected void drawCursor() {
         graphics.setColor(getBackgroundColour());
-        graphics.setXORMode(cursorColour);
+        graphics.setXORMode(SchematicColours.cursorColour);
         graphics.setStroke(cursorWidth,false);
         if ( longCursor ) {
             graphics.drawLine(viewportLeft, cursorY, viewportRight, cursorY);
@@ -139,13 +133,13 @@ public class GridView extends TwoDView {
      * Sets the colour of the grid
      */
     public Color getGridColour() {
-        return gridColour;
+        return SchematicColours.gridColour;
     }
 
     /**
      * Gets the colour of the grid
      */
     public void setGridColour(Color gridColour) {
-        this.gridColour = gridColour;
+        SchematicColours.gridColour = gridColour;
     }
 }

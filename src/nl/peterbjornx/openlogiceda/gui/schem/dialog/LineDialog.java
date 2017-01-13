@@ -47,13 +47,13 @@ public class LineDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         part = p;
-        colourButton.setForeground(p.getLineColour());
+        colourButton.setBackground(p.getLineColour());
         lineWidthTextField.setText(String.valueOf(p.getLineWidth()));
 
         colourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colourButton.setForeground(ColourDialog.choose(contentPane,colourButton.getForeground()));
+                colourButton.setBackground(ColourDialog.choose(contentPane,colourButton.getBackground()));
             }
         });
     }
@@ -70,7 +70,7 @@ public class LineDialog extends JDialog {
             return;
         }
         part.setLineWidth(Integer.parseInt(lineWidthTextField.getText()));
-        part.setLineColour(colourButton.getForeground());
+        part.setLineColour(colourButton.getBackground());
         dispose();
     }
 

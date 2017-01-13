@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 
 import javax.swing.*;
@@ -66,6 +67,11 @@ public class ComponentEditor {
         redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
         redo.addActionListener(e->componentView.redo());
+        edit.addSeparator();
+        JMenuItem prefs = edit.add("Preferences");
+        //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
+        //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
+        prefs.addActionListener(e-> SettingDialog.main());
         edit.addSeparator();
 
         selectModeBtn.addActionListener(e -> updateFromMode());
