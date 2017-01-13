@@ -18,9 +18,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
+import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.schem.*;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -67,10 +69,12 @@ public class ComponentView extends BaseSchematicView {
         }
         return false;
     }
+
     public FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter(
                 "Schematic Components", "cmp","xml");
     }
+
     public boolean isAcceptedFilename(File dir, String name){
         if (name.toLowerCase().endsWith(".cmp"))
             return true;
@@ -78,6 +82,18 @@ public class ComponentView extends BaseSchematicView {
             return true;
         else
             return false;
+    }
+
+    @Override
+    protected void paintBackground() {
+        super.paintBackground();
+        graphics.setStroke(5,false);
+        graphics.setColor( Color.RED );
+        Drawing d = getDrawing();
+        int w = d.getWidth();
+        int h = d.getHeight();
+        graphics.drawLine(0, h/2, w, h/2);
+        graphics.drawLine(w/2, 0, w/2, h);
     }
 
     @Override

@@ -316,6 +316,7 @@ public class DrawingView extends GridView {
     @Override
     protected void paintView() {
         super.paintView();
+        paintBackground();
         List<DrawingPart> parts = drawing.getParts();
         for ( DrawingPart d : parts ){
             TwoDGraphics p = graphics.create();
@@ -324,6 +325,11 @@ public class DrawingView extends GridView {
         }
         drawCursor();
     }
+
+    /**
+     * Paint things on top of the grid but behind the parts
+     */
+    protected void paintBackground() {}
 
     /**
      * Call the selection change listeners
