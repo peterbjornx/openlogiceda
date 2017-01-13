@@ -41,7 +41,7 @@ public class DrawingIO {
         serializer.processAnnotations(BaseSchematicPart.class);
         serializer.processAnnotations(Drawing.class);
         serializer.processAnnotations(DrawingPart.class);
-        serializer.processAnnotations(CompRectPart.class);
+        serializer.processAnnotations(RectanglePart.class);
         serializer.processAnnotations(TextPart.class);
     }
 

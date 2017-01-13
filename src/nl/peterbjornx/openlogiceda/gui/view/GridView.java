@@ -69,7 +69,7 @@ public class GridView extends TwoDView {
      * Draws a grid point
      */
     private void drawGridPoint( int x, int y ){
-        graphics.setStroke(gridRadius,true);
+        graphics.setStroke(gridRadius,false);
         graphics.setColor(gridColour);
         graphics.drawLine(x,y,x,y);
     }

@@ -105,7 +105,10 @@ public class ComponentView extends BaseSchematicView {
                 add(new PinPart());
                     return true;
             case MODE_RECT:
-                addShape(new CompRectPart());
+                addShape(new RectanglePart());
+                return true;
+            case MODE_LINE:
+                addShape(new LinePart());
                 return true;
             case MODE_TEXT:
                 add(new TextPart());

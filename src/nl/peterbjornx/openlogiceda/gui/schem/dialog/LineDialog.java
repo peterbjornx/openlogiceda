@@ -1,21 +1,21 @@
 package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 
-import nl.peterbjornx.openlogiceda.model.schem.CompRectPart;
-import org.w3c.dom.css.Rect;
+import nl.peterbjornx.openlogiceda.model.schem.LinePart;
+import nl.peterbjornx.openlogiceda.model.schem.RectanglePart;
 
 import javax.swing.*;
 import java.awt.event.*;
 
-public class RectDialog extends JDialog {
-    private final CompRectPart part;
+public class LineDialog extends JDialog {
+    private final LinePart part;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField lineWidthTextField;
     private JButton colourButton;
 
-    public RectDialog(CompRectPart p) {
-        setTitle("Edit rectangle");
+    public LineDialog(LinePart p) {
+        setTitle("Edit shape");
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -78,8 +78,8 @@ public class RectDialog extends JDialog {
         dispose();
     }
 
-    public static void main(JComponent c, CompRectPart p) {
-        RectDialog dialog = new RectDialog(p);
+    public static void main(JComponent c, LinePart p) {
+        LineDialog dialog = new LineDialog(p);
         dialog.pack();
         dialog.setLocationByPlatform(true);
         dialog.setVisible(true);

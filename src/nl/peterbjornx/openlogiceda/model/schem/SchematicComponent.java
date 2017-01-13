@@ -42,8 +42,9 @@ public class SchematicComponent extends Drawing {
         io.getSerializer().processAnnotations(BaseSchematicPart.class);
         io.getSerializer().processAnnotations(Drawing.class);
         io.getSerializer().processAnnotations(DrawingPart.class);
-        io.getSerializer().processAnnotations(CompRectPart.class);
+        io.getSerializer().processAnnotations(RectanglePart.class);
         io.getSerializer().processAnnotations(TextPart.class);
+        io.getSerializer().processAnnotations(LinePart.class);
     }
 
     /**

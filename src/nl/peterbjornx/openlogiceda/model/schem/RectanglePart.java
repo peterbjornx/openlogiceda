@@ -19,8 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
-import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
-import nl.peterbjornx.openlogiceda.gui.schem.dialog.RectDialog;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.LineDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
@@ -30,13 +29,11 @@ import java.awt.*;
  * @author Peter Bosch
  */
 @XStreamAlias("comprect")
-public class CompRectPart extends BaseSchematicPart {
-    private Color lineColour = Color.BLUE;
-    private int lineWidth = 15;
+public class RectanglePart extends LinePart {
 
     @Override
     public void edit(BaseSchematicView editor) {
-        RectDialog.main(editor,this);
+        LineDialog.main(editor,this);
     }
 
     @Override
@@ -53,7 +50,7 @@ public class CompRectPart extends BaseSchematicPart {
 
     @Override
     public DrawingPart copy() {
-        CompRectPart rect = new CompRectPart();
+        RectanglePart rect = new RectanglePart();
         rect.setX(x);
         rect.setY(y);
         rect.setOrientation(getOrientation());

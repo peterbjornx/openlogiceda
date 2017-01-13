@@ -39,7 +39,7 @@ import static nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView.EditState.
  */
 public abstract class BaseSchematicView extends DrawingView {
     private BaseSchematicView.EditState editState = STATE_NORMAL;
-    private Stack<String> undoStack = new Stack<>();
+    private final Stack<String> undoStack = new Stack<>();
     private Stack<String> redoStack = new Stack<>();
     private File openFile = null;
 
@@ -247,37 +247,43 @@ public abstract class BaseSchematicView extends DrawingView {
      * Undoes the last change
      */
     public void undo() {
-        if (undoStack.isEmpty())
-            return;
-        Drawing c= getDrawing();
-        String lastChange = c.getIO().store(c);
-        redoStack.push(lastChange);
-        setDrawing(c.getIO().load(undoStack.pop()));
-        repaint();
+        synchronized (undoStack) {
+            if (undoStack.isEmpty())
+                return;
+            Drawing c = getDrawing();
+            String lastChange = c.getIO().store(c);
+            redoStack.push(lastChange);
+            setDrawing(c.getIO().load(undoStack.pop()));
+            repaint();
+        }
     }
 
     /**
      * Redoes the last undone change
      */
     public void redo() {
-        if (redoStack.isEmpty())
-            return;
-        Drawing c= getDrawing();
-        String lastChange = c.getIO().store(c);
-        undoStack.push(lastChange);
-        setDrawing(c.getIO().load(redoStack.pop()));
-        repaint();
+        synchronized (undoStack) {
+            if (redoStack.isEmpty())
+                return;
+            Drawing c = getDrawing();
+            String lastChange = c.getIO().store(c);
+            undoStack.push(lastChange);
+            setDrawing(c.getIO().load(redoStack.pop()));
+            repaint();
+        }
     }
 
     /**
      * Stores a change for undo
      */
     private void markUndo() {
-        if (!redoStack.isEmpty())
-            redoStack.clear();
-        Drawing c= getDrawing();
-        String lastChange = c.getIO().store(c);
-        undoStack.push(lastChange);
+        synchronized (undoStack) {
+            if (!redoStack.isEmpty())
+                redoStack.clear();
+            Drawing c = getDrawing();
+            String lastChange = c.getIO().store(c);
+            undoStack.push(lastChange);
+        }
     }
 
 
@@ -371,7 +377,6 @@ public abstract class BaseSchematicView extends DrawingView {
     }
     protected void buildPartMenu(BaseSchematicPart part, JComponent menu) {
         JMenuItem item = new JMenuItem("Move");
-        System.out.println(getClass().getResource("/res/move.png"));
         item.setIcon(new ImageIcon(getClass().getResource("/res/move.png")));
         item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentMove(),0));
         item.addActionListener(e->{
@@ -416,7 +421,7 @@ public abstract class BaseSchematicView extends DrawingView {
             delete();
         });
         menu.add(item);
-        if ( part instanceof CompRectPart ) {
+        if ( part instanceof RectanglePart) {
             item = new JMenuItem("Resize");
             //item.setAccelerator(KeyStroke.getKeyStroke(KeyBindings.getComponentRes(), 0));
             item.addActionListener(e -> {
