@@ -195,4 +195,9 @@ public class PinPart extends BaseSchematicPart {
         INVERTED_CLOCK
     }
 
+    @Override
+    public String toString() {
+        return "Pin \""+name+"\"";
+    }
+
 }

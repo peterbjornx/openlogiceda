@@ -176,4 +176,9 @@ public class TextPart extends BaseSchematicPart {
     public Color getTextColour() {
         return textColour;
     }
+
+    @Override
+    public String toString() {
+        return "Text \""+text+"\"";
+    }
 }

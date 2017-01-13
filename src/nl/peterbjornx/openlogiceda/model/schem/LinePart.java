@@ -81,4 +81,9 @@ public class LinePart extends BaseSchematicPart {
     public void setLineColour(Color lineColour) {
         this.lineColour = lineColour;
     }
+
+    @Override
+    public String toString() {
+        return "Line ("+x+","+y+")";
+    }
 }

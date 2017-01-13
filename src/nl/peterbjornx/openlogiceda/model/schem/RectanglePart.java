@@ -76,4 +76,9 @@ public class RectanglePart extends LinePart {
     public void setLineColour(Color lineColour) {
         this.lineColour = lineColour;
     }
+
+    @Override
+    public String toString() {
+        return "Rectangle ("+x+","+y+")";
+    }
 }
