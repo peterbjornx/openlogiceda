@@ -22,6 +22,7 @@ import nl.peterbjornx.openlogiceda.config.SchematicColours;
 
 import java.awt.*;
 
+import static nl.peterbjornx.openlogiceda.config.GridConfig.gridSpacing;
 import static nl.peterbjornx.openlogiceda.config.SchematicColours.getBackgroundColour;
 
 /**
@@ -30,6 +31,7 @@ import static nl.peterbjornx.openlogiceda.config.SchematicColours.getBackgroundC
  */
 public class GridView extends TwoDView {
 
+    private static final int MAX_COUNT = 100 * 100;
     /**
      * The last detected X coordinate of the mouse in view coordinates
      */
@@ -41,6 +43,11 @@ public class GridView extends TwoDView {
     protected int cursorY;
 
     /**
+     * Rendered grid spacing
+     */
+    protected int renderedGridSpacing;
+
+    /**
      * Draws a grid point
      */
     private void drawGridPoint( int x, int y ){
@@ -50,17 +57,34 @@ public class GridView extends TwoDView {
     }
 
     private int roundDownToGrid(int c ) {
-        return ( c / GridConfig.gridSpacing ) * GridConfig.gridSpacing;
+        return ( c / renderedGridSpacing ) * renderedGridSpacing;
     }
 
     protected int roundToGrid( int c ) {
-        return ((c + GridConfig.gridSpacing/2) / GridConfig.gridSpacing) * GridConfig.gridSpacing;
+        return ((c + gridSpacing/2) / gridSpacing) * gridSpacing;
     }
 
     @Override
     protected void paintView() {
-        for (int x = roundDownToGrid(viewportLeft); x <= roundDownToGrid(viewportRight); x+= GridConfig.gridSpacing )
-            for (int y = roundDownToGrid(viewportTop); y <= roundDownToGrid(viewportBottom); y+= GridConfig.gridSpacing )
+        int factor = 1;
+        renderedGridSpacing = gridSpacing;
+        int lg = roundDownToGrid(viewportLeft);
+        int rg = roundDownToGrid(viewportRight);
+        int hc = (rg-lg)/renderedGridSpacing + 1;
+        int tg = roundDownToGrid(viewportTop);
+        int bg = roundDownToGrid(viewportBottom);
+        int vc = (bg-tg)/renderedGridSpacing + 1;
+        int c = hc * vc;
+        factor = 1;
+        while ( c/(factor*factor)> MAX_COUNT)
+            factor *= 2;
+        renderedGridSpacing = gridSpacing * factor;
+        lg = roundDownToGrid(viewportLeft);
+        rg = roundDownToGrid(viewportRight);
+        tg = roundDownToGrid(viewportTop);
+        bg = roundDownToGrid(viewportBottom);
+        for (int x = lg; x <= rg; x+= renderedGridSpacing )
+            for (int y = tg; y <= bg; y+= renderedGridSpacing )
                 drawGridPoint( roundDownToGrid(x), roundDownToGrid(y) );
     }
 

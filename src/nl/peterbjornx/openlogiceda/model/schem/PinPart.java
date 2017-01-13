@@ -42,12 +42,12 @@ public class PinPart extends BaseSchematicPart {
     /**
      * The length of the actual pin line segment
      */
-    private static final int PIN_SPACING = 100;
+    private static final int PIN_SPACING = 25;
 
     /**
      * The font used to render the label
      */
-    private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 160);
+    private static Font labelFont = new Font(Font.MONOSPACED, Font.PLAIN, 50);
 
     /**
      * The name of the pin
@@ -61,7 +61,7 @@ public class PinPart extends BaseSchematicPart {
 
     @XStreamOmitField
     private FontMetrics labelFontMetrics;
-    private static final int BUBBLE_DIAM = 100;
+    private static final int BUBBLE_DIAM = 50;
 
     public PinPart() {
         updateSize();
@@ -120,7 +120,7 @@ public class PinPart extends BaseSchematicPart {
 
     @Override
     public void paintPart(TwoDGraphics g, double zoom) {
-        g.setStroke(15,false);
+        g.setStroke(5,false);
         g.setFont(labelFont);
         g.setColor(SchematicColours.pinColour);
         if (selected)

@@ -36,7 +36,7 @@ public class GridConfig {
     /**
      * The spacing of the grid dots
      */
-    public static int gridSpacing = 200;
+    public static int gridSpacing = 50;
 
     public static boolean isLongCursor() {
         return longCursor;
