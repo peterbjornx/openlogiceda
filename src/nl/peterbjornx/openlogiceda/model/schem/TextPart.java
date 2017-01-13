@@ -116,8 +116,10 @@ public class TextPart extends BaseSchematicPart {
 
     @Override
     public void paintPart(TwoDGraphics g, double zoom) {
-        if (labelFont == null || labelFont.getSize() != fontSize)
+        if (labelFont == null || labelFont.getSize() != fontSize) {
             labelFont = new Font(Font.MONOSPACED, Font.PLAIN, fontSize);
+            labelFontMetrics = null;
+        }
         if (labelFontMetrics == null)
             updateSize();
         g.setStroke(2,false);
@@ -167,6 +169,7 @@ public class TextPart extends BaseSchematicPart {
 
     public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
+        updateSize();
     }
 
     public void setTextColour(Color textColour) {
