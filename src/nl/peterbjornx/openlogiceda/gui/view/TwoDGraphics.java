@@ -19,6 +19,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Wrapper routines to make drawing on a TwoDView easier
@@ -31,6 +35,7 @@ public class TwoDGraphics {
     private TwoDView view;
     private Graphics2D g;
     private Font upsideDownFont;
+    private HashMap<String, String> textVariables = new HashMap<>();
 
     TwoDGraphics( TwoDView view, Graphics2D g ) {
         this.view = view;
@@ -38,11 +43,57 @@ public class TwoDGraphics {
         upsideDownFont = getFont().deriveFont(AffineTransform.getRotateInstance(Math.PI));
     }
 
+    public void setVariable(String name, String val) {
+        textVariables.put(name,val);
+    }
+
+    private String doVarSub(String format) {
+        String out = "", var;
+        int pos = -1,len = format.length();
+        int start = -1,end;
+        boolean preStart = false;
+        while ( pos < len - 1 ) {
+            char c = format.charAt(++pos);
+            if ( start != -1 ) {
+                if ( c == '}' ) {
+                    end = pos;
+                    var = format.substring(start+1,end);
+                    if ( textVariables.containsKey(var) )
+                        out += textVariables.get(var);
+                    start = -1;
+                    continue;
+                } else
+                    continue;
+            }
+            if ( preStart ) {
+                if (c == '{') {
+                    start = pos;
+                    preStart = false;
+                    continue;
+                } else {
+                    out += "$";
+                    preStart = false;
+                }
+            }
+            if ( c == '$')
+                preStart = true;
+            else
+                out += c;
+
+        }
+        return out;
+    }
+
     /**
      * Creates a new graohics object
      */
     public TwoDGraphics create() {
-        return new TwoDGraphics( view, (Graphics2D) g.create() );
+        TwoDGraphics gd = new TwoDGraphics( view, (Graphics2D) g.create() );
+        Set<Map.Entry<String, String>> a = textVariables.entrySet();
+        for ( Map.Entry<String, String> b : a ) {
+            gd.setVariable(b.getKey(),b.getValue());
+        }
+        return gd;
     }
 
     /**
@@ -225,7 +276,7 @@ public class TwoDGraphics {
      * @since JDK1.0
      */
     public void drawString(String str, int x, int y) {
-        g.drawString(str, x, y);
+        g.drawString(doVarSub(str), x, y);
     }
 
     /**
@@ -254,7 +305,7 @@ public class TwoDGraphics {
     public void drawStringUpsideDown(String str, int x, int y) {
         Font o = g.getFont();
         g.setFont(upsideDownFont);
-        g.drawString(str, x, y);
+        g.drawString(doVarSub(str), x, y);
         g.setFont(o);
     }
 

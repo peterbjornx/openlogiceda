@@ -88,6 +88,9 @@ public class ComponentView extends BaseSchematicView {
     @Override
     protected void paintBackground() {
         super.paintBackground();
+        graphics.setVariable("NAME", ((SchematicComponent)getDrawing()).getName());
+        graphics.setVariable("REF", "U?");
+        graphics.setVariable("SIM", "*sim*");
         graphics.setStroke(5,false);
         graphics.setColor( Color.RED );
         Drawing d = getDrawing();

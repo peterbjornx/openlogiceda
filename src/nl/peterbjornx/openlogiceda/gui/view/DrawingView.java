@@ -319,7 +319,7 @@ public class DrawingView extends GridView {
         paintBackground();
         List<DrawingPart> parts = drawing.getParts();
         for ( DrawingPart d : parts ){
-            TwoDGraphics p = graphics.create();
+            TwoDGraphics p = graphics.create();;
             p.translate(d.getX(),d.getY());
             d.paintPart(p,viewportZoom);
         }
