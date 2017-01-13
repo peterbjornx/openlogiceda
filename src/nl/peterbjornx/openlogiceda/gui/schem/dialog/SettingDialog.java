@@ -1,5 +1,7 @@
 package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 
+import nl.peterbjornx.openlogiceda.config.GlobalConfig;
+import nl.peterbjornx.openlogiceda.config.GridConfig;
 import nl.peterbjornx.openlogiceda.config.SchematicColours;
 import nl.peterbjornx.openlogiceda.gui.schem.JColourButton;
 
@@ -18,6 +20,8 @@ public class SettingDialog extends JDialog {
     private JColourButton pinJColourButton;
     private JColourButton textJColourButton;
     private JColourButton shapesJColourButton;
+    private JCheckBox useAWTFileDialogsCheckBox;
+    private JCheckBox longCursorCheckBox;
 
     public SettingDialog() {
         setContentPane(contentPane);
@@ -57,6 +61,8 @@ public class SettingDialog extends JDialog {
         textJColourButton.setColour(SchematicColours.getDefaultTextColour());
         shapesJColourButton.setColour(SchematicColours.getDefaultShapeColour());
         pinJColourButton.setColour(SchematicColours.getPinColour());
+        useAWTFileDialogsCheckBox.setSelected(GlobalConfig.getUseAWTFileDialog());
+        longCursorCheckBox.setSelected(GridConfig.getLongCursor());
     }
 
     private void onOK() {
@@ -66,6 +72,8 @@ public class SettingDialog extends JDialog {
         SchematicColours.setDefaultShapeColour(shapesJColourButton.getColour());
         SchematicColours.setDefaultTextColour(textJColourButton.getColour());
         SchematicColours.setPinColour(pinJColourButton.getColour());
+        GlobalConfig.setUseAWTFileDialog(useAWTFileDialogsCheckBox.isSelected());
+        GridConfig.setLongCursor(longCursorCheckBox.isSelected());
         dispose();
     }
 

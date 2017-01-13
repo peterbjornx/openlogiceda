@@ -23,6 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 public class GlobalConfig {
     private static boolean useAWTFileDialog = true;
 
+    public static void setUseAWTFileDialog(boolean useAWTFileDialog) {
+        GlobalConfig.useAWTFileDialog = useAWTFileDialog;
+    }
+
     public static boolean getUseAWTFileDialog() {
         return useAWTFileDialog;
     }

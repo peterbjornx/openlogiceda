@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.config.GridConfig;
 import nl.peterbjornx.openlogiceda.config.SchematicColours;
 
 import java.awt.*;
@@ -28,26 +29,6 @@ import static nl.peterbjornx.openlogiceda.config.SchematicColours.getBackgroundC
  * @author Peter Bosch
  */
 public class GridView extends TwoDView {
-
-    /**
-     * Whether or not to use a screen filling cursor
-     */
-    private boolean longCursor = true;
-
-    /**
-     * The radius of the grid dots
-     */
-    private float gridRadius = 2.0f;
-
-    /**
-     * The width of the cursor lines
-     */
-    private float cursorWidth = 2.0f;
-
-    /**
-     * The spacing of the grid dots
-     */
-    private int gridSpacing = 200;
 
     /**
      * The last detected X coordinate of the mouse in view coordinates
@@ -63,31 +44,31 @@ public class GridView extends TwoDView {
      * Draws a grid point
      */
     private void drawGridPoint( int x, int y ){
-        graphics.setStroke(gridRadius,false);
+        graphics.setStroke(GridConfig.gridRadius,false);
         graphics.setColor(SchematicColours.gridColour);
         graphics.drawLine(x,y,x,y);
     }
 
     private int roundDownToGrid(int c ) {
-        return ( c / gridSpacing ) * gridSpacing;
+        return ( c / GridConfig.gridSpacing ) * GridConfig.gridSpacing;
     }
 
     protected int roundToGrid( int c ) {
-        return ((c + gridSpacing/2) / gridSpacing) * gridSpacing;
+        return ((c + GridConfig.gridSpacing/2) / GridConfig.gridSpacing) * GridConfig.gridSpacing;
     }
 
     @Override
     protected void paintView() {
-        for (int x = roundDownToGrid(viewportLeft); x <= roundDownToGrid(viewportRight); x+=gridSpacing )
-            for (int y = roundDownToGrid(viewportTop); y <= roundDownToGrid(viewportBottom); y+=gridSpacing )
+        for (int x = roundDownToGrid(viewportLeft); x <= roundDownToGrid(viewportRight); x+= GridConfig.gridSpacing )
+            for (int y = roundDownToGrid(viewportTop); y <= roundDownToGrid(viewportBottom); y+= GridConfig.gridSpacing )
                 drawGridPoint( roundDownToGrid(x), roundDownToGrid(y) );
     }
 
     protected void drawCursor() {
         graphics.setColor(getBackgroundColour());
         graphics.setXORMode(SchematicColours.cursorColour);
-        graphics.setStroke(cursorWidth,false);
-        if ( longCursor ) {
+        graphics.setStroke(GridConfig.cursorWidth,false);
+        if ( GridConfig.longCursor ) {
             graphics.drawLine(viewportLeft, cursorY, viewportRight, cursorY);
             graphics.drawLine(cursorX, viewportTop, cursorX, viewportBottom);
         } else {
