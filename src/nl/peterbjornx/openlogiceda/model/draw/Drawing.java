@@ -168,6 +168,8 @@ public abstract class Drawing {
     @SuppressWarnings("unused")
     protected Object readResolve() {
         selectedParts = new LinkedList<>();
+        if ( parts == null )
+            parts = new LinkedList<>();
         return this;
     }
 
