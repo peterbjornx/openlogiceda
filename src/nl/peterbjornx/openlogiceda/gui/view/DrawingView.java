@@ -119,7 +119,6 @@ public class DrawingView extends GridView {
     protected boolean onMouseDown(int button, int x, int y) {
         return super.onMouseDown(button, x, y) || button == CONTEXT_BUTTON;
     }
-
     /**
      * Executes the select action
      */
@@ -140,11 +139,16 @@ public class DrawingView extends GridView {
             return false;
         }
         if ( parts.size() > 1 )
-            selectDisambiguation(disambiguation, parts);
-        else
+            disambiguationMenu(disambiguation, parts,part->{
+                selectPart(part);
+                if ( listener != null )
+                    listener.handle(getSelectedParts());
+            });
+        else {
             selectPart(parts.get(0));
-        if (listener != null)
-            listener.handle(parts);
+            if (listener != null)
+                listener.handle(parts);
+        }
         return true;
     }
 

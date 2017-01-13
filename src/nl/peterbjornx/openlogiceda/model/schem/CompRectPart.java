@@ -36,7 +36,6 @@ public class CompRectPart extends BaseSchematicPart {
 
     @Override
     public void edit(BaseSchematicView editor) {
-        Thread.dumpStack();
         RectDialog.main(editor,this);
     }
 
