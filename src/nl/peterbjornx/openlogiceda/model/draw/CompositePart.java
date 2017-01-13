@@ -17,7 +17,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
+import nl.peterbjornx.openlogiceda.model.schem.BaseSchematicPart;
 
 import java.awt.*;
 
@@ -25,11 +28,12 @@ import java.awt.*;
  * Implements a part that is made of a collection of other parts
  * @author Peter Bosch
  */
-public class CompositePart extends DrawingPart {
+public abstract class CompositePart extends BaseSchematicPart {
 
     /**
      * The drawing specifying the components of this part
      */
+    @XStreamOmitField
     private Drawing subDrawing;
 
     /**
@@ -37,15 +41,22 @@ public class CompositePart extends DrawingPart {
      * @param subDrawing The drawing to use
      */
     public CompositePart(Drawing subDrawing) {
-        this.subDrawing = subDrawing;
-        java.util.List<DrawingPart> parts = subDrawing.getParts();
-        for ( DrawingPart p : parts ){
-            leftExtent = Integer.min(p.getLeft(),leftExtent);
-            rightExtent = Integer.max(p.getRight(),rightExtent);
-            topExtent = Integer.min(p.getTop(),topExtent);
-            bottomExtent = Integer.max(p.getTop(),bottomExtent);
-        }
+        setSubDrawing(subDrawing);
     }
+
+    protected CompositePart() {
+
+    }
+
+    public void setSubDrawing(Drawing d){
+        this.subDrawing = d;
+        java.util.List<DrawingPart> parts = d.getParts();
+        for ( DrawingPart p : parts ){
+            leftExtent = Integer.max(d.getWidth() / 2 - p.getLeft(),leftExtent);
+            rightExtent = Integer.max(p.getRight() - d.getWidth() / 2,rightExtent);
+            topExtent = Integer.max(d.getHeight() / 2 - p.getTop(),topExtent);
+            bottomExtent = Integer.max(p.getBottom()-d.getHeight()/2,bottomExtent);
+        }}
 
     @Override
     public void setSelected(boolean selected) {
@@ -58,18 +69,13 @@ public class CompositePart extends DrawingPart {
     @Override
     public void paintPart(TwoDGraphics g, double zoom) {
         java.util.List<DrawingPart> parts = subDrawing.getParts();
+        setVariables(g);
         for ( DrawingPart d : parts ){
             TwoDGraphics p = g.create();
-            p.translate(d.getX(),d.getY());
+            p.translate(d.getX()-subDrawing.getWidth()/2,d.getY()-subDrawing.getHeight()/2);
             d.paintPart(p, zoom);
         }
     }
 
-    /**
-     * Creates a copy of this part
-     */
-    @Override
-    public DrawingPart copy() {
-        return new CompositePart(subDrawing);
-    }
+    public void setVariables(TwoDGraphics g) {}
 }

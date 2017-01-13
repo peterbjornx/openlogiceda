@@ -23,11 +23,10 @@ import nl.peterbjornx.openlogiceda.model.draw.DrawingIO;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 /**
- * Represents a component in the schematic
  * @author Peter Bosch
  */
-@XStreamAlias("scomponent")
-public class SchematicComponent extends Drawing {
+@XStreamAlias("schematic")
+public class Schematic extends Drawing {
 
     /**
      * This component's name
@@ -37,8 +36,8 @@ public class SchematicComponent extends Drawing {
 
     static {
         io = new DrawingIO();
-        io.getSerializer().processAnnotations(SchematicComponent.class);
-        io.getSerializer().processAnnotations(PinPart.class);
+        io.getSerializer().processAnnotations(Schematic.class);
+        io.getSerializer().processAnnotations(ComponentPart.class);
         io.getSerializer().processAnnotations(BaseSchematicPart.class);
         io.getSerializer().processAnnotations(Drawing.class);
         io.getSerializer().processAnnotations(DrawingPart.class);
@@ -51,13 +50,9 @@ public class SchematicComponent extends Drawing {
      * Creates a new component
      * @param name The name of the component
      */
-    public SchematicComponent( String name ) {
-        super(10000,10000);
+    public Schematic( String name ) {
+        super(11690,8270);
         this.name = name;
-    }
-
-    public static DrawingIO getIOStatic() {
-        return io;
     }
 
     /**
