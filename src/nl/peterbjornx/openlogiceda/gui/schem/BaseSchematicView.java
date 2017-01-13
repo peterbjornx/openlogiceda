@@ -340,25 +340,21 @@ public abstract class BaseSchematicView extends DrawingView {
         } else if ( editState == STATE_ADD_SHAPE || editState == STATE_RESIZE ) {
             List<DrawingPart> parts = getSelectedParts();
             for (DrawingPart _p : parts ){
-                int top = _p.getTop();
-                int left = _p.getLeft();
-                int right = roundToGrid(x);
-                int bottom = roundToGrid(y);
-                _p.setX((left+right)/2);
-                _p.setY((top+bottom)/2);
-                if ( right >= left ){
-                    _p.setLeftExtent(_p.getX() - left);
-                    _p.setRightExtent(right - _p.getX());
+                int lx = roundToGrid(x) - _p.getX();
+                int ly = roundToGrid(y) - _p.getY();
+                if ( lx <= 0 ) {
+                    _p.setLeftExtent(-lx);
+                    _p.setRightExtent(0);
                 } else {
-                    _p.setRightExtent(left - _p.getX());
-                    _p.setLeftExtent(_p.getX() - right);
+                    _p.setLeftExtent(0);
+                    _p.setRightExtent(lx);
                 }
-                if ( bottom >= top ){
-                    _p.setTopExtent(_p.getY() - top);
-                    _p.setBottomExtent(bottom - _p.getY());
+                if ( ly <= 0 ) {
+                    _p.setTopExtent(-ly);
+                    _p.setBottomExtent(0);
                 } else {
-                    _p.setBottomExtent(top - _p.getY());
-                    _p.setTopExtent(_p.getY() - bottom);
+                    _p.setTopExtent(0);
+                    _p.setBottomExtent(ly);
                 }
 
             }

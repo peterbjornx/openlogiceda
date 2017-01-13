@@ -48,10 +48,16 @@ public class LinePart extends BaseSchematicPart {
         else
             g.setColor(lineColour);
         g.setStroke(lineWidth,false);
-        if (orientation == Rotation.EAST || orientation == Rotation.WEST)
-            g.drawLine(-leftExtent,-topExtent,rightExtent,bottomExtent);
+        int xx,yx;
+        if (leftExtent>rightExtent)
+            xx = -leftExtent;
         else
-            g.drawLine(-leftExtent,bottomExtent,rightExtent,-topExtent);
+            xx = rightExtent;
+        if (topExtent>bottomExtent)
+            yx = -topExtent;
+        else
+            yx = bottomExtent;
+        g.drawLine(0,0,xx,yx);
     }
 
     @Override
