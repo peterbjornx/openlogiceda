@@ -104,7 +104,7 @@ public class SchematicView extends BaseSchematicView {
             return true;
         switch (editMode) {
             case MODE_COMP:
-                add(new ComponentPart(JOptionPane.showInputDialog(this,"Path?")));
+                add(new ComponentPart());
                 return true;
             case MODE_RECT:
                 addShape(new RectanglePart());

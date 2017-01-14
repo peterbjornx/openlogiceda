@@ -20,6 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
+import nl.peterbjornx.openlogiceda.gui.schem.dialog.CompPartDialog;
 import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.CompositePart;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
@@ -53,6 +54,10 @@ public class ComponentPart extends CompositePart {
         setSubDrawing(component);
         this.name =name;
     }
+    public ComponentPart() {
+        super();
+        setSubDrawing(new SchematicComponent("jkhjhk"));
+    }
 
     private SchematicComponent loadComponent(String name) {
         return (SchematicComponent) SchematicComponent.getIOStatic().load(new File("test/"+name+".cmp"));
@@ -69,7 +74,7 @@ public class ComponentPart extends CompositePart {
         super.setVariables(g);
         g.setVariable("REF", reference);
         g.setVariable("NAME", component.getName());
-        g.setVariable("SIM", simText);
+        g.setVariable("SIM", simText+simConfig);
     }
 
     public String getReference() {
@@ -90,7 +95,7 @@ public class ComponentPart extends CompositePart {
 
     @Override
     public void edit(BaseSchematicView editor) {
-
+        CompPartDialog.main(editor,this);
     }
 
     @Override
@@ -134,6 +139,7 @@ public class ComponentPart extends CompositePart {
        ComponentPart p = new ComponentPart(name);
        p.setX(x);
        p.setY(y);
+       p.setSimConfig(simConfig);
        return p;
     }
 
@@ -143,5 +149,16 @@ public class ComponentPart extends CompositePart {
 
     public String getSimConfig() {
         return simConfig;
+    }
+
+    public void setName(String name) {
+        SchematicComponent component = loadComponent(name);
+        this.component = component;
+        setSubDrawing(component);
+        this.name =name;
+    }
+
+    public void setSimConfig(String simConfig) {
+        this.simConfig = simConfig;
     }
 }

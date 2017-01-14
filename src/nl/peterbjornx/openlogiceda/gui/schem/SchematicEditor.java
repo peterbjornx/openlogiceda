@@ -17,12 +17,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.SignalTracePane;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
+import nl.peterbjornx.openlogiceda.lib.Probe;
+import nl.peterbjornx.openlogiceda.model.*;
 import nl.peterbjornx.openlogiceda.model.schem.Schematic;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicCircuit;
+import nl.peterbjornx.openlogiceda.sim.Simulator;
+import nl.peterbjornx.openlogiceda.util.ModificationException;
+import nl.peterbjornx.openlogiceda.util.SimulationException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -61,6 +68,26 @@ public class SchematicEditor {
             Schematic sn = (Schematic) schematicView.getDrawing();
             SchematicCircuit circuit = new SchematicCircuit();
             circuit.build(sn);
+            try {
+                Circuit c = circuit.compileCircuit();
+                Simulator s = new Simulator();
+                s.start(c);
+                for (int i = 0; i < 50; i++)
+                    s.step();
+                JFrame tf = new JFrame("Traces");
+                //tf.setType(Window.Type.UTILITY);
+                SignalTracePane stf = new SignalTracePane();
+                for(nl.peterbjornx.openlogiceda.model.Component cp : c.getComponents())
+                    if (cp instanceof Probe)
+                        stf.addTrace(Color.MAGENTA,((Probe) cp).getInput().getNet().getName(),((Probe) cp).getHistory());
+                tf.add(stf.getMainPane());
+                tf.setResizable(true);
+                tf.setVisible(true);
+            } catch (SimulationException e1) {
+                JOptionPane.showMessageDialog(mainPane,e1.getMessage());
+            } catch (ModificationException e1) {
+                JOptionPane.showMessageDialog(mainPane,e1.getMessage());
+            }
         });
         file.addSeparator();
         JMenuItem quit = file.add("Quit");

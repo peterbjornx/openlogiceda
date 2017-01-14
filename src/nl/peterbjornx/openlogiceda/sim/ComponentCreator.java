@@ -57,9 +57,9 @@ public class ComponentCreator {
             Object[] params = new Object[toks.length];
             int i = 0;
             for (Class<?> a : ctor.getParameterTypes()) {
-                if ( a.isAssignableFrom(Long.class))
+                if ( a.isAssignableFrom(Long.TYPE))
                     params[i] = Long.parseLong(toks[i++]);
-                else if ( a.isAssignableFrom(Integer.class))
+                else if ( a.isAssignableFrom(Integer.TYPE))
                     params[i] = Integer.parseInt(toks[i++]);
                 else if ( a.isAssignableFrom(String.class))
                     params[i] = toks[i++];
