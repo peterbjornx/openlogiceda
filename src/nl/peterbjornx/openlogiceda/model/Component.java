@@ -78,6 +78,16 @@ public abstract class Component
     }
 
     /**
+     * Gets a node by its name
+     */
+    public Node getNodeByName(String name) throws SimulationException {
+        for (Node n : nodes)
+            if (n.getName().equals(name))
+                return n;
+        throw new SimulationException("No such node");
+    }
+
+    /**
      * This function is called by the simulator before starting the simulation
      * @param simulator The simulator context
      * @throws SimulationException if something went wrong during the simulation.

@@ -115,4 +115,8 @@ public class Node {
     public void addProcess( Process process ) {
         processes.add(process);
     }
+
+    public String getName() {
+        return name;
+    }
 }
