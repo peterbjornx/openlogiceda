@@ -47,6 +47,8 @@ public class SchematicComponent extends Drawing {
         io.getSerializer().processAnnotations(LinePart.class);
     }
 
+    private String simName = "";
+
     /**
      * Creates a new component
      * @param name The name of the component
@@ -85,5 +87,13 @@ public class SchematicComponent extends Drawing {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSimName() {
+        return simName;
+    }
+
+    public void setSimName(String simName) {
+        this.simName = simName;
     }
 }

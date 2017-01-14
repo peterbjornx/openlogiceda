@@ -39,6 +39,7 @@ public class ComponentPart extends CompositePart {
     private SchematicComponent component;
     private String simText = "";
     private String name;
+    private String simConfig;
 
     /**
      * Creates a composite part based on a drawing
@@ -134,5 +135,13 @@ public class ComponentPart extends CompositePart {
        p.setX(x);
        p.setY(y);
        return p;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSimConfig() {
+        return simConfig;
     }
 }

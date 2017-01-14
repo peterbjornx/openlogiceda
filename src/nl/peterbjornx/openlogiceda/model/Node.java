@@ -116,6 +116,9 @@ public class Node {
         processes.add(process);
     }
 
+    /**
+     * Gets this node's name
+     */
     public String getName() {
         return name;
     }
