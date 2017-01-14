@@ -19,6 +19,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
+import nl.peterbjornx.openlogiceda.model.schem.Schematic;
+import nl.peterbjornx.openlogiceda.model.schem.SchematicCircuit;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -53,6 +55,13 @@ public class SchematicEditor {
         save.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
         save.addActionListener(e-> schematicView.saveComponent());
+        file.addSeparator();
+        JMenuItem bnet = file.add("Build net");
+        bnet.addActionListener(e->{
+            Schematic sn = (Schematic) schematicView.getDrawing();
+            SchematicCircuit circuit = new SchematicCircuit();
+            circuit.build(sn);
+        });
         file.addSeparator();
         JMenuItem quit = file.add("Quit");
         quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));

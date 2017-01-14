@@ -26,6 +26,8 @@ import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * A pin in a component
@@ -62,6 +64,9 @@ public class PinPart extends BaseSchematicPart {
     @XStreamOmitField
     private FontMetrics labelFontMetrics;
     private static final int BUBBLE_DIAM = 50;
+
+    @XStreamOmitField
+    private SchematicNode node = new PinNode(this );
 
     public PinPart() {
         updateSize();
@@ -108,6 +113,11 @@ public class PinPart extends BaseSchematicPart {
     public void setOrientation(Rotation orientation) {
         super.setOrientation(orientation);
         updateSize();
+    }
+
+    public Object readResolve(){
+        node = new PinNode(this );
+        return this;
     }
 
     /**
@@ -194,5 +204,56 @@ public class PinPart extends BaseSchematicPart {
     public String toString() {
         return "Pin \""+name+"\"";
     }
+
+    @Override
+    public SchematicNode getNodeAt(int x, int y) {
+        x -= this.x;
+        y -= this.y;
+        switch(orientation){
+            case EAST:
+                if ( x == PIN_LENGTH && y == 0 )
+                    return node;
+                return null;
+            case WEST:
+                if ( x == -PIN_LENGTH && y == 0 )
+                    return node;
+                return null;
+            case NORTH:
+                if ( x == 0 && y == -PIN_LENGTH )
+                    return node;
+                return null;
+            case SOUTH:
+                if ( x == 0 && y == PIN_LENGTH )
+                    return node;
+                return null;
+        }
+        return null;
+    }
+
+    /**
+     * Gets all the nodes on this part
+     */
+    public java.util.List<SchematicNode> getNodes(){
+        List<SchematicNode> e = new LinkedList<>();
+        node.setConnectionX(x);
+        node.setConnectionY(y);
+        switch(orientation){
+            case EAST:
+                node.setConnectionX(x+PIN_LENGTH);
+                break;
+            case WEST:
+                node.setConnectionX(x-PIN_LENGTH);
+                break;
+            case NORTH:
+                node.setConnectionY(y+PIN_LENGTH);
+                break;
+            case SOUTH:
+                node.setConnectionY(y-PIN_LENGTH);
+                break;
+        }
+        e.add(node);
+        return e;
+    }
+
 
 }

@@ -18,8 +18,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
-import nl.peterbjornx.openlogiceda.gui.schem.ComponentView;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This represents a part of a schematic drawing
@@ -50,4 +53,14 @@ public abstract class BaseSchematicPart extends DrawingPart {
      * Open the property window for this part.
      */
     public abstract void edit(BaseSchematicView editor);
+
+    /**
+     * Gets the node at the given coordinates
+     */
+    public SchematicNode getNodeAt(int x,int y){return null;}
+
+    /**
+     * Gets all the nodes on this part
+     */
+    public List<SchematicNode> getNodes(){return new LinkedList<>();}
 }

@@ -301,7 +301,7 @@ public abstract class BaseSchematicView extends DrawingView {
                 return true;
         } else if ( editState == STATE_ADD_WIRE ) {
             List<DrawingPart> parts = getSelectedParts();
-            LinePart a = null, b = null, start, end;
+            LinePart a, b, start, end;
             assert parts.size() == 2;
             a = (LinePart) parts.get(0);
             b = (LinePart) parts.get(1);
@@ -329,14 +329,20 @@ public abstract class BaseSchematicView extends DrawingView {
                 restoreSelectMultiple();
                 deletePart(end);
                 return true;
+            } else if ( getDrawing() instanceof Schematic &&
+                    ((Schematic)getDrawing()).getNode( end.getX(), end.getY() ) != null ) {
+                editState = STATE_NORMAL;
+                clearSelection();
+                restoreSelectMultiple();
+                return true;
             }
             unselectPart(start);
             start = end;
             end = (LinePart) start.copy();
             end.setX(start.getBX());
             end.setY(start.getBY());
-            end.setBX(roundToGrid(x));
-            end.setBY(roundToGrid(y));
+            end.setBX(mx);
+            end.setBY(my);
             addPart(end);
             selectPart(end);
             return true;

@@ -77,5 +77,9 @@ public abstract class CompositePart extends BaseSchematicPart {
         }
     }
 
+    public Drawing getSubDrawing() {
+        return subDrawing;
+    }
+
     public void setVariables(TwoDGraphics g) {}
 }

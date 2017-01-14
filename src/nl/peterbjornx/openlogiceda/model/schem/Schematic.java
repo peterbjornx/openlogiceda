@@ -22,6 +22,9 @@ import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingIO;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Peter Bosch
  */
@@ -44,6 +47,34 @@ public class Schematic extends Drawing {
         io.getSerializer().processAnnotations(RectanglePart.class);
         io.getSerializer().processAnnotations(TextPart.class);
         io.getSerializer().processAnnotations(LinePart.class);
+        io.getSerializer().processAnnotations(WirePart.class);
+    }
+
+    public List<SchematicNode> getNode(int x, int y) {
+        LinkedList<SchematicNode> nodes = new LinkedList<>();
+        List<DrawingPart> e =  getParts();
+        for (DrawingPart p: e) {
+            if (!(p instanceof BaseSchematicPart))
+                continue;
+            SchematicNode node = ((BaseSchematicPart) p).getNodeAt(x,y);
+            if ( node == null )
+                continue;
+            node.setConnectionX(x);
+            node.setConnectionY(y);
+            nodes.add(node);
+        }
+        return nodes;
+    }
+
+    public List<SchematicNode> getNodes() {
+        LinkedList<SchematicNode> nodes = new LinkedList<>();
+        List<DrawingPart> e = getParts();
+        for (DrawingPart p: e) {
+            if (!(p instanceof BaseSchematicPart))
+                continue;
+            nodes.addAll(((BaseSchematicPart) p).getNodes());
+        }
+        return nodes;
     }
 
     /**

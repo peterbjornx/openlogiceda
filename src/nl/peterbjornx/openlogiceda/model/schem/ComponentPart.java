@@ -26,6 +26,8 @@ import nl.peterbjornx.openlogiceda.model.draw.Drawing;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Peter Bosch
@@ -88,6 +90,37 @@ public class ComponentPart extends CompositePart {
     @Override
     public void edit(BaseSchematicView editor) {
 
+    }
+
+    @Override
+    public SchematicNode getNodeAt(int x, int y) {
+        List<DrawingPart> e =  getSubDrawing().getParts();
+        for (DrawingPart p: e){
+            if ( !(p instanceof  BaseSchematicPart))
+                continue;
+            SchematicNode found = ((BaseSchematicPart) p).getNodeAt(
+                    x-this.x+getSubDrawing().getWidth()/2,
+                    y-this.y+getSubDrawing().getHeight()/2);
+            if (found != null)
+                return found;
+        }
+        return null;
+    }
+
+    @Override
+    public List<SchematicNode> getNodes() {
+        LinkedList<SchematicNode> nodes = new LinkedList<>();
+        List<DrawingPart> e =  getSubDrawing().getParts();
+        for (DrawingPart p: e) {
+            if (!(p instanceof BaseSchematicPart))
+                continue;
+            nodes.addAll(((BaseSchematicPart) p).getNodes());
+        }
+        for (SchematicNode n : nodes) {
+            n.setConnectionX(n.getConnectionX() + x - getSubDrawing().getWidth()/2);
+            n.setConnectionY(n.getConnectionY() + y - getSubDrawing().getHeight()/2);
+        }
+        return nodes;
     }
 
     /**

@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import nl.peterbjornx.openlogiceda.config.SchematicColours;
 import nl.peterbjornx.openlogiceda.config.SchematicConfig;
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
@@ -25,13 +27,19 @@ import nl.peterbjornx.openlogiceda.gui.view.TwoDGraphics;
 import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * @author Peter Bosch
  */
+@XStreamAlias("wire")
 public class WirePart extends LinePart {
 
-    private int length;
+    @XStreamOmitField
+    private WireNode nodeB = new WireNode();
+    @XStreamOmitField
+    private WireNode nodeA = new WireNode(nodeB);
 
     @Override
     public void edit(BaseSchematicView editor) {
@@ -77,12 +85,31 @@ public class WirePart extends LinePart {
         return rect;
     }
 
-    public int getLength() {
-        return length;
+    @Override
+    public SchematicNode getNodeAt(int x, int y) {
+        if ( x == this.x && y == this.y )
+            return nodeA;
+        if ( x == getBX() && y == getBY() )
+            return nodeB;
+        return null;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    @Override
+    public List<SchematicNode> getNodes() {
+        nodeA.setConnectionX(x);
+        nodeA.setConnectionY(y);
+        nodeB.setConnectionX(getBX());
+        nodeB.setConnectionY(getBY());
+        List<SchematicNode> node = new LinkedList<>();
+        node.add(nodeA);
+        node.add(nodeB);
+        return node;
+    }
+
+    public Object readResolve(){
+        nodeB = new WireNode();
+        nodeA = new WireNode(nodeB);
+        return this;
     }
 
     @Override
