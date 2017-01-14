@@ -22,18 +22,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 public class PinNode extends SchematicNode {
     private final PinPart pinPart;
-    private SchematicComponent component;
+    private ComponentPart component;
 
     public PinNode(PinPart pinPart) {
         super();
         this.pinPart = pinPart;
     }
 
-    public SchematicComponent getComponent() {
+    public ComponentPart getComponent() {
         return component;
     }
 
-    public void setComponent(SchematicComponent component) {
+    public void setComponent(ComponentPart component) {
         this.component = component;
     }
 

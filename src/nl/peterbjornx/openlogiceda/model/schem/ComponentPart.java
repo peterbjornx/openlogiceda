@@ -119,6 +119,8 @@ public class ComponentPart extends CompositePart {
         for (SchematicNode n : nodes) {
             n.setConnectionX(n.getConnectionX() + x - getSubDrawing().getWidth()/2);
             n.setConnectionY(n.getConnectionY() + y - getSubDrawing().getHeight()/2);
+            if (n instanceof PinNode)
+                ((PinNode) n).setComponent(this);
         }
         return nodes;
     }
