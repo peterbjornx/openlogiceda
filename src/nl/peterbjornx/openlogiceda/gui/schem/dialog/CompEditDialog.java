@@ -10,6 +10,7 @@ public class CompEditDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField nameTextField;
+    private JTextField simulatorClassTextField;
     private SchematicComponent comp;
 
     public CompEditDialog(SchematicComponent comp) {
@@ -46,11 +47,13 @@ public class CompEditDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         this.comp = comp;
-        nameTextField.setName(comp.getName());
+        nameTextField.setText(comp.getName());
+        simulatorClassTextField.setText(comp.getSimName());
     }
 
     private void onOK() {
-        comp.setName(nameTextField.getName());
+        comp.setName(nameTextField.getText());
+        comp.setSimName(simulatorClassTextField.getText());
         dispose();
     }
 
