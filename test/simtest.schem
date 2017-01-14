@@ -1,0 +1,39 @@
+<schematic width="11690" height="8270">
+  <component x="6700" y="3950">
+    <leftExtent>400</leftExtent>
+    <rightExtent>622</rightExtent>
+    <topExtent>299</topExtent>
+    <bottomExtent>188</bottomExtent>
+    <orientation>EAST</orientation>
+    <reference>U?</reference>
+    <simText></simText>
+    <name>probe</name>
+    <simConfig></simConfig>
+  </component>
+  <component x="5350" y="3950">
+    <leftExtent>200</leftExtent>
+    <rightExtent>572</rightExtent>
+    <topExtent>399</topExtent>
+    <bottomExtent>288</bottomExtent>
+    <orientation>EAST</orientation>
+    <reference>U?</reference>
+    <simText></simText>
+    <name>clock</name>
+    <simConfig>a 200</simConfig>
+  </component>
+  <wire x="5750" y="3950">
+    <leftExtent>0</leftExtent>
+    <rightExtent>550</rightExtent>
+    <topExtent>0</topExtent>
+    <bottomExtent>0</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>255</blue>
+      <alpha>255</alpha>
+    </lineColour>
+    <lineWidth>15</lineWidth>
+  </wire>
+  <name>testing</name>
+</schematic>

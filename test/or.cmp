@@ -1,0 +1,70 @@
+<scomponent width="10000" height="10000">
+  <comprect x="4800" y="4800">
+    <leftExtent>0</leftExtent>
+    <rightExtent>400</rightExtent>
+    <topExtent>0</topExtent>
+    <bottomExtent>400</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>255</blue>
+      <alpha>255</alpha>
+    </lineColour>
+    <lineWidth>15</lineWidth>
+  </comprect>
+  <pin x="5200" y="5000">
+    <leftExtent>55</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>O</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="4900">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>I0</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="5100">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>I1</name>
+    <style>NORMAL</style>
+  </pin>
+  <text x="4950" y="5000">
+    <leftExtent>0</leftExtent>
+    <rightExtent>192</rightExtent>
+    <topExtent>149</topExtent>
+    <bottomExtent>38</bottomExtent>
+    <orientation>EAST</orientation>
+    <textColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </textColour>
+    <text>OR</text>
+    <fontSize>75</fontSize>
+  </text>
+  <text x="4950" y="5250">
+    <leftExtent>0</leftExtent>
+    <rightExtent>576</rightExtent>
+    <topExtent>149</topExtent>
+    <bottomExtent>38</bottomExtent>
+    <orientation>EAST</orientation>
+    <textColour reference="../../text/textColour"/>
+    <text>${REF}</text>
+    <fontSize>50</fontSize>
+  </text>
+  <name>or</name>
+  <simName>Or</simName>
+</scomponent>

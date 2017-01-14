@@ -1,0 +1,39 @@
+<scomponent width="10000" height="10000">
+  <pin x="5000" y="5000">
+    <leftExtent>384</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>CLK1</name>
+    <style>INVERTED_CLOCK</style>
+  </pin>
+  <pin x="5000" y="5200">
+    <leftExtent>384</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>CLK2</name>
+    <style>CLOCK</style>
+  </pin>
+  <pin x="3800" y="5000">
+    <leftExtent>200</leftExtent>
+    <rightExtent>96</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>Q</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="3800" y="5200">
+    <leftExtent>200</leftExtent>
+    <rightExtent>192</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>nQ</name>
+    <style>INVERTED</style>
+  </pin>
+  <name>testing</name>
+</scomponent>

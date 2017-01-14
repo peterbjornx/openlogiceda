@@ -1,0 +1,64 @@
+<schematic width="11690" height="8270">
+  <component x="5400" y="4000">
+    <leftExtent>400</leftExtent>
+    <rightExtent>800</rightExtent>
+    <topExtent>474</topExtent>
+    <bottomExtent>1438</bottomExtent>
+    <orientation>EAST</orientation>
+    <reference>U?</reference>
+    <simText></simText>
+    <name>reg8</name>
+  </component>
+  <component x="6500" y="4000">
+    <leftExtent>400</leftExtent>
+    <rightExtent>800</rightExtent>
+    <topExtent>474</topExtent>
+    <bottomExtent>1438</bottomExtent>
+    <orientation>EAST</orientation>
+    <reference>U?</reference>
+    <simText></simText>
+    <name>reg8</name>
+  </component>
+  <wire x="5800" y="4100">
+    <leftExtent>0</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>0</topExtent>
+    <bottomExtent>0</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>255</blue>
+      <alpha>255</alpha>
+    </lineColour>
+    <lineWidth>15</lineWidth>
+  </wire>
+  <wire x="5800" y="4050">
+    <leftExtent>0</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>0</topExtent>
+    <bottomExtent>0</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour reference="../../wire/lineColour"/>
+    <lineWidth>15</lineWidth>
+  </wire>
+  <wire x="6000" y="4050">
+    <leftExtent>0</leftExtent>
+    <rightExtent>0</rightExtent>
+    <topExtent>0</topExtent>
+    <bottomExtent>50</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour reference="../../wire/lineColour"/>
+    <lineWidth>15</lineWidth>
+  </wire>
+  <wire x="6100" y="4100">
+    <leftExtent>100</leftExtent>
+    <rightExtent>0</rightExtent>
+    <topExtent>0</topExtent>
+    <bottomExtent>0</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour reference="../../wire/lineColour"/>
+    <lineWidth>15</lineWidth>
+  </wire>
+  <name>testing</name>
+</schematic>

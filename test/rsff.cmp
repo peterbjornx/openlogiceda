@@ -1,0 +1,53 @@
+<scomponent width="10000" height="10000">
+  <pin x="5600" y="4800">
+    <leftExtent>96</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5600" y="5000">
+    <leftExtent>192</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>nQ</name>
+    <style>INVERTED</style>
+  </pin>
+  <pin x="5000" y="4800">
+    <leftExtent>200</leftExtent>
+    <rightExtent>96</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>R</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5000" y="5000">
+    <leftExtent>200</leftExtent>
+    <rightExtent>96</rightExtent>
+    <topExtent>100</topExtent>
+    <bottomExtent>100</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>S</name>
+    <style>NORMAL</style>
+  </pin>
+  <comprect x="5300" y="4900">
+    <leftExtent>300</leftExtent>
+    <rightExtent>300</rightExtent>
+    <topExtent>300</topExtent>
+    <bottomExtent>300</bottomExtent>
+    <orientation>EAST</orientation>
+    <normalColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>255</blue>
+      <alpha>255</alpha>
+    </normalColour>
+    <lineWidth>15</lineWidth>
+  </comprect>
+  <name>testing</name>
+</scomponent>

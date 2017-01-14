@@ -1,0 +1,224 @@
+<scomponent width="10000" height="10000">
+  <comprect x="5000" y="4975">
+    <leftExtent>200</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>375</topExtent>
+    <bottomExtent>375</bottomExtent>
+    <orientation>EAST</orientation>
+    <lineColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>255</blue>
+      <alpha>255</alpha>
+    </lineColour>
+    <lineWidth>5</lineWidth>
+  </comprect>
+  <pin x="5200" y="4750">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q0</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="4800">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q1</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="4850">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q2</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="4900">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q3</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="4950">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q4</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="5000">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q5</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="5050">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q6</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="5200" y="5100">
+    <leftExtent>85</leftExtent>
+    <rightExtent>200</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>EAST</orientation>
+    <name>Q7</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="4750">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D0</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="4800">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D1</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="4850">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D2</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="4900">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D3</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="4950">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D4</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="5000">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D5</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="5050">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D6</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="5100">
+    <leftExtent>200</leftExtent>
+    <rightExtent>85</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>D7</name>
+    <style>NORMAL</style>
+  </pin>
+  <pin x="4800" y="5200">
+    <leftExtent>200</leftExtent>
+    <rightExtent>115</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>CLK</name>
+    <style>CLOCK</style>
+  </pin>
+  <pin x="4800" y="5250">
+    <leftExtent>200</leftExtent>
+    <rightExtent>115</rightExtent>
+    <topExtent>25</topExtent>
+    <bottomExtent>25</bottomExtent>
+    <orientation>WEST</orientation>
+    <name>RST</name>
+    <style>INVERTED</style>
+  </pin>
+  <text x="4900" y="5400">
+    <leftExtent>0</leftExtent>
+    <rightExtent>105</rightExtent>
+    <topExtent>24</topExtent>
+    <bottomExtent>6</bottomExtent>
+    <orientation>EAST</orientation>
+    <textColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </textColour>
+    <text>${NAME}</text>
+    <fontSize>50</fontSize>
+  </text>
+  <text x="5000" y="4550">
+    <leftExtent>0</leftExtent>
+    <rightExtent>90</rightExtent>
+    <topExtent>24</topExtent>
+    <bottomExtent>6</bottomExtent>
+    <orientation>EAST</orientation>
+    <textColour>
+      <red>0</red>
+      <green>0</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </textColour>
+    <text>${REF}</text>
+    <fontSize>50</fontSize>
+  </text>
+  <text x="4900" y="4650">
+    <leftExtent>0</leftExtent>
+    <rightExtent>180</rightExtent>
+    <topExtent>47</topExtent>
+    <bottomExtent>12</bottomExtent>
+    <orientation>EAST</orientation>
+    <textColour>
+      <red>255</red>
+      <green>0</green>
+      <blue>181</blue>
+      <alpha>255</alpha>
+    </textColour>
+    <text>${SIM}</text>
+    <fontSize>50</fontSize>
+  </text>
+  <name>74LS373</name>
+</scomponent>
