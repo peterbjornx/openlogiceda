@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.config.GlobalConfig;
+import nl.peterbjornx.openlogiceda.config.GridConfig;
 import nl.peterbjornx.openlogiceda.config.KeyBindings;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.model.draw.Drawing;
@@ -298,6 +299,47 @@ public abstract class BaseSchematicView extends DrawingView {
         } else if ( editState == STATE_NORMAL ) {
             if (super.onMouseClick(button, x, y))
                 return true;
+        } else if ( editState == STATE_ADD_WIRE ) {
+            List<DrawingPart> parts = getSelectedParts();
+            LinePart a = null, b = null, start, end;
+            assert parts.size() == 2;
+            a = (LinePart) parts.get(0);
+            b = (LinePart) parts.get(1);
+            int mx = roundToGrid(x);
+            int my = roundToGrid(y);
+            int ax = a.getX();
+            int ay = a.getY();
+            int bx = a.getBX();
+            int by = a.getBY();
+            int cx = b.getX();
+            int cy = b.getY();
+            int dx = b.getBX();
+            int dy = b.getBY();
+            if ( ax == dx && ay == dy ) {
+                start = b;
+                end = a;
+            } else if ( cx == bx && cy == by ) {
+                start = a;
+                end = b;
+            } else
+                throw new AssertionError("NOPE!");
+            if ( end.getX() == end.getBX() && end.getY() == end.getBY() ) {
+                editState = STATE_NORMAL;
+                clearSelection();
+                restoreSelectMultiple();
+                deletePart(end);
+                return true;
+            }
+            unselectPart(start);
+            start = end;
+            end = (LinePart) start.copy();
+            end.setX(start.getBX());
+            end.setY(start.getBY());
+            end.setBX(roundToGrid(x));
+            end.setBY(roundToGrid(y));
+            addPart(end);
+            selectPart(end);
+            return true;
         }
         return false;
     }
@@ -320,6 +362,26 @@ public abstract class BaseSchematicView extends DrawingView {
         p.setY(cursorY);
         addPart(p);
         setSelectMultiple(false);
+        selectPart(p);
+    }
+
+    public void addWire(LinePart p){
+        markUndo();
+        editState = STATE_ADD_WIRE;
+        p.setX(cursorX);
+        p.setY(cursorY);
+        p.setBX(cursorX);
+        p.setBY(cursorY);
+        LinePart p2 = (LinePart) p.copy();
+        p2.setX(cursorX);
+        p2.setY(cursorY);
+        p2.setBX(cursorX);
+        p2.setBY(cursorY);
+        addPart(p);
+        addPart(p2);
+        setSelectMultiple(true);
+        clearSelection();
+        selectPart(p2);
         selectPart(p);
     }
 
@@ -357,6 +419,59 @@ public abstract class BaseSchematicView extends DrawingView {
                     _p.setBottomExtent(ly);
                 }
 
+            }
+            repaint();
+            return true;
+        } else if ( editState == STATE_ADD_WIRE ) {
+            List<DrawingPart> parts = getSelectedParts();
+            LinePart a = null, b = null, start, end;
+            assert parts.size() == 2;
+            a = (LinePart) parts.get(0);
+            b = (LinePart) parts.get(1);
+            int mx = roundToGrid(x);
+            int my = roundToGrid(y);
+            int ax = a.getX();
+            int ay = a.getY();
+            int bx = a.getBX();
+            int by = a.getBY();
+            int cx = b.getX();
+            int cy = b.getY();
+            int dx = b.getBX();
+            int dy = b.getBY();
+            if ( ax == dx && ay == dy ) {
+                start = b;
+                end = a;
+            } else if ( cx == bx && cy == by ) {
+                start = a;
+                end = b;
+            } else
+                throw new AssertionError("NOPE!");
+            ax = start.getX();
+            ay = start.getY();
+            bx = start.getBX();
+            by = start.getBY();
+            cx = end.getBX();
+            cy = end.getBY();
+            int d = Math.abs(ax-mx)+Math.abs(ay-my);
+            if ( (d == GridConfig.getGridSpacing())) {
+                start.setBX(mx);
+                start.setBY(my);
+                end.setX(mx);
+                end.setY(my);
+                end.setBX(mx);
+                end.setBY(my);
+            } else if ( ax == bx ) {
+                //First segment is vertical
+                start.setBY(my);
+                end.setY(my);
+                end.setBX(mx);
+                end.setBY(my);
+            } else if ( ay == by ) {
+                //First segment is vertical
+                start.setBX(mx);
+                end.setX(mx);
+                end.setBX(mx);
+                end.setBY(my);
             }
             repaint();
             return true;
@@ -520,6 +635,7 @@ public abstract class BaseSchematicView extends DrawingView {
         STATE_MOVE,
         STATE_ADD,
         STATE_ADD_SHAPE,
-        STATE_RESIZE
+        STATE_RESIZE,
+        STATE_ADD_WIRE
     }
 }

@@ -292,6 +292,13 @@ public class DrawingView extends GridView {
     }
 
     /**
+     * Deletes a part
+     */
+    public void deletePart(DrawingPart part) {
+        drawing.deletePart(part);
+    }
+
+    /**
      * Select the parts
      */
     public void selectParts(List<DrawingPart> list) {

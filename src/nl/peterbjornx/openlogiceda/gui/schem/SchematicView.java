@@ -34,6 +34,7 @@ public class SchematicView extends BaseSchematicView {
     public final static int MODE_RECT = 2;
     public final static int MODE_LINE = 3;
     public final static int MODE_TEXT = 4;
+    public static final int MODE_WIRE = 5;
 
     /**
      * Creates a new drawing view
@@ -113,6 +114,9 @@ public class SchematicView extends BaseSchematicView {
                 return true;
             case MODE_TEXT:
                 add(new TextPart());
+                return true;
+            case MODE_WIRE:
+                addWire(new WirePart());
                 return true;
         }
         return false;

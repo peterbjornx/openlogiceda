@@ -36,6 +36,7 @@ public class SchematicEditor {
     private JToggleButton rectModeBtn;
     private JToggleButton textModeBtn;
     private JToggleButton lineModeBtn;
+    private JToggleButton wireModeBtn;
     private ButtonGroup modeGroup;
     private JMenuBar menuBar;
 
@@ -84,6 +85,7 @@ public class SchematicEditor {
         textModeBtn.addActionListener(e -> updateFromMode());
         rectModeBtn.addActionListener(e -> updateFromMode());
         lineModeBtn.addActionListener(e -> updateFromMode());
+        wireModeBtn.addActionListener(e -> updateFromMode());
         schematicView.addEditModeListener(c -> updateToMode());
         selectModeBtn.setActionCommand("S");
         compModeBtn.setActionCommand("A");
@@ -114,6 +116,9 @@ public class SchematicEditor {
             case SchematicView.MODE_LINE:
                 lineModeBtn.setSelected(true);
                 break;
+            case SchematicView.MODE_WIRE:
+                wireModeBtn.setSelected(true);
+                break;
         }
     }
 
@@ -133,6 +138,9 @@ public class SchematicEditor {
                 break;
             case "L":
                 schematicView.setEditMode(SchematicView.MODE_LINE);
+                break;
+            case "W":
+                schematicView.setEditMode(SchematicView.MODE_WIRE);
                 break;
         }
     }
