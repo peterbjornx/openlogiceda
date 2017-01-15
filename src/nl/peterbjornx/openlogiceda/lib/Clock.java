@@ -28,7 +28,8 @@ import nl.peterbjornx.openlogiceda.util.SimulationException;
  */
 public class Clock extends Component {
 
-    private final long period;
+    private final long periodH;
+    private final long periodL;
     private final Node output;
     private boolean state = false;
 
@@ -39,7 +40,22 @@ public class Clock extends Component {
      */
     public Clock( String name, long period ) {
         super( name );
-        this.period = period;
+        this.periodH = period;
+        this.periodL = period;
+        this.output = new Node( this, "OUT" );
+        nodes.add( output );
+    }
+
+    /**
+     * Creates a clock source
+     * @param name The name of the new clock
+     * @param periodL The time the signal stays low
+     * @param periodH The time the signal stays high
+     */
+    public Clock( String name, long periodH, long periodL ) {
+        super( name );
+        this.periodH = periodH;
+        this.periodL = periodL;
         this.output = new Node( this, "OUT" );
         nodes.add( output );
     }
@@ -48,13 +64,13 @@ public class Clock extends Component {
     public void beginSimulation( Simulator sim ) throws SimulationException {
         super.beginSimulation(sim);
         sim.setNode( output, ValueTools.drive(state), 1 );
-        sim.addEvent( period, this::processTick );
+        sim.addEvent( periodL, this::processTick );
     }
 
     private void processTick( Simulator sim ) throws SimulationException {
         state = !state;
         sim.setNode( output, ValueTools.drive(state), 1 );
-        sim.addEvent( period, this::processTick );
+        sim.addEvent( state ? periodH : periodL, this::processTick );
     }
 
     public Node getOutput() {
