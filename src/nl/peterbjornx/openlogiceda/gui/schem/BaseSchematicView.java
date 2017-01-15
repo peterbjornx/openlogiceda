@@ -661,6 +661,8 @@ public abstract class BaseSchematicView extends DrawingView {
             deleteSelection();
         } else if ( editState == STATE_ADD_SHAPE ) {
             deleteSelection();
+        } else if ( editState == STATE_ADD_WIRE ) {
+            deleteSelection();
         }
         editState = STATE_NORMAL;
     }
