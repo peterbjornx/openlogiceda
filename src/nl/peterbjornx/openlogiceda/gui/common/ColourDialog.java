@@ -1,4 +1,4 @@
-package nl.peterbjornx.openlogiceda.gui.schem.dialog;
+package nl.peterbjornx.openlogiceda.gui.common;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,4 +64,5 @@ public class ColourDialog extends JDialog {
         dialog.setVisible(true);
         return dialog.colour;
     }
+
 }

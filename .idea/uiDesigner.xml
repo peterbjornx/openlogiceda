@@ -128,8 +128,14 @@
       <item class="javax.swing.JToggleButton" icon="" removable="true" auto-create-binding="true" can-attach-label="true">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
-      <item class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="true" auto-create-binding="true" can-attach-label="true">
+      <item class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="true" auto-create-binding="true" can-attach-label="true">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
+      <item class="nl.peterbjornx.openlogiceda.gui.common.JSIField" icon="/com/intellij/uiDesigner/icons/panel.png" removable="true" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="3" hsize-policy="7" anchor="0" fill="1" />
+      </item>
+      <item class="nl.peterbjornx.openlogiceda.gui.common.JSIForm" icon="" removable="true" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="3" hsize-policy="7" anchor="0" fill="1" />
       </item>
     </group>
   </component>

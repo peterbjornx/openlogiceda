@@ -1,4 +1,4 @@
-package nl.peterbjornx.openlogiceda.gui.schem;/*
+package nl.peterbjornx.openlogiceda.gui.sim;/*
 Part of OpenLogicEDA
 Copyright (C) 2017 Peter Bosch
 
@@ -17,36 +17,26 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import nl.peterbjornx.openlogiceda.gui.schem.dialog.ColourDialog;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author Peter Bosch
  */
-public class JColourButton extends JButton {
-    public JColourButton() {
-        super();
-        setBorderPainted(false);
-        setOpaque(true);
-        setContentAreaFilled(true);
-        setText(" ");
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setColour(ColourDialog.choose(JColourButton.this,getColour()));
-            }
-        });
+public class DefaultSimConfig extends SimConfig{
+    private String simconfig;
+
+    @Override
+    public void setValues(String config) {
+        simconfig = config;
     }
 
-    public Color getColour() {
-        return getBackground();
+    @Override
+    public String getValues() {
+        return simconfig;
     }
 
-    public void setColour(Color colour) {
-        setBackground(colour);
+    @Override
+    public JPanel getMainPane() {
+        return new JPanel();
     }
 }

@@ -17,11 +17,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.sim.DefaultSimConfig;
+import nl.peterbjornx.openlogiceda.gui.sim.SimConfig;
 import nl.peterbjornx.openlogiceda.model.Component;
+import nl.peterbjornx.openlogiceda.util.ModificationException;
 import nl.peterbjornx.openlogiceda.util.SimulationException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 
@@ -29,7 +33,12 @@ import java.util.HashMap;
  * @author Peter Bosch
  */
 public class ComponentCreator {
+    private static ComponentCreator instance = new ComponentCreator();
     private HashMap<String, Class<Component>>  componentCache = new HashMap<>();
+
+    public static ComponentCreator getInstance() {
+        return instance;
+    }
 
     private Class<Component> resolveClass(String name) throws ClassNotFoundException {
         Class<Component> out = componentCache.get(name);
@@ -39,6 +48,20 @@ public class ComponentCreator {
             componentCache.put(name,out);
         }
         return out;
+    }
+
+    public SimConfig getSimConfig(String name) {
+        try {
+            Class<Component> s = resolveClass(name);
+            Method csc = s.getDeclaredMethod("createSimConfig");
+            return (SimConfig) csc.invoke(null);
+        } catch (NoSuchMethodException |
+                ClassNotFoundException |
+                InvocationTargetException |
+                IllegalAccessException e) {
+            e.printStackTrace();
+            return new DefaultSimConfig();
+        }
     }
 
     public Component createComponent(String name, String config) throws SimulationException{

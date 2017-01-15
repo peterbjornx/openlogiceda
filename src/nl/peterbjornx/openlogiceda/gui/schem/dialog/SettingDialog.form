@@ -134,13 +134,13 @@
                       <text value="Grid:"/>
                     </properties>
                   </component>
-                  <component id="6461a" class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" binding="backgroundJColourButton" default-binding="true">
+                  <component id="6461a" class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" binding="backgroundJColourButton" default-binding="true">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="5fb68" class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" binding="gridJColourButton" default-binding="true">
+                  <component id="5fb68" class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" binding="gridJColourButton" default-binding="true">
                     <constraints>
                       <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -155,13 +155,13 @@
                       <text value="Cursor:"/>
                     </properties>
                   </component>
-                  <component id="faf63" class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" binding="cursorJColourButton" default-binding="true">
+                  <component id="faf63" class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" binding="cursorJColourButton" default-binding="true">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="49144" class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" binding="pinJColourButton" default-binding="true">
+                  <component id="49144" class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" binding="pinJColourButton" default-binding="true">
                     <constraints>
                       <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -176,13 +176,13 @@
                       <text value="Pin:"/>
                     </properties>
                   </component>
-                  <component id="c2105" class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" binding="textJColourButton" default-binding="true">
+                  <component id="c2105" class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" binding="textJColourButton" default-binding="true">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="22eae" class="nl.peterbjornx.openlogiceda.gui.schem.JColourButton" binding="shapesJColourButton" default-binding="true">
+                  <component id="22eae" class="nl.peterbjornx.openlogiceda.gui.common.JColourButton" binding="shapesJColourButton" default-binding="true">
                     <constraints>
                       <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>

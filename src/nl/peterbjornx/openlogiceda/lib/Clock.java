@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import nl.peterbjornx.openlogiceda.gui.sim.ClockSimConfig;
+import nl.peterbjornx.openlogiceda.gui.sim.SimConfig;
 import nl.peterbjornx.openlogiceda.model.Component;
 import nl.peterbjornx.openlogiceda.model.Node;
 import nl.peterbjornx.openlogiceda.sim.Simulator;
@@ -32,6 +34,10 @@ public class Clock extends Component {
     private final long periodL;
     private final Node output;
     private boolean state = false;
+
+    public static SimConfig createSimConfig() {
+        return new ClockSimConfig();
+    }
 
     /**
      * Creates a clock source

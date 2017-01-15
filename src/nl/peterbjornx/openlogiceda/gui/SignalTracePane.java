@@ -75,7 +75,7 @@ public class SignalTracePane {
         zoomChanged();
     }
 
-    private void zoomSet( long zoom ){
+    private void zoomSet(long zoom) {
         signalView.setTimeScale(zoom);
         zoomChanged();
     }
@@ -94,16 +94,17 @@ public class SignalTracePane {
     }
 
     public void updateHorizontal() {
-        horizontalScrollBar.setMaximum(signalView.getScrollXMax()+signalView.getVisibleWidth());
+        horizontalScrollBar.setMaximum(signalView.getScrollXMax() + signalView.getVisibleWidth());
         horizontalScrollBar.setVisibleAmount(signalView.getVisibleWidth());
     }
 
     public void updateVertical() {
-        verticalScrollBar.setMaximum(signalView.getScrollYMax()+signalView.getVisibleHeight());
+        verticalScrollBar.setMaximum(signalView.getScrollYMax() + signalView.getVisibleHeight());
         verticalScrollBar.setVisibleAmount(signalView.getVisibleHeight());
     }
 
     public JPanel getMainPane() {
         return mainPane;
     }
+
 }

@@ -1,8 +1,10 @@
 package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 
+import nl.peterbjornx.openlogiceda.gui.common.ColourDialog;
 import nl.peterbjornx.openlogiceda.model.schem.TextPart;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class TextDialog extends JDialog {
@@ -52,7 +54,7 @@ public class TextDialog extends JDialog {
         colourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colourButton.setForeground(ColourDialog.choose(contentPane,colourButton.getForeground()));
+                colourButton.setForeground(ColourDialog.choose(contentPane, colourButton.getForeground()));
             }
         });
         part = p;
@@ -61,7 +63,7 @@ public class TextDialog extends JDialog {
     private void onOK() {
         try {
             Integer.parseInt(sizeTextField.getText());
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Invalid number for size!",
                     "Error",
@@ -85,4 +87,5 @@ public class TextDialog extends JDialog {
         dialog.setLocationByPlatform(true);
         dialog.setVisible(true);
     }
+
 }

@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 import nl.peterbjornx.openlogiceda.model.Value;
+import nl.peterbjornx.openlogiceda.util.SimulationException;
 
 /**
  * Implements utility routines to ease working with Value objects
@@ -40,5 +41,26 @@ public class ValueTools {
             bvalues[i] = inputs[i].truth;
         }
         return drive(eqn.compute( bvalues ));
+    }
+
+    public static boolean isValid(Value... inputs){
+        for (Value input : inputs) {
+            if (!input.valid)
+                return false;
+        }
+        return true;
+    }
+
+    public static long decode(Value... inputs ) throws SimulationException {
+        long value = 0;
+        if ( inputs.length > 63)
+            throw new SimulationException("Can only simulate up to 63 bit words");
+        for ( int i = 0; i < inputs.length; i++ ) {
+            if ( !inputs[i].valid )
+                throw new SimulationException("Tried to decode invalid value");
+            if ( inputs[i].truth )
+                value |= 1L << i;
+        }
+        return value;
     }
 }

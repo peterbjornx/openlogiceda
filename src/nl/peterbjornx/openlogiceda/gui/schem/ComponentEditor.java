@@ -22,6 +22,7 @@ import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -50,44 +51,44 @@ public class ComponentEditor {
         file.setMnemonic('F');
         JMenuItem neww = file.add("New");
         neww.setIcon(new ImageIcon(getClass().getResource("/res/new.png")));
-        neww.addActionListener(e->componentView.newComponent());
+        neww.addActionListener(e -> componentView.newComponent());
         JMenuItem open = file.add("Open");
         open.setIcon(new ImageIcon(getClass().getResource("/res/open.png")));
-        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
-        open.addActionListener(e->componentView.openComponent());
+        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
+        open.addActionListener(e -> componentView.openComponent());
         JMenuItem save = file.add("Save");
         save.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
-        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
-        save.addActionListener(e->componentView.saveComponent());
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+        save.addActionListener(e -> componentView.saveComponent());
         JMenuItem saveAs = file.add("Save As");
         saveAs.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
         //saveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
-        saveAs.addActionListener(e->componentView.saveAsComponent());
+        saveAs.addActionListener(e -> componentView.saveAsComponent());
         file.addSeparator();
         JMenuItem quit = file.add("Quit");
-        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
-        quit.addActionListener(e->quitAction());
+        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_MASK));
+        quit.addActionListener(e -> quitAction());
         JMenu edit = new JMenu("Edit");
         menuBar.add(edit);
         edit.setMnemonic('E');
         JMenuItem undo = edit.add("Undo");
         undo.setIcon(new ImageIcon(getClass().getResource("/res/undo.png")));
-        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,KeyEvent.CTRL_MASK));
-        undo.addActionListener(e->componentView.undo());
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_MASK));
+        undo.addActionListener(e -> componentView.undo());
         JMenuItem redo = edit.add("Redo");
         redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
-        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
-        redo.addActionListener(e->componentView.redo());
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_MASK));
+        redo.addActionListener(e -> componentView.redo());
         edit.addSeparator();
         JMenuItem prop = edit.add("Component properties");
         //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
-        prop.addActionListener(e->componentView.props());
+        prop.addActionListener(e -> componentView.props());
         edit.addSeparator();
         JMenuItem prefs = edit.add("Preferences");
         //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
-        prefs.addActionListener(e-> SettingDialog.main());
+        prefs.addActionListener(e -> SettingDialog.main());
         edit.addSeparator();
 
         selectModeBtn.addActionListener(e -> updateFromMode());
@@ -130,7 +131,7 @@ public class ComponentEditor {
     }
 
     private void updateToMode() {
-        switch ( componentView.getEditMode() ) {
+        switch (componentView.getEditMode()) {
             case DrawingView.MODE_SELECT:
                 selectModeBtn.setSelected(true);
                 break;
@@ -150,7 +151,7 @@ public class ComponentEditor {
     }
 
     private void updateFromMode() {
-        switch( modeGroup.getSelection().getActionCommand() ) {
+        switch (modeGroup.getSelection().getActionCommand()) {
             case "S":
                 componentView.setEditMode(DrawingView.MODE_SELECT);
                 break;
@@ -169,7 +170,9 @@ public class ComponentEditor {
         }
     }
 
-    public JMenuBar getMenuBar() {return menuBar;}
+    public JMenuBar getMenuBar() {
+        return menuBar;
+    }
 
     public JPanel getMainPane() {
         return mainPane;
@@ -192,4 +195,5 @@ public class ComponentEditor {
         }
         ComponentEditor ed = new ComponentEditor();
     }
+
 }

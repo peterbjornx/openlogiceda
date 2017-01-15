@@ -3,6 +3,7 @@ package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class CompEditDialog extends JDialog {
@@ -69,4 +70,5 @@ public class CompEditDialog extends JDialog {
         dialog.setVisible(true);
 
     }
+
 }

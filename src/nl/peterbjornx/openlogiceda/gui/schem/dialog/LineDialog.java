@@ -1,9 +1,10 @@
 package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 
+import nl.peterbjornx.openlogiceda.gui.common.ColourDialog;
 import nl.peterbjornx.openlogiceda.model.schem.LinePart;
-import nl.peterbjornx.openlogiceda.model.schem.RectanglePart;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class LineDialog extends JDialog {
@@ -53,7 +54,7 @@ public class LineDialog extends JDialog {
         colourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colourButton.setBackground(ColourDialog.choose(contentPane,colourButton.getBackground()));
+                colourButton.setBackground(ColourDialog.choose(contentPane, colourButton.getBackground()));
             }
         });
     }
@@ -62,7 +63,7 @@ public class LineDialog extends JDialog {
         // add your code here
         try {
             Integer.parseInt(lineWidthTextField.getText());
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Invalid number for linewidth!",
                     "Error",
@@ -84,4 +85,5 @@ public class LineDialog extends JDialog {
         dialog.setLocationByPlatform(true);
         dialog.setVisible(true);
     }
+
 }

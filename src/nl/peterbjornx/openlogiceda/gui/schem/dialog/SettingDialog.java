@@ -3,10 +3,10 @@ package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 import nl.peterbjornx.openlogiceda.config.GlobalConfig;
 import nl.peterbjornx.openlogiceda.config.GridConfig;
 import nl.peterbjornx.openlogiceda.config.SchematicColours;
-import nl.peterbjornx.openlogiceda.gui.schem.JColourButton;
+import nl.peterbjornx.openlogiceda.gui.common.JColourButton;
 
 import javax.swing.*;
-import javax.xml.validation.Schema;
+import java.awt.*;
 import java.awt.event.*;
 
 public class SettingDialog extends JDialog {
@@ -88,4 +88,5 @@ public class SettingDialog extends JDialog {
         dialog.pack();
         dialog.setVisible(true);
     }
+
 }

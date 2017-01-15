@@ -1,19 +1,24 @@
 package nl.peterbjornx.openlogiceda.gui.schem.dialog;
 
 import nl.peterbjornx.openlogiceda.gui.schem.BaseSchematicView;
+import nl.peterbjornx.openlogiceda.gui.sim.SimConfig;
 import nl.peterbjornx.openlogiceda.model.schem.BaseSchematicPart;
 import nl.peterbjornx.openlogiceda.model.schem.ComponentPart;
+import nl.peterbjornx.openlogiceda.model.schem.SchematicComponent;
+import nl.peterbjornx.openlogiceda.sim.ComponentCreator;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class CompPartDialog extends JDialog {
+    private final SimConfig simConfig;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField nameTextField;
     private JTextField refTextField;
-    private JTextField simConfigTextField;
+    private JPanel simConfigPanel;
     private BaseSchematicView c;
     private ComponentPart part;
 
@@ -52,13 +57,15 @@ public class CompPartDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         refTextField.setText(part.getReference());
         nameTextField.setText(part.getName());
-        simConfigTextField.setText(part.getSimConfig());
+        simConfig = ComponentCreator.getInstance().getSimConfig(((SchematicComponent) part.getSubDrawing()).getSimName());
+        simConfig.setValues(part.getSimConfig());
+        simConfigPanel.add(simConfig.getMainPane());
     }
 
     private void onOK() {
         part.setReference(refTextField.getText());
         part.setName(nameTextField.getText());
-        part.setSimConfig(simConfigTextField.getText());
+        part.setSimConfig(simConfig.getValues());
         dispose();
     }
 
@@ -68,9 +75,10 @@ public class CompPartDialog extends JDialog {
     }
 
     public static void main(BaseSchematicView c, ComponentPart p) {
-        CompPartDialog dialog = new CompPartDialog(c,p);
+        CompPartDialog dialog = new CompPartDialog(c, p);
         dialog.pack();
         dialog.setLocationByPlatform(true);
         dialog.setVisible(true);
     }
+
 }

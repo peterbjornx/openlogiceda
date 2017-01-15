@@ -23,6 +23,7 @@ import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 import nl.peterbjornx.openlogiceda.lib.Probe;
 import nl.peterbjornx.openlogiceda.model.*;
+import nl.peterbjornx.openlogiceda.model.Component;
 import nl.peterbjornx.openlogiceda.model.schem.Schematic;
 import nl.peterbjornx.openlogiceda.model.schem.SchematicCircuit;
 import nl.peterbjornx.openlogiceda.sim.Simulator;
@@ -61,22 +62,22 @@ public class SchematicEditor {
         file.setMnemonic('F');
         JMenuItem neww = file.add("New");
         neww.setIcon(new ImageIcon(getClass().getResource("/res/new.png")));
-        neww.addActionListener(e->schematicView.newComponent());
+        neww.addActionListener(e -> schematicView.newComponent());
         JMenuItem open = file.add("Open");
         open.setIcon(new ImageIcon(getClass().getResource("/res/open.png")));
-        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
-        open.addActionListener(e-> schematicView.openComponent());
+        open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
+        open.addActionListener(e -> schematicView.openComponent());
         JMenuItem save = file.add("Save");
         save.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
-        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
-        save.addActionListener(e-> schematicView.saveComponent());
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+        save.addActionListener(e -> schematicView.saveComponent());
         JMenuItem saveAs = file.add("Save As");
         saveAs.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
         //saveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
-        saveAs.addActionListener(e->schematicView.saveAsComponent());
+        saveAs.addActionListener(e -> schematicView.saveAsComponent());
         file.addSeparator();
         JMenuItem bnet = file.add("Build net");
-        bnet.addActionListener(e->{
+        bnet.addActionListener(e -> {
             Schematic sn = (Schematic) schematicView.getDrawing();
             SchematicCircuit circuit = new SchematicCircuit();
             circuit.build(sn);
@@ -87,70 +88,70 @@ public class SchematicEditor {
                 JFrame tf = new JFrame("Traces");
                 //tf.setType(Window.Type.UTILITY);
                 SignalTracePane stf = new SignalTracePane();
-                for(nl.peterbjornx.openlogiceda.model.Component cp : c.getComponents())
+                for (Component cp : c.getComponents())
                     if (cp instanceof Probe)
-                        stf.addTrace(Color.MAGENTA,((Probe) cp).getInput().getNet().getName(),((Probe) cp).getHistory());
+                        stf.addTrace(Color.MAGENTA, ((Probe) cp).getInput().getNet().getName(), ((Probe) cp).getHistory());
                 tf.add(stf.getMainPane());
                 tf.setResizable(true);
                 tf.setVisible(true);
-                new Thread(){
-                    public void run(){
+                new Thread() {
+                    public void run() {
                         long t = System.currentTimeMillis();
-                        int N=5000000;
+                        int N = 5000000;
                         for (int i = 0; i < N; i++) {
                             try {
                                 s.step();
                             } catch (SimulationException e1) {
-                                JOptionPane.showMessageDialog(mainPane,e1.getMessage());
+                                JOptionPane.showMessageDialog(mainPane, e1.getMessage());
                                 return;
                             }
                             //try {
-                               // Thread.sleep(1);
-                           // } catch (InterruptedException e1) {
-                          //      e1.printStackTrace();
-                          //  }
+                            // Thread.sleep(1);
+                            // } catch (InterruptedException e1) {
+                            //      e1.printStackTrace();
+                            //  }
                         }
-                        long dt = System.currentTimeMillis()-t;
-                        System.out.println("Took:"+dt);
-                        dt *= 1000L*1000L*1000L;
+                        long dt = System.currentTimeMillis() - t;
+                        System.out.println("Took:" + dt);
+                        dt *= 1000L * 1000L * 1000L;
                         double dtd = dt / (double) N;
                         double dtb = (double) s.getNow() / (double) dt;
-                        System.out.println("Thats:"+1.0/dtd+" it/ms");
-                        System.out.println("Thats:"+dtb+" times faster than real life");
+                        System.out.println("Thats:" + 1.0 / dtd + " it/ms");
+                        System.out.println("Thats:" + dtb + " times faster than real life");
 
                     }
                 }.start();
             } catch (SimulationException e1) {
-                JOptionPane.showMessageDialog(mainPane,e1.getMessage());
+                JOptionPane.showMessageDialog(mainPane, e1.getMessage());
             } catch (ModificationException e1) {
-                JOptionPane.showMessageDialog(mainPane,e1.getMessage());
+                JOptionPane.showMessageDialog(mainPane, e1.getMessage());
             }
         });
         file.addSeparator();
         JMenuItem quit = file.add("Quit");
-        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
-        quit.addActionListener(e->quitAction());
+        quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_MASK));
+        quit.addActionListener(e -> quitAction());
         JMenu edit = new JMenu("Edit");
         menuBar.add(edit);
         edit.setMnemonic('E');
         JMenuItem undo = edit.add("Undo");
         undo.setIcon(new ImageIcon(getClass().getResource("/res/undo.png")));
-        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,KeyEvent.CTRL_MASK));
-        undo.addActionListener(e-> schematicView.undo());
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_MASK));
+        undo.addActionListener(e -> schematicView.undo());
         JMenuItem redo = edit.add("Redo");
         redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
-        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
-        redo.addActionListener(e-> schematicView.redo());
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_MASK));
+        redo.addActionListener(e -> schematicView.redo());
         edit.addSeparator();
         JMenuItem prop = edit.add("Schematic properties");
         //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
-        prop.addActionListener(e-> schematicView.props());
+        prop.addActionListener(e -> schematicView.props());
         edit.addSeparator();
         JMenuItem prefs = edit.add("Preferences");
         //redo.setIcon(new ImageIcon(getClass().getResource("/res/redo.png")));
         //redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,KeyEvent.CTRL_MASK));
-        prefs.addActionListener(e-> SettingDialog.main());
+        prefs.addActionListener(e -> SettingDialog.main());
         edit.addSeparator();
 
         selectModeBtn.addActionListener(e -> updateFromMode());
@@ -194,7 +195,7 @@ public class SchematicEditor {
     }
 
     private void updateToMode() {
-        switch ( schematicView.getEditMode() ) {
+        switch (schematicView.getEditMode()) {
             case DrawingView.MODE_SELECT:
                 selectModeBtn.setSelected(true);
                 break;
@@ -217,7 +218,7 @@ public class SchematicEditor {
     }
 
     private void updateFromMode() {
-        switch( modeGroup.getSelection().getActionCommand() ) {
+        switch (modeGroup.getSelection().getActionCommand()) {
             case "S":
                 schematicView.setEditMode(DrawingView.MODE_SELECT);
                 break;
@@ -239,7 +240,9 @@ public class SchematicEditor {
         }
     }
 
-    public JMenuBar getMenuBar() {return menuBar;}
+    public JMenuBar getMenuBar() {
+        return menuBar;
+    }
 
     public JPanel getMainPane() {
         return mainPane;
@@ -262,4 +265,5 @@ public class SchematicEditor {
         }
         SchematicEditor ed = new SchematicEditor();
     }
+
 }

@@ -6,6 +6,7 @@ import nl.peterbjornx.openlogiceda.model.schem.PinPart;
 import nl.peterbjornx.openlogiceda.model.schem.Rotation;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class PinDialog extends JDialog {
@@ -60,7 +61,7 @@ public class PinDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        switch( edit.getOrientation() ){
+        switch (edit.getOrientation()) {
             case NORTH:
                 northRadioButton.setSelected(true);
                 break;
@@ -75,7 +76,7 @@ public class PinDialog extends JDialog {
                 break;
         }
 
-        switch( edit.getStyle() ){
+        switch (edit.getStyle()) {
             case NORMAL:
                 normalRadioButton.setSelected(true);
                 break;
@@ -106,9 +107,10 @@ public class PinDialog extends JDialog {
     }
 
     public static void showDialog(BaseSchematicView view, PinPart edit) {
-        PinDialog dialog = new PinDialog(view,edit);
+        PinDialog dialog = new PinDialog(view, edit);
         dialog.setLocationByPlatform(true);
         dialog.pack();
         dialog.setVisible(true);
     }
+
 }
