@@ -77,6 +77,18 @@ public class SchematicView extends BaseSchematicView {
                 "Schematics", "schem","xml");
     }
 
+    public void newComponent() {
+        if (!close())
+            return;
+        openFile = null;
+        try {
+            setDrawing(new Schematic("none"));
+        } catch (Exception e) {
+            //TODO: Show error dialog
+            e.printStackTrace();
+        }
+    }
+
     public boolean isAcceptedFilename(File dir, String name){
         if (name.toLowerCase().endsWith(".schem"))
             return true;

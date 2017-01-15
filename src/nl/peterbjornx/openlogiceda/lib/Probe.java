@@ -36,9 +36,9 @@ public class Probe extends Component {
         super("probe" );
         input = new Node( this, "IN" );
         input.addProcess(sim -> {
-                System.out.println("[" + sim.getNow()+ "]"+input.getNet()+
+           /*     System.out.println("[" + sim.getNow()+ "]"+input.getNet()+
                         " change of state "+input.getNet().getChange() +
-                        " to "+input.getNet().getValue());
+                        " to "+input.getNet().getValue());*/
                 history.addChange(sim.getNow(), input.getNet().getValue());
         });
         this.nodes.add(input);

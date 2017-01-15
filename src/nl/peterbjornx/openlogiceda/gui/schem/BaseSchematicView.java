@@ -42,7 +42,7 @@ public abstract class BaseSchematicView extends DrawingView {
     private BaseSchematicView.EditState editState = STATE_NORMAL;
     private final Stack<String> undoStack = new Stack<>();
     private Stack<String> redoStack = new Stack<>();
-    private File openFile = null;
+    protected File openFile = null;
 
     /**
      * Creates a new drawing view
@@ -68,12 +68,23 @@ public abstract class BaseSchematicView extends DrawingView {
     }
 
     public void openComponent() {
-        if (openFile != null && !close())
+        if (!close())
             return;
         if (!openDialog())
             return;
         try {
             setDrawing(getDrawing().getIO().load(openFile));
+        } catch (Exception e) {
+            //TODO: Show error dialog
+            e.printStackTrace();
+        }
+    }
+
+    public void saveAsComponent() {
+        if (!saveAsDialog())
+            return;
+        try {
+            getDrawing().getIO().store(openFile,getDrawing());
         } catch (Exception e) {
             //TODO: Show error dialog
             e.printStackTrace();

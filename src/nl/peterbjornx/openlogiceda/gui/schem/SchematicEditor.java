@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.sun.java.swing.plaf.gtk.GTKLookAndFeel;
 import nl.peterbjornx.openlogiceda.gui.SignalTracePane;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
@@ -31,6 +32,9 @@ import nl.peterbjornx.openlogiceda.util.SimulationException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  * @author Peter Bosch
@@ -48,12 +52,16 @@ public class SchematicEditor {
     private JToggleButton wireModeBtn;
     private ButtonGroup modeGroup;
     private JMenuBar menuBar;
+    private JFrame frame;
 
     public SchematicEditor() {
         menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
         menuBar.add(file);
         file.setMnemonic('F');
+        JMenuItem neww = file.add("New");
+        neww.setIcon(new ImageIcon(getClass().getResource("/res/new.png")));
+        neww.addActionListener(e->schematicView.newComponent());
         JMenuItem open = file.add("Open");
         open.setIcon(new ImageIcon(getClass().getResource("/res/open.png")));
         open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
@@ -62,6 +70,10 @@ public class SchematicEditor {
         save.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
         save.addActionListener(e-> schematicView.saveComponent());
+        JMenuItem saveAs = file.add("Save As");
+        saveAs.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
+        //saveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
+        saveAs.addActionListener(e->schematicView.saveAsComponent());
         file.addSeparator();
         JMenuItem bnet = file.add("Build net");
         bnet.addActionListener(e->{
@@ -72,8 +84,6 @@ public class SchematicEditor {
                 Circuit c = circuit.compileCircuit();
                 Simulator s = new Simulator();
                 s.start(c);
-                for (int i = 0; i < 50; i++)
-                    s.step();
                 JFrame tf = new JFrame("Traces");
                 //tf.setType(Window.Type.UTILITY);
                 SignalTracePane stf = new SignalTracePane();
@@ -83,6 +93,33 @@ public class SchematicEditor {
                 tf.add(stf.getMainPane());
                 tf.setResizable(true);
                 tf.setVisible(true);
+                new Thread(){
+                    public void run(){
+                        long t = System.currentTimeMillis();
+                        int N=5000000;
+                        for (int i = 0; i < N; i++) {
+                            try {
+                                s.step();
+                            } catch (SimulationException e1) {
+                                JOptionPane.showMessageDialog(mainPane,e1.getMessage());
+                                return;
+                            }
+                            //try {
+                               // Thread.sleep(1);
+                           // } catch (InterruptedException e1) {
+                          //      e1.printStackTrace();
+                          //  }
+                        }
+                        long dt = System.currentTimeMillis()-t;
+                        System.out.println("Took:"+dt);
+                        dt *= 1000L*1000L*1000L;
+                        double dtd = dt / (double) N;
+                        double dtb = (double) s.getNow() / (double) dt;
+                        System.out.println("Thats:"+1.0/dtd+" it/ms");
+                        System.out.println("Thats:"+dtb+" times faster than real life");
+
+                    }
+                }.start();
             } catch (SimulationException e1) {
                 JOptionPane.showMessageDialog(mainPane,e1.getMessage());
             } catch (ModificationException e1) {
@@ -128,11 +165,32 @@ public class SchematicEditor {
         textModeBtn.setActionCommand("T");
         rectModeBtn.setActionCommand("R");
         lineModeBtn.setActionCommand("L");
+        frame = new JFrame("Schematic editor");
+        frame.add(getMainPane());
+        frame.setJMenuBar(getMenuBar());
+        frame.setResizable(true);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            /**
+             * Invoked when a window is in the process of being closed.
+             * The close operation can be overridden at this point.
+             *
+             * @param e
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                if (schematicView.close())
+                    frame.dispose();
+            }
+        });
+        postInit();
     }
 
     private void quitAction() {
         schematicView.close();
-        //TODO: Actually close editor
+        frame.dispose();
     }
 
     private void updateToMode() {
@@ -193,5 +251,15 @@ public class SchematicEditor {
 
     public void postInit() {
         schematicView.requestFocusInWindow();
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            UIManager.setLookAndFeel(new GTKLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        SchematicEditor ed = new SchematicEditor();
     }
 }

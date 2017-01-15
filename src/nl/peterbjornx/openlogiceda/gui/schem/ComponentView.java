@@ -71,6 +71,19 @@ public class ComponentView extends BaseSchematicView {
         return false;
     }
 
+    public void newComponent() {
+        if (!close())
+            return;
+        openFile = null;
+        try {
+            setDrawing(new SchematicComponent("none"));
+
+        } catch (Exception e) {
+            //TODO: Show error dialog
+            e.printStackTrace();
+        }
+    }
+
     public FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter(
                 "Schematic Components", "cmp","xml");

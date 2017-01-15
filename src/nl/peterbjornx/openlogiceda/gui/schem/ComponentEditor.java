@@ -17,11 +17,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+import com.sun.java.swing.plaf.gtk.GTKLookAndFeel;
 import nl.peterbjornx.openlogiceda.gui.schem.dialog.SettingDialog;
 import nl.peterbjornx.openlogiceda.gui.view.DrawingView;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * @author Peter Bosch
@@ -38,12 +41,16 @@ public class ComponentEditor {
     private JToggleButton lineModeBtn;
     private ButtonGroup modeGroup;
     private JMenuBar menuBar;
+    private JFrame frame;
 
     public ComponentEditor() {
         menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
         menuBar.add(file);
         file.setMnemonic('F');
+        JMenuItem neww = file.add("New");
+        neww.setIcon(new ImageIcon(getClass().getResource("/res/new.png")));
+        neww.addActionListener(e->componentView.newComponent());
         JMenuItem open = file.add("Open");
         open.setIcon(new ImageIcon(getClass().getResource("/res/open.png")));
         open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
@@ -52,6 +59,10 @@ public class ComponentEditor {
         save.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
         save.addActionListener(e->componentView.saveComponent());
+        JMenuItem saveAs = file.add("Save As");
+        saveAs.setIcon(new ImageIcon(getClass().getResource("/res/save.png")));
+        //saveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
+        saveAs.addActionListener(e->componentView.saveAsComponent());
         file.addSeparator();
         JMenuItem quit = file.add("Quit");
         quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
@@ -90,11 +101,32 @@ public class ComponentEditor {
         textModeBtn.setActionCommand("T");
         rectModeBtn.setActionCommand("R");
         lineModeBtn.setActionCommand("L");
+        frame = new JFrame("Schematic editor");
+        frame.add(getMainPane());
+        frame.setJMenuBar(getMenuBar());
+        frame.setResizable(true);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            /**
+             * Invoked when a window is in the process of being closed.
+             * The close operation can be overridden at this point.
+             *
+             * @param e
+             */
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                if (componentView.close())
+                    frame.dispose();
+            }
+        });
+        postInit();
     }
 
     private void quitAction() {
         componentView.close();
-        //TODO: Actually close editor
+        frame.dispose();
     }
 
     private void updateToMode() {
@@ -149,5 +181,15 @@ public class ComponentEditor {
 
     public void postInit() {
         componentView.requestFocusInWindow();
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            UIManager.setLookAndFeel(new GTKLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+        ComponentEditor ed = new ComponentEditor();
     }
 }
