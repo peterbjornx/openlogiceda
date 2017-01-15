@@ -17,40 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * @author Peter Bosch
  */
-public abstract class SchematicNode {
-
-    private SchematicNet net;
-    private int connectionX;
-    private int connectionY;
-
-    public SchematicNet getNet() {
-        return net;
-    }
-
-    public void setNet(SchematicNet net) {
-        this.net = net;
-    }
-
-    public int getConnectionX() {
-        return connectionX;
-    }
-
-    public void setConnectionX(int connectionX) {
-        this.connectionX = connectionX;
-    }
-
-    public int getConnectionY() {
-        return connectionY;
-    }
-
-    public void setConnectionY(int connectionY) {
-        this.connectionY = connectionY;
-    }
+public class JunctionNode extends SchematicNode {
 }

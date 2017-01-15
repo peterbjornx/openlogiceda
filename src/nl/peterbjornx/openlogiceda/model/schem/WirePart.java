@@ -37,9 +37,9 @@ import java.util.List;
 public class WirePart extends LinePart {
 
     @XStreamOmitField
-    private WireNode nodeB = new WireNode();
+    private WireNode nodeB = new WireNode(this);
     @XStreamOmitField
-    private WireNode nodeA = new WireNode(nodeB);
+    private WireNode nodeA = new WireNode(this);
 
     @Override
     public void edit(BaseSchematicView editor) {
@@ -107,8 +107,8 @@ public class WirePart extends LinePart {
     }
 
     public Object readResolve(){
-        nodeB = new WireNode();
-        nodeA = new WireNode(nodeB);
+        nodeB = new WireNode(this);
+        nodeA = new WireNode(this);
         return this;
     }
 

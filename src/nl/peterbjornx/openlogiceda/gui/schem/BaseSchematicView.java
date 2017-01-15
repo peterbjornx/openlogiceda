@@ -328,13 +328,42 @@ public abstract class BaseSchematicView extends DrawingView {
                 clearSelection();
                 restoreSelectMultiple();
                 deletePart(end);
+                List<SchematicNode> n = ((Schematic)getDrawing()).getNode( end.getBX(), end.getBY() );
+                if (n.size() > 2){
+                    JunctionPart jp = new JunctionPart();
+                    jp.setX(end.getBX());
+                    jp.setY(end.getBY());
+                    addPart(jp);
+                }
                 return true;
-            } else if ( getDrawing() instanceof Schematic &&
-                    ((Schematic)getDrawing()).getNode( end.getX(), end.getY() ) != null ) {
-                editState = STATE_NORMAL;
-                clearSelection();
-                restoreSelectMultiple();
-                return true;
+            } else if ( getDrawing() instanceof Schematic ) {
+                List<SchematicNode> n = ((Schematic)getDrawing()).getNode( end.getBX(), end.getBY() );
+                if (n.size() > 1) {
+                    if (n.size() > 2){
+                        JunctionPart jp = new JunctionPart();
+                        jp.setX(end.getBX());
+                        jp.setY(end.getBY());
+                        addPart(jp);
+                    }
+                    editState = STATE_NORMAL;
+                    clearSelection();
+                    restoreSelectMultiple();
+                    return true;
+                }
+                List<DrawingPart> ps = getDrawing().getParts(end.getBX(),end.getBY());
+                for ( DrawingPart _p : ps ){
+                    if ( _p == end || _p == start )
+                        continue;
+                    if ( _p instanceof WirePart ) {
+                        editState = STATE_NORMAL;
+                        clearSelection();
+                        restoreSelectMultiple();
+                        JunctionPart jp = new JunctionPart();
+                        jp.setX(end.getBX());
+                        jp.setY(end.getBY());
+                        addPart(jp);
+                    }
+                }
             }
             unselectPart(start);
             start = end;

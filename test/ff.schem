@@ -228,7 +228,7 @@
     <reference>U?</reference>
     <simText></simText>
     <name>clock</name>
-    <simConfig>a 1000</simConfig>
+    <simConfig>a 600 2000</simConfig>
   </component>
   <component x="3850" y="5300">
     <leftExtent>200</leftExtent>
@@ -239,7 +239,7 @@
     <reference>U?</reference>
     <simText></simText>
     <name>clock</name>
-    <simConfig>a 2000</simConfig>
+    <simConfig>a 600 3000</simConfig>
   </component>
   <wire x="4250" y="3700">
     <leftExtent>0</leftExtent>

@@ -17,22 +17,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-import java.util.LinkedList;
-
 /**
  * @author Peter Bosch
  */
 public class WireNode extends SchematicNode {
-    private LinkedList<SchematicNode> connectedNodes = new LinkedList<SchematicNode>();
-    public WireNode(WireNode nodeB){
-        connectedNodes.add(nodeB);
-        nodeB.connectedNodes.add(this);
+    private WirePart part;
+    public WireNode(WirePart part){
+        this.part = part;
     }
 
-    public WireNode(){}
-
-    @Override
-    public LinkedList<SchematicNode> getConnectedNodes() {
-        return connectedNodes;
+    public WirePart getPart() {
+        return part;
     }
 }

@@ -22,13 +22,12 @@ import nl.peterbjornx.openlogiceda.model.Component;
 import nl.peterbjornx.openlogiceda.model.Net;
 import nl.peterbjornx.openlogiceda.model.Node;
 import nl.peterbjornx.openlogiceda.model.draw.CompositePart;
+import nl.peterbjornx.openlogiceda.model.draw.DrawingPart;
 import nl.peterbjornx.openlogiceda.sim.ComponentCreator;
 import nl.peterbjornx.openlogiceda.util.ModificationException;
 import nl.peterbjornx.openlogiceda.util.SimulationException;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Peter Bosch
@@ -39,7 +38,7 @@ public class SchematicCircuit {
     private List<SchematicNode> nodes;
     private String name;
 
-    private void join(List<SchematicNode> nodes){
+    private void join(Collection<SchematicNode> nodes){
         SchematicNet net = null;
         for (SchematicNode node : nodes ) {
             if (net == null) {
@@ -68,28 +67,21 @@ public class SchematicCircuit {
             nets.remove(node.getNet());
         }
         for ( SchematicNode n : nodes ){
-            SchematicNet net;
-            List<SchematicNode> cn =  n.getConnectedNodes();
-            net = n.getNet();
-            for ( SchematicNode cnode : cn ) {
-                if ( net != null)
-                    break;
-                net = cnode.getNet();
-            }
-            if ( net == null ) {
-                net = new SchematicNet();
-                nets.add(net);
-            }
-            net.addNode(n);
-            for ( SchematicNode cnode : cn ) {
-                SchematicNet other = cnode.getNet();
-                if ( other == null )
-                    net.addNode(cnode);
-                else if ( other != net ){
-                    net.joinNets(other);
-                    nets.remove(other);
+            Set<SchematicNode> cn = new HashSet<>();
+            cn.add(n);
+            if (n instanceof WireNode){
+                cn.addAll(((WireNode) n).getPart().getNodes());
+            } else if (n instanceof JunctionNode) {
+                List<DrawingPart> parts = s.getParts(n.getConnectionX(),n.getConnectionY());
+                for (DrawingPart p : parts) {
+                    if (!(p instanceof BaseSchematicPart))
+                        continue;
+                    BaseSchematicPart sp = (BaseSchematicPart) p;
+                    cn.addAll(sp.getNodes());
                 }
             }
+            if (cn.size() != 0)
+                join(cn);
         }
         for ( SchematicNode node : nodes) {
             List<SchematicNode> net = s.getNode(node.getConnectionX(), node.getConnectionY());
