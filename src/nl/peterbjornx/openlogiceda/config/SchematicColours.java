@@ -45,7 +45,7 @@ public class SchematicColours {
      */
     private static Color defaultTextColour = Color.BLACK;
     private static Color backgroundColour = Color.WHITE;
-    private static Color wireColour = Color.GREEN;
+    private static Color wireColour = Color.GREEN.darker().darker();
 
     public static Color getDefaultShapeColour() {
         return defaultShapeColour;

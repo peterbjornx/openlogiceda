@@ -345,6 +345,21 @@ public abstract class BaseSchematicView extends DrawingView {
                     jp.setX(end.getBX());
                     jp.setY(end.getBY());
                     addPart(jp);
+                    return true;
+                }
+                List<DrawingPart> ps = getDrawing().getParts(end.getBX(),end.getBY());
+                for ( DrawingPart _p : ps ){
+                    if ( _p == end || _p == start )
+                        continue;
+                    if ( _p instanceof WirePart ) {
+                        editState = STATE_NORMAL;
+                        clearSelection();
+                        restoreSelectMultiple();
+                        JunctionPart jp = new JunctionPart();
+                        jp.setX(end.getBX());
+                        jp.setY(end.getBY());
+                        addPart(jp);
+                    }
                 }
                 return true;
             } else if ( getDrawing() instanceof Schematic ) {
