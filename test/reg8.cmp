@@ -163,8 +163,8 @@
     <topExtent>25</topExtent>
     <bottomExtent>25</bottomExtent>
     <orientation>WEST</orientation>
-    <name>CLK</name>
-    <style>CLOCK</style>
+    <name>LE</name>
+    <style>LE</style>
   </pin>
   <pin x="4800" y="5250">
     <leftExtent>200</leftExtent>
@@ -172,7 +172,7 @@
     <topExtent>25</topExtent>
     <bottomExtent>25</bottomExtent>
     <orientation>WEST</orientation>
-    <name>RST</name>
+    <name>OE</name>
     <style>INVERTED</style>
   </pin>
   <text x="4900" y="5400">
