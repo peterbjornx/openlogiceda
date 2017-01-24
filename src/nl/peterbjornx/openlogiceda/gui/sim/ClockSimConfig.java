@@ -56,6 +56,8 @@ public class ClockSimConfig extends SimConfig {
 
     @Override
     public void setValues(String config) {
+        if ( config == null )
+            config = "a 500 500";
         String[] toks = config.split(" ");
         try {
             periodH = Long.parseLong(toks[1]);

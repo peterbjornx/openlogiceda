@@ -68,7 +68,7 @@ public class ComponentCreator {
         try {
             Class<Component> out = resolveClass(name);
             Constructor<?>[] ctors = out.getConstructors();
-            String toks[] = config.length() == 0 ? new String[0] : config.split(" " );
+            String toks[] = (config == null || config.length() == 0) ? new String[0] : config.split(" " );
             Constructor<?> ctor = null;
             for ( Constructor<?> _ctor : ctors ) {
                 if ( _ctor.getParameterCount() != toks.length )

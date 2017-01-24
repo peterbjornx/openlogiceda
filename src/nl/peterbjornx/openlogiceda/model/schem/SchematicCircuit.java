@@ -77,6 +77,8 @@ public class SchematicCircuit {
                     if (!(p instanceof BaseSchematicPart))
                         continue;
                     BaseSchematicPart sp = (BaseSchematicPart) p;
+                    if (!(p instanceof WirePart))
+                        continue;
                     cn.addAll(sp.getNodes());
                 }
             }
